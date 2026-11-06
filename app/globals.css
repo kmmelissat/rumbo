@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body { height: 100%; }
+body { background: #FFF4DF; color: #0F2A3A; font-family: var(--font-dm), sans-serif; -webkit-tap-highlight-color: transparent; }
+@media (min-width: 768px) {
+  body { background: radial-gradient(circle at 20% 10%, #bfeeec 0, transparent 40%), radial-gradient(circle at 85% 90%, #ffd9cc 0, transparent 40%), #f3e6c8; }
+}
+h1, h2, h3, .font-display { font-family: var(--font-fraunces), serif; font-weight: 700; }
+@keyframes entrar { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.entrar { animation: entrar .35s ease-out both; }
+button, a { transition: transform .15s ease, background-color .2s ease, opacity .2s ease; }
+button:active, a:active { transform: scale(.97); }
+.scroll-hide::-webkit-scrollbar { display: none; }
+:focus-visible { outline: 3px solid #0E5A8A; outline-offset: 2px; }
