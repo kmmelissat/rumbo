@@ -17,6 +17,18 @@ interface Estado {
 const VACIO: Estado = { guardados: [], boletos: [], sellos: [], intereses: [], bienvenidaVista: false, zona: "San Salvador", notificaciones: true };
 const KEY = "rumbo:v2";
 
+/** Lee y valida el estado guardado; solo toma las claves conocidas. */
+function leer(): Estado | null {
+  try {
+    const raw = localStorage.getItem(KEY);
+    if (!raw) return null;
+    const p = JSON.parse(raw);
+    const e = { ...VACIO };
+    (Object.keys(VACIO) as (keyof Estado)[]).forEach((k) => { if (p[k] !== undefined) (e as Record<string, unknown>)[k] = p[k]; });
+    return e;
+  } catch { return null; }
+}
+
 interface Ctx extends Estado {
   listo: boolean;
   eventos: Evento[];
@@ -35,16 +47,17 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const [listo, setListo] = useState(false);
 
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem(KEY);
-      if (raw) {
-        const p = JSON.parse(raw);
-        const e = { ...VACIO };
-        (Object.keys(VACIO) as (keyof Estado)[]).forEach((k) => { if (p[k] !== undefined) (e as Record<string, unknown>)[k] = p[k]; });
-        setEstado(e);
-      }
-    } catch {}
+    const e = leer();
+    if (e) setEstado(e);
     setListo(true);
+    // Sincroniza en vivo con otras pestañas o iframes del mismo origen.
+    // (El evento "storage" solo se dispara en los demás documentos, así que no hay bucles.)
+    const alCambiar = (ev: StorageEvent) => {
+      if (ev.key !== null && ev.key !== KEY) return;
+      setEstado(leer() ?? VACIO);
+    };
+    window.addEventListener("storage", alCambiar);
+    return () => window.removeEventListener("storage", alCambiar);
   }, []);
 
   useEffect(() => {

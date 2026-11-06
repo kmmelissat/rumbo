@@ -4,10 +4,10 @@ import { usePathname } from "next/navigation";
 import { IconExplorar, IconCorazon, IconBoleto, IconPerfil } from "./Icons";
 
 const TABS = [
-  { href: "/", label: "Explorar", Icon: IconExplorar },
-  { href: "/guardados", label: "Guardados", Icon: IconCorazon },
-  { href: "/boletos", label: "Boletos", Icon: IconBoleto },
-  { href: "/perfil", label: "Perfil", Icon: IconPerfil },
+  { href: "/prototipo", label: "Explorar", Icon: IconExplorar },
+  { href: "/prototipo/guardados", label: "Guardados", Icon: IconCorazon },
+  { href: "/prototipo/boletos", label: "Boletos", Icon: IconBoleto },
+  { href: "/prototipo/perfil", label: "Perfil", Icon: IconPerfil },
 ];
 
 export function TabBar() {
@@ -16,7 +16,7 @@ export function TabBar() {
     <nav aria-label="Principal" className="absolute inset-x-0 bottom-0 z-20 border-t border-linea bg-white pb-[env(safe-area-inset-bottom)]">
       <ul className="grid grid-cols-4">
         {TABS.map(({ href, label, Icon }) => {
-          const activo = href === "/" ? path === "/" : path.startsWith(href);
+          const activo = href === "/prototipo" ? path === "/prototipo" : path.startsWith(href);
           return (
             <li key={href}>
               <Link href={href} aria-current={activo ? "page" : undefined}

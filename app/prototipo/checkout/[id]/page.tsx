@@ -40,7 +40,7 @@ export default function Checkout() {
     return (
       <div className="space-y-4 p-6 pt-16 text-center">
         <h1 className="text-xl">No encontramos este evento</h1>
-        <LinkPrimario href="/">Volver a explorar</LinkPrimario>
+        <LinkPrimario href="/prototipo">Volver a explorar</LinkPrimario>
       </div>
     );
   }
@@ -60,7 +60,7 @@ export default function Checkout() {
     setPagando(true);
     setTimeout(() => {
       const b = comprar(e, cant, contacto.trim());
-      router.push(`/boleto/${b.id}`);
+      router.push(`/prototipo/boleto/${b.id}`);
     }, 1200);
   }
 

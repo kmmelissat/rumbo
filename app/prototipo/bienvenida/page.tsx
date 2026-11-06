@@ -6,6 +6,7 @@ import { PILARES, type Pilar } from "@/lib/data";
 import { Foto } from "@/components/Foto";
 import { BotonPrimario } from "@/components/Botones";
 import { Nota, Ondulado } from "@/components/Marca";
+import { Logo } from "@/src/components/Logo";
 import { IconCheck } from "@/components/Icons";
 
 export default function Bienvenida() {
@@ -16,7 +17,7 @@ export default function Bienvenida() {
 
   return (
     <div className="flex min-h-full flex-col px-4 pb-6 pt-8">
-      <p className="font-display text-2xl font-bold">Rumbo<span className="text-marca">.</span></p>
+      <Logo variant="principal" size={64} />
       <div className="relative mt-6">
         <h1 className="relative inline-block text-[34px] leading-tight">Encuentra tu rumbo<Ondulado color="text-coral" /></h1>
         <Nota className="mt-3 block -rotate-2 text-oceano">elige los que quieras</Nota>
@@ -42,7 +43,7 @@ export default function Bienvenida() {
       </ul>
 
       <div className="mt-auto space-y-2 pt-6">
-        <BotonPrimario disabled={sel.length === 0} onClick={() => { terminarBienvenida(sel); router.replace("/"); }}>Empezar a explorar</BotonPrimario>
+        <BotonPrimario disabled={sel.length === 0} onClick={() => { terminarBienvenida(sel); router.replace("/prototipo"); }}>Empezar a explorar</BotonPrimario>
         <p className="text-center text-xs text-gris">{sel.length === 0 ? "Elige al menos uno: sin brújula no se sale." : `${sel.length} ${sel.length === 1 ? "elegido" : "elegidos"}. ¡Buen rumbo!`}</p>
       </div>
     </div>

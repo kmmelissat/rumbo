@@ -41,7 +41,7 @@ function Precio({ e }: { e: Evento }) {
 export function TarjetaEvento({ e }: { e: Evento }) {
   return (
     <article className="relative w-[256px] shrink-0 snap-start">
-      <Link href={`/evento/${e.id}`} className="block">
+      <Link href={`/prototipo/evento/${e.id}`} className="block">
         <FotoEvento e={e} sizes="256px" className="h-[176px] w-full" />
         <div className="space-y-1 pt-3">
           <ChipCategoria categoria={e.categoria} />
@@ -59,7 +59,7 @@ export function TarjetaEvento({ e }: { e: Evento }) {
 export function FilaEvento({ e }: { e: Evento }) {
   return (
     <article className="relative">
-      <Link href={`/evento/${e.id}`} className="flex gap-3">
+      <Link href={`/prototipo/evento/${e.id}`} className="flex gap-3">
         <div className="w-[112px] shrink-0"><FotoEvento e={e} sizes="112px" className="h-[112px] w-full" /></div>
         <div className="min-w-0 flex-1 space-y-1 py-0.5 pr-10">
           <ChipCategoria categoria={e.categoria} />

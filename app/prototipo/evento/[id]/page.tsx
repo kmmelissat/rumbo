@@ -19,7 +19,7 @@ export default function Detalle() {
     return (
       <div className="space-y-4 p-6 pt-16 text-center">
         <h1 className="text-xl">No encontramos este evento</h1>
-        <LinkPrimario href="/">Volver a explorar</LinkPrimario>
+        <LinkPrimario href="/prototipo">Volver a explorar</LinkPrimario>
       </div>
     );
   }
@@ -43,7 +43,7 @@ export default function Detalle() {
         <Foto src={e.foto} priority sizes="430px" className="h-[320px] w-full rounded-b-[28px]" />
         <span className="absolute bottom-4 right-4"><PestanaFecha e={e} /></span>
         {sticker && <span className="absolute -bottom-3 left-4"><Sticker tipo={sticker} id={e.id} /></span>}
-        <button onClick={() => (window.history.length > 1 ? router.back() : router.push("/"))} aria-label="Volver" className={`absolute left-4 top-4 ${circ}`}><IconAtras /></button>
+        <button onClick={() => (window.history.length > 1 ? router.back() : router.push("/prototipo"))} aria-label="Volver" className={`absolute left-4 top-4 ${circ}`}><IconAtras /></button>
         <div className="absolute right-4 top-4 flex gap-2">
           <a href={wa} target="_blank" rel="noopener noreferrer" aria-label="Compartir por WhatsApp" className={circ}><IconCompartir width={20} height={20} /></a>
           <div className="relative h-11 w-11"><Corazon id={e.id} className="inset-0" /></div>
@@ -90,7 +90,7 @@ export default function Detalle() {
           <p className="text-xs text-gris">{gratis ? "Entrada" : "Desde"}</p>
           <p className="text-xl font-semibold leading-none">{formatPrecio(e.precio)}</p>
         </div>
-        <Link href={`/checkout/${e.id}`} className="inline-flex min-h-[48px] flex-1 items-center justify-center rounded-xl bg-marca px-6 font-bold text-white hover:bg-[#0c8e8e]">
+        <Link href={`/prototipo/checkout/${e.id}`} className="inline-flex min-h-[48px] flex-1 items-center justify-center rounded-xl bg-marca px-6 font-bold text-white hover:bg-[#0c8e8e]">
           {gratis ? "Guardar mi lugar" : "Comprar entradas"}
         </Link>
       </div>

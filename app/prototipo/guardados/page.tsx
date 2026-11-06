@@ -12,7 +12,7 @@ export default function Guardados() {
       <Encabezado titulo="Guardados" sub="Tus planes favoritos, a un toque." color="text-coral" />
       {lista.length === 0 ? (
         <Vacio icono={<IconCorazon width={28} height={28} />} titulo="Aún no guardas ningún plan" texto="Toca el corazón en cualquier evento y quedará aquí, esperándote.">
-          <LinkPrimario href="/">Explorar eventos</LinkPrimario>
+          <LinkPrimario href="/prototipo">Explorar eventos</LinkPrimario>
         </Vacio>
       ) : (
         <div className="space-y-5 px-4">{lista.map((e) => <FilaEvento key={e.id} e={e} />)}</div>

@@ -29,7 +29,7 @@ export default function Boleto() {
     return (
       <div className="space-y-4 p-6 pt-16 text-center">
         <h1 className="text-xl">No encontramos este boleto</h1>
-        <LinkPrimario href="/">Volver a Explorar</LinkPrimario>
+        <LinkPrimario href="/prototipo">Volver a Explorar</LinkPrimario>
       </div>
     );
   }
@@ -87,7 +87,7 @@ export default function Boleto() {
       <div className="space-y-3">
         <button onClick={calendario} className={SECUNDARIO}><IconCalendario width={20} height={20} />Agregar al calendario</button>
         <a href={invitar} target="_blank" rel="noopener noreferrer" className={SECUNDARIO}><IconCompartir width={20} height={20} />Invitar a un amigo</a>
-        <LinkPrimario href="/">Volver a Explorar</LinkPrimario>
+        <LinkPrimario href="/prototipo">Volver a Explorar</LinkPrimario>
       </div>
     </div>
   );
