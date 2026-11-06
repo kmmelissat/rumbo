@@ -2,10 +2,12 @@
 import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useStore } from "@/lib/store";
+import { MotionConfig } from "motion/react";
 import { TabBar } from "./TabBar";
+import { transicionLista } from "@/lib/transicion";
 
 export function Shell({ children }: { children: React.ReactNode }) {
-  const { listo, bienvenidaVista } = useStore();
+  const { listo, bienvenidaVista, tema } = useStore();
   const path = usePathname();
   const router = useRouter();
   // Modo embed (?embed=1): la app corre dentro de un iframe, a todo el ancho y sin marco de escritorio.
@@ -45,16 +47,33 @@ export function Shell({ children }: { children: React.ReactNode }) {
     return () => window.removeEventListener("keydown", tecla);
   }, [embed]);
 
+  // Tema: "auto" sigue al sistema (en embed siempre claro, para que la demo sea predecible).
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-color-scheme: dark)");
+    const aplicar = () => {
+      const oscuro = tema === "oscuro" || (tema === "auto" && mq.matches && !embed);
+      if (oscuro) document.documentElement.dataset.tema = "oscuro"; else delete document.documentElement.dataset.tema;
+    };
+    aplicar();
+    mq.addEventListener("change", aplicar);
+    return () => { mq.removeEventListener("change", aplicar); delete document.documentElement.dataset.tema; };
+  }, [tema, embed]);
+
+  // Cierra la transición compartida cuando la nueva ruta ya se pintó.
+  useEffect(() => { transicionLista(); }, [path]);
+
   const mostrar = listo && (bienvenidaVista || enBienvenida);
 
   return (
     <div className={embed ? "h-dvh w-full" : "mx-auto h-dvh w-full max-w-[430px] md:border-x md:border-linea"}>
-      <div className="relative h-full overflow-hidden bg-white">
-        <main key={path} className={`scroll-hide entrar h-full overflow-y-auto ${sinTabs ? "" : "pb-[72px]"}`}>
+      <MotionConfig reducedMotion="user">
+      <div className="relative h-full overflow-hidden bg-sup">
+        <main key={path} className={`scroll-hide scroll-suave h-full overflow-y-auto ${rel.startsWith("/evento/") ? "" : "entrar"} ${sinTabs ? "" : "pb-[88px]"}`}>
           {mostrar ? children : null}
         </main>
         {mostrar && !sinTabs && <TabBar />}
       </div>
+      </MotionConfig>
     </div>
   );
 }

@@ -65,7 +65,7 @@ function pantallaDe(ruta: string): Pantalla {
 /** Marco de teléfono en CSS (390 x 844 de pantalla). */
 function Telefono({ cargar }: { cargar: boolean }) {
   return (
-    <div className="relative" style={{ width: 418, height: 872 }}>
+    <div className="relative" style={{ width: 420, height: 874 }}>
       {/* Botones laterales */}
       <span className="absolute -left-[4px] top-[130px] h-[34px] w-[5px] rounded-l-sm bg-[#9a9a9f]" aria-hidden />
       <span className="absolute -left-[4px] top-[190px] h-[62px] w-[5px] rounded-l-sm bg-[#9a9a9f]" aria-hidden />
@@ -140,8 +140,8 @@ export function AsiSeVe({ activa }: { activa: boolean }) {
   return (
     <div className="relative h-full w-full">
       <Entra activa={activa} desde="escala" rot={-2} className="absolute left-[150px] top-[100px]">
-        <div ref={cajaRef} data-nodrag style={{ width: 418 * 0.86, height: 872 * 0.86 }}>
-          <div style={{ transform: "scale(0.86)", transformOrigin: "top left", width: 418, height: 872 }}>
+        <div ref={cajaRef} data-nodrag style={{ width: 420 * 0.86, height: 874 * 0.86 }}>
+          <div style={{ transform: "scale(0.86)", transformOrigin: "top left", width: 420, height: 874 }}>
             <Telefono cargar={cargar} />
           </div>
         </div>

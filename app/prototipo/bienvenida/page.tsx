@@ -20,7 +20,7 @@ export default function Bienvenida() {
       <Logo variant="principal" size={64} />
       <div className="relative mt-6">
         <h1 className="relative inline-block text-[34px] leading-tight">Encuentra tu rumbo<Ondulado color="text-coral" /></h1>
-        <Nota className="mt-3 block -rotate-2 text-oceano">elige los que quieras</Nota>
+        <Nota className="mt-3 block -rotate-2 text-acento">elige los que quieras</Nota>
       </div>
       <p className="mt-2 text-gris">Cuéntanos qué te mueve y armamos planes a tu medida.</p>
 
@@ -30,12 +30,12 @@ export default function Bienvenida() {
           return (
             <li key={p.id}>
               <button onClick={() => alternar(p.id)} aria-pressed={on}
-                className={`relative flex h-full min-h-[200px] w-full flex-col items-start rounded-[20px] border-2 p-3 text-left ${p.estilo} ${on ? "ring-4 ring-tinta/80 ring-offset-2" : ""}`}
+                className={`relative flex h-full min-h-[200px] w-full flex-col items-start rounded-3xl border-2 p-3 text-left ${p.estilo} ${on ? "ring-4 ring-tinta/80 ring-offset-2" : ""}`}
                 style={{ transform: `rotate(${i % 2 ? 1 : -1}deg)` }}>
                 <Foto src={p.foto} sizes="80px" className="h-20 w-20 rounded-full border-4 border-white" />
                 <span className="mt-3 block font-display text-xl font-bold leading-tight">{p.id}</span>
                 <span className="mt-1 block text-sm leading-snug opacity-90">{p.texto}</span>
-                {on && <span className="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-full bg-tinta text-white"><IconCheck width={18} height={18} /></span>}
+                {on && <span className="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-full bg-ink text-white"><IconCheck width={18} height={18} /></span>}
               </button>
             </li>
           );

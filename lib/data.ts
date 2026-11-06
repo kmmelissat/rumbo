@@ -2,8 +2,8 @@ export type Pilar = "Aventura" | "Conexión" | "Emprendedurismo" | "Bienestar";
 export type Categoria = "Mercado" | "Música" | "Comida" | "Taller";
 
 export const PILARES: { id: Pilar; texto: string; foto: string; estilo: string }[] = [
-  { id: "Aventura", texto: "Rutas, volcanes y playas", foto: "/images/caminata.jpg", estilo: "bg-lima border-lima text-tinta" },
-  { id: "Conexión", texto: "Música y buena compañía", foto: "/images/luces.jpg", estilo: "bg-coral border-coral text-tinta" },
+  { id: "Aventura", texto: "Rutas, volcanes y playas", foto: "/images/caminata.jpg", estilo: "bg-lima border-lima text-ink" },
+  { id: "Conexión", texto: "Música y buena compañía", foto: "/images/luces.jpg", estilo: "bg-coral border-coral text-ink" },
   { id: "Emprendedurismo", texto: "Mercaditos y talento local", foto: "/images/mercado.jpg", estilo: "bg-arena border-marca text-tinta" },
   { id: "Bienestar", texto: "Movimiento y pausas", foto: "/images/yoga.jpg", estilo: "bg-oceano border-oceano text-white" },
 ];
@@ -15,24 +15,24 @@ export const FILTROS: { id: FiltroCategoria; label: string }[] = [
 ];
 
 /** Estilos por categoría: chip (etiqueta), anillo (sello) y banda (pestaña de fecha). */
-export const COLOR_CAT: Record<Categoria, { chip: string; banda: string; anillo: string }> = {
-  Mercado: { chip: "bg-lima border-lima text-tinta", banda: "bg-lima text-tinta", anillo: "ring-lima" },
-  Música: { chip: "bg-oceano border-oceano text-white", banda: "bg-oceano text-white", anillo: "ring-oceano" },
-  Comida: { chip: "bg-coral border-coral text-tinta", banda: "bg-coral text-tinta", anillo: "ring-coral" },
-  Taller: { chip: "bg-arena border-marca text-tinta", banda: "bg-arena text-tinta", anillo: "ring-marca" },
+export const COLOR_CAT: Record<Categoria, { chip: string; banda: string; anillo: string; sello: string }> = {
+  Mercado: { chip: "bg-lima border-lima text-ink", banda: "bg-lima text-ink", anillo: "ring-lima", sello: "border-lima text-lima" },
+  Música: { chip: "bg-oceano border-oceano text-white", banda: "bg-oceano text-white", anillo: "ring-oceano", sello: "border-[#7CC4F0] text-[#7CC4F0]" },
+  Comida: { chip: "bg-coral border-coral text-ink", banda: "bg-coral text-ink", anillo: "ring-coral", sello: "border-coral text-coral" },
+  Taller: { chip: "bg-arena border-marca text-tinta", banda: "bg-arena text-tinta", anillo: "ring-marca", sello: "border-[#3DD6D0] text-[#3DD6D0]" },
 };
 export const COLOR_FILTRO: Record<FiltroCategoria, { on: string; off: string }> = {
-  todo: { on: "bg-tinta border-tinta text-white", off: "bg-fondo border-transparent text-tinta" },
-  mercado: { on: "bg-lima border-tinta/20 text-tinta", off: "bg-lima/30 border-transparent text-tinta" },
-  musica: { on: "bg-oceano border-oceano text-white", off: "bg-oceano/10 border-transparent text-oceano" },
-  comida: { on: "bg-coral border-coral text-tinta", off: "bg-coral/20 border-transparent text-[#9A3B22]" },
+  todo: { on: "bg-tinta border-tinta text-sup", off: "bg-fondo border-transparent text-tinta" },
+  mercado: { on: "bg-lima border-ink/20 text-ink", off: "bg-lima/30 border-transparent text-tinta" },
+  musica: { on: "bg-oceano border-oceano text-white", off: "bg-oceano/10 border-transparent text-acento" },
+  comida: { on: "bg-coral border-coral text-ink", off: "bg-coral/20 border-transparent text-coral2" },
   taller: { on: "bg-arena border-marca text-tinta", off: "bg-arena border-marca/40 text-tinta" },
-  gratis: { on: "bg-marca border-marca text-white", off: "bg-marca/10 border-transparent text-[#0B7C7C]" },
+  gratis: { on: "bg-marca border-marca text-white", off: "bg-marca/10 border-transparent text-marca2" },
 };
 
 export type TipoSticker = "Hoy" | "Quedan pocas" | "Gratis" | "Nuevo";
 export const COLOR_STICKER: Record<TipoSticker, string> = {
-  Hoy: "bg-coral text-tinta", "Quedan pocas": "bg-lima text-tinta", Gratis: "bg-marca text-white", Nuevo: "bg-oceano text-white",
+  Hoy: "bg-coral text-ink", "Quedan pocas": "bg-lima text-ink", Gratis: "bg-marca text-white", Nuevo: "bg-oceano text-white",
 };
 
 export interface Evento {

@@ -8,6 +8,7 @@ export const IconBuscar = IconExplorar;
 export const IconCorazon = I(<path d="M12 20s-7-4.4-7-10a4 4 0 017-2.6A4 4 0 0119 10c0 5.6-7 10-7 10z" />);
 export const IconBoleto = I(<><path d="M3 8a2 2 0 012-2h14a2 2 0 012 2v2a2 2 0 000 4v2a2 2 0 01-2 2H5a2 2 0 01-2-2v-2a2 2 0 000-4z" /><path d="M14 6v12" strokeDasharray="2 3" /></>);
 export const IconPerfil = I(<><circle cx="12" cy="8" r="4" /><path d="M4 21a8 8 0 0116 0" /></>);
+export const IconPlanes = I(<><circle cx="6" cy="5" r="2" /><circle cx="18" cy="19" r="2" /><path d="M6 7c0 6 12 4 12 10" strokeDasharray="1 3.5" /></>);
 export const IconAtras = I(<path d="M15 5l-7 7 7 7" />);
 export const IconPin = I(<><path d="M12 21s7-6.2 7-11a7 7 0 10-14 0c0 4.8 7 11 7 11z" /><circle cx="12" cy="10" r="2.5" /></>);
 export const IconReloj = I(<><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></>);
@@ -31,3 +32,5 @@ export const IconMusica = I(<><path d="M9 18V6l10-2v12" /><circle cx="6.5" cy="1
 export const IconComida = I(<><path d="M7 3v8a2 2 0 002 2v8M11 3v8a2 2 0 01-2 2M9 3v6" /><path d="M17 21V3c-2.5 1.5-3.5 5-3.5 8H17" /></>);
 export const IconTaller = I(<><path d="M14 4l6 6-9.5 9.5H4.5v-6z" /><path d="M12 6l6 6" /></>);
 export const IconGratis = I(<><path d="M3 12l9-9h8v8l-9 9z" /><circle cx="16" cy="8" r="1.2" /></>);
+
+export const IconFiltro = I(<><path d="M4 6h16M7 12h10M10 18h4" /></>);

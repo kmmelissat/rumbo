@@ -10,7 +10,7 @@ export default function Boletos() {
   const { eventos, boletos } = useStore();
   return (
     <div className="pb-6">
-      <Encabezado titulo="Rumbo al plan" sub="Tus boletos, listos para mostrar el QR." color="text-oceano" />
+      <Encabezado titulo="Rumbo al plan" sub="Tus boletos, listos para mostrar el QR." color="text-acento" />
       {boletos.length === 0 ? (
         <Vacio icono={<IconBoleto width={28} height={28} />} titulo="Todavía no hay plan" texto="Cuando compres entradas las verás aquí con su QR. ¿Te animas?">
           <LinkPrimario href="/prototipo">Explorar eventos</LinkPrimario>
@@ -22,7 +22,7 @@ export default function Boletos() {
             if (!e) return null;
             return (
               <li key={b.id}>
-                <Link href={`/prototipo/boleto/${b.id}`} className="flex min-h-[88px] items-center gap-3 rounded-[20px] border border-linea bg-white p-3">
+                <Link href={`/prototipo/boleto/${b.id}`} className="flex min-h-[88px] items-center gap-3 rounded-3xl bg-sup p-3 shadow-suave ring-1 ring-linea">
                   <Foto src={e.foto} sizes="64px" className="h-16 w-16 shrink-0 rounded-2xl" />
                   <span className="min-w-0 flex-1">
                     <span className="block truncate font-semibold">{e.titulo}</span>

@@ -18,9 +18,9 @@ export function TituloSeccion({ children, color }: { children: React.ReactNode; 
   return <h2 className="relative inline-block text-xl leading-tight">{children}<Ondulado color={color} /></h2>;
 }
 
-/** Detalle a mano en Caveat. */
+/** Acento juguetón: Bricolage Grotesque, inclinado como un garabato. */
 export function Nota({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return <span className={`font-mano text-xl font-bold leading-none ${className}`}>{children}</span>;
+  return <span className={`font-mano text-[17px] font-extrabold leading-none tracking-tight ${className}`}>{children}</span>;
 }
 
 /** Sticker con borde blanco grueso e inclinación. */
@@ -39,7 +39,7 @@ export function PestanaFecha({ e }: { e: Evento }) {
   return (
     <span className="flex w-11 flex-col items-center overflow-hidden rounded-lg bg-white text-center shadow-md shadow-black/20" aria-hidden>
       <span className={`w-full py-px text-[10px] font-bold uppercase leading-3 ${COLOR_CAT[e.categoria].banda}`}>{mes}</span>
-      <span className="font-display text-xl font-bold leading-7 text-tinta">{d.getDate()}</span>
+      <span className="font-display text-xl font-bold leading-7 text-ink">{d.getDate()}</span>
     </span>
   );
 }
@@ -47,7 +47,7 @@ export function PestanaFecha({ e }: { e: Evento }) {
 export function ChipCategoria({ categoria }: { categoria: Categoria }) {
   const Icon = ICONO_CAT[categoria];
   return (
-    <span className={`inline-flex items-center gap-1 rounded-md border px-1.5 py-0.5 text-[11px] font-bold ${COLOR_CAT[categoria].chip}`}>
+    <span className={`inline-flex items-center gap-1 rounded-md border px-1.5 py-0.5 text-xs font-bold ${COLOR_CAT[categoria].chip}`}>
       <Icon width={12} height={12} />{categoria}
     </span>
   );
@@ -59,7 +59,7 @@ export function Ruta({ invertir = false }: { invertir?: boolean }) {
   return (
     <svg aria-hidden viewBox="0 0 430 56" className="mt-3 block h-14 w-full text-marca" fill="none">
       <path d={`M${a} 6 C ${a} 38, ${b} 18, ${b} 50`} stroke="currentColor" strokeOpacity=".55" strokeWidth="3" strokeLinecap="round" strokeDasharray="0.1 9" />
-      <circle cx={a} cy="5" r="4.5" fill="currentColor" /><circle cx={b} cy="51" r="4.5" fill="#fff" stroke="currentColor" strokeWidth="3" />
+      <circle cx={a} cy="5" r="4.5" fill="currentColor" /><circle cx={b} cy="51" r="4.5" fill="var(--color-sup)" stroke="currentColor" strokeWidth="3" />
     </svg>
   );
 }

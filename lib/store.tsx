@@ -3,18 +3,21 @@ import { createContext, useCallback, useContext, useEffect, useState, type React
 import { EVENTOS, type Evento, type Pilar } from "./data";
 
 export interface Boleto { id: string; codigo: string; eventoId: string; cantidad: number; subtotal: number; procesamiento: number; total: number; contacto: string; comprado: string }
+export interface Plan { id: string; nombre: string; eventos: string[] }
 export interface Sello { eventoId: string; fecha: string }
 
 interface Estado {
   guardados: string[];
   boletos: Boleto[];
   sellos: Sello[];
+  planes: Plan[];
   intereses: Pilar[];
   bienvenidaVista: boolean;
   zona: string;
   notificaciones: boolean;
+  tema: "auto" | "claro" | "oscuro";
 }
-const VACIO: Estado = { guardados: [], boletos: [], sellos: [], intereses: [], bienvenidaVista: false, zona: "San Salvador", notificaciones: true };
+const VACIO: Estado = { guardados: [], boletos: [], sellos: [], planes: [], intereses: [], bienvenidaVista: false, zona: "San Salvador", notificaciones: true, tema: "auto" };
 const KEY = "rumbo:v2";
 
 /** Lee y valida el estado guardado; solo toma las claves conocidas. */
@@ -33,11 +36,16 @@ interface Ctx extends Estado {
   listo: boolean;
   eventos: Evento[];
   toggleGuardado: (id: string) => void;
+  crearPlan: (eventoId?: string) => Plan;
+  toggleEnPlan: (planId: string, eventoId: string) => void;
+  renombrarPlan: (planId: string, nombre: string) => void;
+  borrarPlan: (planId: string) => void;
   comprar: (e: Evento, cantidad: number, contacto: string) => Boleto;
   terminarBienvenida: (intereses: Pilar[]) => void;
   setZona: (z: string) => void;
   toggleInteres: (p: Pilar) => void;
   setNotificaciones: (v: boolean) => void;
+  setTema: (t: Estado["tema"]) => void;
   reiniciar: () => void;
 }
 const StoreCtx = createContext<Ctx | null>(null);
@@ -68,6 +76,17 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const toggleGuardado = useCallback((id: string) =>
     setEstado((s) => ({ ...s, guardados: s.guardados.includes(id) ? s.guardados.filter((g) => g !== id) : [...s.guardados, id] })), []);
 
+  const crearPlan = useCallback((eventoId?: string): Plan => {
+    const plan: Plan = { id: `p${Date.now()}`, nombre: "Mi plan de finde", eventos: eventoId ? [eventoId] : [] };
+    setEstado((s) => ({ ...s, planes: [...s.planes, plan] }));
+    return plan;
+  }, []);
+  const toggleEnPlan = useCallback((planId: string, eventoId: string) =>
+    setEstado((s) => ({ ...s, planes: s.planes.map((p) => p.id !== planId ? p : { ...p, eventos: p.eventos.includes(eventoId) ? p.eventos.filter((x) => x !== eventoId) : [...p.eventos, eventoId] }) })), []);
+  const renombrarPlan = useCallback((planId: string, nombre: string) =>
+    setEstado((s) => ({ ...s, planes: s.planes.map((p) => p.id === planId ? { ...p, nombre } : p) })), []);
+  const borrarPlan = useCallback((planId: string) => setEstado((s) => ({ ...s, planes: s.planes.filter((p) => p.id !== planId) })), []);
+
   const comprar = useCallback((e: Evento, cantidad: number, contacto: string): Boleto => {
     const ahora = new Date();
     const subtotal = Math.round(e.precio * cantidad * 100) / 100;
@@ -90,10 +109,11 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const toggleInteres = useCallback((p: Pilar) =>
     setEstado((s) => ({ ...s, intereses: s.intereses.includes(p) ? s.intereses.filter((x) => x !== p) : [...s.intereses, p] })), []);
   const setNotificaciones = useCallback((notificaciones: boolean) => setEstado((s) => ({ ...s, notificaciones })), []);
+  const setTema = useCallback((tema: Estado["tema"]) => setEstado((s) => ({ ...s, tema })), []);
   const reiniciar = useCallback(() => setEstado(VACIO), []);
 
   return (
-    <StoreCtx.Provider value={{ ...estado, listo, eventos: EVENTOS, toggleGuardado, comprar, terminarBienvenida, setZona, toggleInteres, setNotificaciones, reiniciar }}>
+    <StoreCtx.Provider value={{ ...estado, listo, eventos: EVENTOS, toggleGuardado, crearPlan, toggleEnPlan, renombrarPlan, borrarPlan, comprar, terminarBienvenida, setZona, toggleInteres, setNotificaciones, setTema, reiniciar }}>
       {children}
     </StoreCtx.Provider>
   );

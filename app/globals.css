@@ -10,23 +10,80 @@
   --color-oceano: #0E5A8A;
   --color-lima: #C5E063;
   --color-arena: #FFF4DF;
+  /* Semánticos: se adaptan al modo oscuro. */
+  --color-sup: #FFFFFF;
+  --color-ink: #111827;
+  --color-acento: #0E5A8A;
+  --color-marca2: #0B7C7C;
+  --color-coral2: #9A3B22;
   --font-display: var(--font-fraunces), Georgia, serif;
-  --font-mano: var(--font-caveat), cursive;
+  --font-mano: var(--font-acento), system-ui, sans-serif;
   --font-sans: var(--font-dm), system-ui, sans-serif;
+  /* Sombras suaves en capas */
+  --shadow-suave: 0 1px 2px rgb(16 24 40 / .05), 0 4px 12px -2px rgb(16 24 40 / .07);
+  --shadow-capas: 0 1px 2px rgb(16 24 40 / .04), 0 6px 14px -2px rgb(16 24 40 / .08), 0 22px 40px -12px rgb(16 24 40 / .18);
+}
+
+/* Modo oscuro: azul noche de base, misma paleta. Solo dentro de la app (data-tema lo pone el Shell). */
+html[data-tema="oscuro"] {
+  color-scheme: dark;
+  --color-sup: #0F1A2E;
+  --color-tinta: #EEF2F8;
+  --color-gris: #A3B0C4;
+  --color-linea: #22304A;
+  --color-fondo: #18263F;
+  --color-arena: #2A2A24;
+  --color-acento: #7CC4F0;
+  --color-marca2: #3DD6D0;
+  --color-coral2: #FFB4A0;
+  --shadow-suave: 0 1px 2px rgb(0 0 0 / .3), 0 4px 12px -2px rgb(0 0 0 / .35);
+  --shadow-capas: 0 1px 2px rgb(0 0 0 / .3), 0 6px 14px -2px rgb(0 0 0 / .4), 0 22px 40px -12px rgb(0 0 0 / .6);
 }
 
 html, body { height: 100%; }
-body { background: #fff; color: #111827; font-family: var(--font-dm), system-ui, sans-serif; -webkit-tap-highlight-color: transparent; -webkit-font-smoothing: antialiased; }
+html { overscroll-behavior: none; }
+body {
+  background: #fff; color: var(--color-tinta);
+  font-family: var(--font-dm), system-ui, sans-serif; line-height: 1.55;
+  -webkit-tap-highlight-color: transparent; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+  overscroll-behavior: none;
+}
 @media (min-width: 768px) { body { background: #F3F4F6; } }
-html[data-embed] body { background: #fff; }
-h1, h2, h3 { font-family: var(--font-display), Georgia, serif; font-weight: 700; letter-spacing: -0.01em; }
-@keyframes entrar { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
-.entrar { animation: entrar .25s ease-out both; }
-@keyframes pulso { 50% { opacity: .5; } }
-.skeleton { background: #E5E7EB; animation: pulso 1.2s ease-in-out infinite; }
-button, a { transition: transform .15s ease, background-color .2s ease, opacity .2s ease, border-color .2s ease; }
+html[data-embed] body { background: var(--color-sup); }
+html[data-tema="oscuro"] body { background: #0A1324; }
+@media (min-width: 768px) { html[data-tema="oscuro"]:not([data-embed]) body { background: #060B16; } }
+
+/* Jerarquía: pocos tamaños, mucho contraste. Títulos en Fraunces con tracking ajustado. */
+h1, h2, h3 { font-family: var(--font-display), Georgia, serif; font-weight: 700; letter-spacing: -0.025em; line-height: 1.12; }
+h1 { font-variation-settings: "SOFT" 50; }
+
+@keyframes entrar { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.entrar { animation: entrar .3s cubic-bezier(.2,.7,.2,1) both; }
+
+/* Skeleton con brillo */
+@keyframes brillo { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+.skeleton {
+  background: linear-gradient(100deg, var(--color-linea) 30%, color-mix(in srgb, var(--color-linea) 55%, var(--color-sup)) 50%, var(--color-linea) 70%);
+  background-size: 200% 100%; animation: brillo 1.6s linear infinite;
+}
+
+button, a { transition: transform .15s ease, background-color .2s ease, opacity .2s ease, border-color .2s ease, filter .2s ease; }
 button:active:not(:disabled), a:active { transform: scale(.98); }
 .scroll-hide { scrollbar-width: none; }
 .scroll-hide::-webkit-scrollbar { display: none; }
-:focus-visible { outline: 2px solid #0FA3A3; outline-offset: 2px; }
+.scroll-suave { scroll-behavior: smooth; overscroll-behavior-y: contain; -webkit-overflow-scrolling: touch; }
+:focus-visible { outline: 3px solid var(--color-marca); outline-offset: 2px; border-radius: 6px; }
 input, select, textarea { font: inherit; }
+input::placeholder { color: var(--color-gris); }
+
+/* Cristal esmerilado */
+.cristal { background: color-mix(in srgb, var(--color-sup) 72%, transparent); -webkit-backdrop-filter: blur(22px) saturate(1.6); backdrop-filter: blur(22px) saturate(1.6); }
+
+/* Transición compartida de la foto (View Transitions) */
+::view-transition-group(*) { animation-duration: .45s; animation-timing-function: cubic-bezier(.2,.7,.2,1); }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: .25s; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
+}

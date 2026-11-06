@@ -29,6 +29,11 @@ export default function Checkout() {
   const [restante, setRestante] = useState(APARTADO_MS);
 
   useEffect(() => {
+    const c = Number(new URLSearchParams(window.location.search).get("cant"));
+    if (c >= 1 && c <= 6) setCant(c);
+  }, []);
+
+  useEffect(() => {
     const tick = () => setRestante(Math.max(0, limite - Date.now()));
     tick();
     const t = setInterval(tick, 1000);
@@ -75,7 +80,7 @@ export default function Checkout() {
       </div>
 
       <div className="space-y-5 px-4 pt-4">
-        <div role="timer" className={`flex items-center gap-3 rounded-xl border p-3 text-sm ${expirado ? "border-coral bg-coral/10" : "border-marca/40 bg-arena"}`}>
+        <div role="timer" className={`flex items-center gap-3 rounded-2xl border p-3 text-sm ${expirado ? "border-coral bg-coral/10" : "border-marca/40 bg-arena"}`}>
           <IconReloj width={20} height={20} className="shrink-0 text-gris" />
           {expirado ? (
             <div className="flex-1">
@@ -88,7 +93,7 @@ export default function Checkout() {
         </div>
 
         <section className="flex gap-3" aria-label="Resumen del evento">
-          <Foto src={e.foto} sizes="88px" className="h-[88px] w-[88px] shrink-0 rounded-[20px]" />
+          <Foto src={e.foto} sizes="88px" className="h-[88px] w-[88px] shrink-0 rounded-3xl" />
           <div className="min-w-0 space-y-0.5">
             <h2 className="line-clamp-2 text-base leading-snug">{e.titulo}</h2>
             <p className="text-sm capitalize text-gris">{formatFecha(e.fecha, true)} · {e.hora}</p>
@@ -117,13 +122,13 @@ export default function Checkout() {
           <input id="contacto" value={contacto} onChange={(ev) => setContacto(ev.target.value)} onBlur={() => setTocado(true)}
             inputMode="email" autoComplete="email" placeholder="tu@correo.com o +503 7000 0000"
             aria-invalid={tocado && !valido} aria-describedby="contacto-ayuda"
-            className={`min-h-[48px] w-full rounded-xl border px-4 text-base ${tocado && !valido ? "border-coral" : "border-linea"}`} />
+            className={`min-h-[48px] w-full rounded-2xl border px-4 text-base ${tocado && !valido ? "border-coral" : "border-linea"}`} />
           <p id="contacto-ayuda" className={`text-xs ${tocado && !valido ? "font-semibold text-tinta" : "text-gris"}`}>
             {tocado && !valido ? "Escribe un correo o un número de WhatsApp válido." : "Aquí te enviamos tus entradas. No necesitas crear cuenta."}
           </p>
         </section>
 
-        <div className="space-y-2 rounded-[20px] bg-arena p-3 text-xs leading-relaxed text-gris">
+        <div className="space-y-2 rounded-3xl bg-arena p-3 text-xs leading-relaxed text-gris">
           <p className="flex items-center gap-2 text-sm font-semibold text-tinta"><IconCandado width={16} height={16} className="text-marca" />Pago seguro. Tu plan está en buenas manos.</p>
           <p><strong className="text-tinta">Política de reembolso:</strong> puedes pedir reembolso del subtotal hasta 48 horas antes del evento. Si el organizador cancela, te devolvemos todo.</p>
         </div>
