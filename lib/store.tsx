@@ -1,6 +1,6 @@
 "use client";
-import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
-import { EVENTOS, hoyISO, type Evento, type Pilar } from "./data";
+import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
+import { EVENTOS, type Evento, type Pilar } from "./data";
 
 export interface Boleto { id: string; codigo: string; eventoId: string; cantidad: number; subtotal: number; procesamiento: number; total: number; contacto: string; comprado: string }
 export interface Sello { eventoId: string; fecha: string }
@@ -9,22 +9,24 @@ interface Estado {
   guardados: string[];
   boletos: Boleto[];
   sellos: Sello[];
-  publicados: Evento[];
   intereses: Pilar[];
   bienvenidaVista: boolean;
-  clics: Record<string, number>;
+  zona: string;
+  notificaciones: boolean;
 }
-const VACIO: Estado = { guardados: [], boletos: [], sellos: [], publicados: [], intereses: [], bienvenidaVista: false, clics: {} };
-const KEY = "rumbo:v1";
+const VACIO: Estado = { guardados: [], boletos: [], sellos: [], intereses: [], bienvenidaVista: false, zona: "San Salvador", notificaciones: true };
+const KEY = "rumbo:v2";
 
 interface Ctx extends Estado {
   listo: boolean;
   eventos: Evento[];
   toggleGuardado: (id: string) => void;
   comprar: (e: Evento, cantidad: number, contacto: string) => Boleto;
-  publicar: (e: Omit<Evento, "id" | "verificado" | "actualizado">) => Evento;
-  registrarClic: (id: string) => void;
   terminarBienvenida: (intereses: Pilar[]) => void;
+  setZona: (z: string) => void;
+  toggleInteres: (p: Pilar) => void;
+  setNotificaciones: (v: boolean) => void;
+  reiniciar: () => void;
 }
 const StoreCtx = createContext<Ctx | null>(null);
 
@@ -35,7 +37,12 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     try {
       const raw = localStorage.getItem(KEY);
-      if (raw) setEstado({ ...VACIO, ...JSON.parse(raw) });
+      if (raw) {
+        const p = JSON.parse(raw);
+        const e = { ...VACIO };
+        (Object.keys(VACIO) as (keyof Estado)[]).forEach((k) => { if (p[k] !== undefined) (e as Record<string, unknown>)[k] = p[k]; });
+        setEstado(e);
+      }
     } catch {}
     setListo(true);
   }, []);
@@ -65,22 +72,15 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     return boleto;
   }, []);
 
-  const publicar = useCallback((e: Omit<Evento, "id" | "verificado" | "actualizado">): Evento => {
-    const nuevo: Evento = { ...e, id: `p${Date.now()}`, verificado: false, actualizado: hoyISO() };
-    setEstado((s) => ({ ...s, publicados: [nuevo, ...s.publicados] }));
-    return nuevo;
-  }, []);
-
-  const registrarClic = useCallback((id: string) =>
-    setEstado((s) => ({ ...s, clics: { ...s.clics, [id]: (s.clics[id] ?? 0) + 1 } })), []);
-
-  const terminarBienvenida = useCallback((intereses: Pilar[]) =>
-    setEstado((s) => ({ ...s, intereses, bienvenidaVista: true })), []);
-
-  const eventos = useMemo(() => [...estado.publicados, ...EVENTOS], [estado.publicados]);
+  const terminarBienvenida = useCallback((intereses: Pilar[]) => setEstado((s) => ({ ...s, intereses, bienvenidaVista: true })), []);
+  const setZona = useCallback((zona: string) => setEstado((s) => ({ ...s, zona })), []);
+  const toggleInteres = useCallback((p: Pilar) =>
+    setEstado((s) => ({ ...s, intereses: s.intereses.includes(p) ? s.intereses.filter((x) => x !== p) : [...s.intereses, p] })), []);
+  const setNotificaciones = useCallback((notificaciones: boolean) => setEstado((s) => ({ ...s, notificaciones })), []);
+  const reiniciar = useCallback(() => setEstado(VACIO), []);
 
   return (
-    <StoreCtx.Provider value={{ ...estado, listo, eventos, toggleGuardado, comprar, publicar, terminarBienvenida, registrarClic }}>
+    <StoreCtx.Provider value={{ ...estado, listo, eventos: EVENTOS, toggleGuardado, comprar, terminarBienvenida, setZona, toggleInteres, setNotificaciones, reiniciar }}>
       {children}
     </StoreCtx.Provider>
   );

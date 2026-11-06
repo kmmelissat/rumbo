@@ -9,7 +9,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
   const path = usePathname();
   const router = useRouter();
   const enBienvenida = path === "/bienvenida";
-  const sinTabs = enBienvenida || path.startsWith("/evento/") || path.startsWith("/checkout/") || path.startsWith("/boleto/") || path === "/organizador/nuevo";
+  const sinTabs = enBienvenida || path.startsWith("/evento/") || path.startsWith("/checkout/") || path.startsWith("/boleto/");
 
   useEffect(() => {
     if (!listo) return;
@@ -20,9 +20,9 @@ export function Shell({ children }: { children: React.ReactNode }) {
   const mostrar = listo && (bienvenidaVista || enBienvenida);
 
   return (
-    <div className="flex h-dvh items-center justify-center md:p-6">
-      <div className="relative h-full w-full max-w-[430px] overflow-hidden bg-arena md:h-[860px] md:max-h-full md:rounded-[44px] md:border-[10px] md:border-tinta md:shadow-[0_30px_80px_-20px_rgba(15,42,58,.45)]">
-        <main key={path} className={`scroll-hide entrar h-full overflow-y-auto ${sinTabs ? "" : "pb-24"}`}>
+    <div className="mx-auto h-dvh w-full max-w-[430px] md:border-x md:border-linea">
+      <div className="relative h-full overflow-hidden bg-white">
+        <main key={path} className={`scroll-hide entrar h-full overflow-y-auto ${sinTabs ? "" : "pb-[72px]"}`}>
           {mostrar ? children : null}
         </main>
         {mostrar && !sinTabs && <TabBar />}
