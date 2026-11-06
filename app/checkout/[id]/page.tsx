@@ -75,7 +75,7 @@ export default function Checkout() {
       </div>
 
       <div className="space-y-5 px-4 pt-4">
-        <div role="timer" className={`flex items-center gap-3 rounded-xl border p-3 text-sm ${expirado ? "border-coral bg-coral/10" : "border-linea bg-fondo"}`}>
+        <div role="timer" className={`flex items-center gap-3 rounded-xl border p-3 text-sm ${expirado ? "border-coral bg-coral/10" : "border-marca/40 bg-arena"}`}>
           <IconReloj width={20} height={20} className="shrink-0 text-gris" />
           {expirado ? (
             <div className="flex-1">
@@ -88,7 +88,7 @@ export default function Checkout() {
         </div>
 
         <section className="flex gap-3" aria-label="Resumen del evento">
-          <Foto src={e.foto} sizes="88px" className="h-[88px] w-[88px] shrink-0 rounded-xl" />
+          <Foto src={e.foto} sizes="88px" className="h-[88px] w-[88px] shrink-0 rounded-[20px]" />
           <div className="min-w-0 space-y-0.5">
             <h2 className="line-clamp-2 text-base leading-snug">{e.titulo}</h2>
             <p className="text-sm capitalize text-gris">{formatFecha(e.fecha, true)} · {e.hora}</p>
@@ -123,8 +123,8 @@ export default function Checkout() {
           </p>
         </section>
 
-        <div className="space-y-2 rounded-xl bg-fondo p-3 text-xs leading-relaxed text-gris">
-          <p className="flex items-center gap-2 text-sm font-semibold text-tinta"><IconCandado width={16} height={16} className="text-marca" />Pago seguro</p>
+        <div className="space-y-2 rounded-[20px] bg-arena p-3 text-xs leading-relaxed text-gris">
+          <p className="flex items-center gap-2 text-sm font-semibold text-tinta"><IconCandado width={16} height={16} className="text-marca" />Pago seguro. Tu plan está en buenas manos.</p>
           <p><strong className="text-tinta">Política de reembolso:</strong> puedes pedir reembolso del subtotal hasta 48 horas antes del evento. Si el organizador cancela, te devolvemos todo.</p>
         </div>
 

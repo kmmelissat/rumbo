@@ -5,6 +5,7 @@ import { useStore } from "@/lib/store";
 import { PILARES, type Pilar } from "@/lib/data";
 import { Foto } from "@/components/Foto";
 import { BotonPrimario } from "@/components/Botones";
+import { Nota, Ondulado } from "@/components/Marca";
 import { IconCheck } from "@/components/Icons";
 
 export default function Bienvenida() {
@@ -15,22 +16,25 @@ export default function Bienvenida() {
 
   return (
     <div className="flex min-h-full flex-col px-4 pb-6 pt-8">
-      <p className="text-2xl font-semibold tracking-tight">Rumbo<span className="text-marca">.</span></p>
-      <h1 className="mt-6 text-3xl leading-tight">Encuentra tu rumbo</h1>
-      <p className="mt-2 text-gris">Elige lo que te mueve y te mostraremos planes para ti. Puedes escoger varios.</p>
+      <p className="font-display text-2xl font-bold">Rumbo<span className="text-marca">.</span></p>
+      <div className="relative mt-6">
+        <h1 className="relative inline-block text-[34px] leading-tight">Encuentra tu rumbo<Ondulado color="text-coral" /></h1>
+        <Nota className="mt-3 block -rotate-2 text-oceano">elige los que quieras</Nota>
+      </div>
+      <p className="mt-2 text-gris">Cuéntanos qué te mueve y armamos planes a tu medida.</p>
 
-      <ul className="mt-6 grid grid-cols-2 gap-3">
-        {PILARES.map((p) => {
+      <ul className="mt-5 grid grid-cols-2 gap-3">
+        {PILARES.map((p, i) => {
           const on = sel.includes(p.id);
           return (
             <li key={p.id}>
-              <button onClick={() => alternar(p.id)} aria-pressed={on} className={`relative block w-full overflow-hidden rounded-xl border-2 text-left ${on ? "border-marca" : "border-transparent"}`}>
-                <Foto src={p.foto} sizes="200px" className="aspect-[4/5] w-full" />
-                <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-3 pt-10 text-white">
-                  <span className="block font-semibold leading-tight">{p.id}</span>
-                  <span className="block text-xs text-white/85">{p.texto}</span>
-                </span>
-                {on && <span className="absolute right-2 top-2 flex h-7 w-7 items-center justify-center rounded-full bg-marca text-white"><IconCheck width={16} height={16} /></span>}
+              <button onClick={() => alternar(p.id)} aria-pressed={on}
+                className={`relative flex h-full min-h-[200px] w-full flex-col items-start rounded-[20px] border-2 p-3 text-left ${p.estilo} ${on ? "ring-4 ring-tinta/80 ring-offset-2" : ""}`}
+                style={{ transform: `rotate(${i % 2 ? 1 : -1}deg)` }}>
+                <Foto src={p.foto} sizes="80px" className="h-20 w-20 rounded-full border-4 border-white" />
+                <span className="mt-3 block font-display text-xl font-bold leading-tight">{p.id}</span>
+                <span className="mt-1 block text-sm leading-snug opacity-90">{p.texto}</span>
+                {on && <span className="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-full bg-tinta text-white"><IconCheck width={18} height={18} /></span>}
               </button>
             </li>
           );
@@ -39,7 +43,7 @@ export default function Bienvenida() {
 
       <div className="mt-auto space-y-2 pt-6">
         <BotonPrimario disabled={sel.length === 0} onClick={() => { terminarBienvenida(sel); router.replace("/"); }}>Empezar a explorar</BotonPrimario>
-        <p className="text-center text-xs text-gris">{sel.length === 0 ? "Elige al menos un interés para continuar." : `${sel.length} ${sel.length === 1 ? "elegido" : "elegidos"}`}</p>
+        <p className="text-center text-xs text-gris">{sel.length === 0 ? "Elige al menos uno: sin brújula no se sale." : `${sel.length} ${sel.length === 1 ? "elegido" : "elegidos"}. ¡Buen rumbo!`}</p>
       </div>
     </div>
   );

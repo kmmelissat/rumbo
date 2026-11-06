@@ -5,6 +5,7 @@ import { useStore } from "@/lib/store";
 import { formatFecha } from "@/lib/data";
 import { Foto } from "@/components/Foto";
 import { LinkPrimario, SECUNDARIO } from "@/components/Botones";
+import { ChipCategoria, Nota } from "@/components/Marca";
 import { IconCalendario, IconCheck, IconCompartir } from "@/components/Icons";
 
 const pad = (n: number) => String(n).padStart(2, "0");
@@ -55,12 +56,13 @@ export default function Boleto() {
   return (
     <div className="space-y-5 px-4 pb-8 pt-10">
       <header className="text-center">
-        <span className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-marca text-white"><IconCheck /></span>
-        <h1 className="text-3xl">¡Hay plan!</h1>
+        <span className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-lima text-tinta"><IconCheck /></span>
+        <h1 className="text-[34px] leading-tight">¡Hay plan!</h1>
+        <Nota className="mt-1 block -rotate-2 text-oceano">nos vemos allá</Nota>
         <p className="mt-1 text-sm text-gris">Enviamos tus entradas a {b.contacto || "tu contacto"}.</p>
       </header>
 
-      <article className="overflow-hidden rounded-xl border border-linea">
+      <article className="overflow-hidden rounded-[20px] border-2 border-marca">
         <Foto src={e.foto} sizes="430px" className="h-32 w-full" />
         <div className="space-y-0.5 p-4">
           <h2 className="text-lg leading-snug">{e.titulo}</h2>
@@ -77,8 +79,8 @@ export default function Boleto() {
             <div><dt className="text-xs text-gris">Cantidad</dt><dd className="font-semibold">{b.cantidad} {b.cantidad === 1 ? "entrada" : "entradas"}</dd></div>
           </dl>
         </div>
-        <p className="border-t border-linea bg-fondo px-4 py-3 text-sm text-gris">
-          Sello ganado: <strong className="text-tinta">{e.categoria}</strong> · <span className="capitalize">{formatFecha(e.fecha)}</span>
+        <p className="flex items-center gap-2 border-t border-marca/40 bg-arena px-4 py-3 text-sm text-gris">
+          Sello ganado: <ChipCategoria categoria={e.categoria} /> · <span className="capitalize">{formatFecha(e.fecha)}</span>
         </p>
       </article>
 

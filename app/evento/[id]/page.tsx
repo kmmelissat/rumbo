@@ -2,9 +2,10 @@
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useStore } from "@/lib/store";
-import { formatFecha, formatPrecio } from "@/lib/data";
+import { formatFecha, formatPrecio, stickerDe } from "@/lib/data";
 import { Foto } from "@/components/Foto";
-import { Corazon, Etiqueta } from "@/components/EventCard";
+import { Corazon } from "@/components/EventCard";
+import { ChipCategoria, Nota, PestanaFecha, Sticker } from "@/components/Marca";
 import { LinkPrimario, SECUNDARIO } from "@/components/Botones";
 import { IconAtras, IconCalendario, IconCoche, IconCompartir, IconNavegar, IconPata, IconPin, IconReloj, IconVerificado } from "@/components/Icons";
 
@@ -24,6 +25,7 @@ export default function Detalle() {
   }
 
   const gratis = e.precio === 0;
+  const sticker = stickerDe(e);
   const direccion = encodeURIComponent(`${e.lugar}, ${e.zona}, El Salvador`);
   const url = typeof window !== "undefined" ? window.location.href : "";
   const wa = `https://wa.me/?text=${encodeURIComponent(`${e.titulo} · ${formatFecha(e.fecha)} · ${e.lugar}, ${e.zona}\n${url}`)}`;
@@ -31,14 +33,16 @@ export default function Detalle() {
   const fila = (Icon: typeof IconPin, titulo: string, sub?: string) => (
     <li className="flex items-start gap-3">
       <Icon width={22} height={22} className="mt-0.5 shrink-0 text-gris" />
-      <span><span className="block font-medium capitalize-first">{titulo}</span>{sub && <span className="block text-sm text-gris">{sub}</span>}</span>
+      <span><span className="block font-medium first-letter:uppercase">{titulo}</span>{sub && <span className="block text-sm text-gris">{sub}</span>}</span>
     </li>
   );
 
   return (
     <div className="flex min-h-full flex-col">
       <div className="relative">
-        <Foto src={e.foto} priority sizes="430px" className="h-[300px] w-full" />
+        <Foto src={e.foto} priority sizes="430px" className="h-[320px] w-full rounded-b-[28px]" />
+        <span className="absolute bottom-4 right-4"><PestanaFecha e={e} /></span>
+        {sticker && <span className="absolute -bottom-3 left-4"><Sticker tipo={sticker} id={e.id} /></span>}
         <button onClick={() => (window.history.length > 1 ? router.back() : router.push("/"))} aria-label="Volver" className={`absolute left-4 top-4 ${circ}`}><IconAtras /></button>
         <div className="absolute right-4 top-4 flex gap-2">
           <a href={wa} target="_blank" rel="noopener noreferrer" aria-label="Compartir por WhatsApp" className={circ}><IconCompartir width={20} height={20} /></a>
@@ -46,10 +50,10 @@ export default function Detalle() {
         </div>
       </div>
 
-      <div className="flex-1 space-y-6 px-4 pb-6 pt-5">
+      <div className="flex-1 space-y-6 px-4 pb-6 pt-7">
         <div className="space-y-2">
-          <Etiqueta>{gratis ? "Gratis" : e.categoria}</Etiqueta>
-          <h1 className="text-2xl leading-tight">{e.titulo}</h1>
+          <ChipCategoria categoria={e.categoria} />
+          <h1 className="text-[28px] leading-tight">{e.titulo}</h1>
           <p className="flex flex-wrap items-center gap-1.5 text-sm text-gris">
             Organiza <span className="font-medium text-tinta">{e.organizador}</span>
             {e.verificado && <span className="inline-flex items-center gap-1 text-marca"><IconVerificado width={16} height={16} />Verificado</span>}
@@ -70,7 +74,7 @@ export default function Detalle() {
         </div>
 
         <section aria-labelledby="como-llegar" className="border-t border-linea pt-5">
-          <h2 id="como-llegar" className="text-lg">Cómo llegar</h2>
+          <h2 id="como-llegar" className="text-lg">Cómo llegar <Nota className="ml-1 inline-block -rotate-3 text-oceano">¡te esperamos!</Nota></h2>
           <p className="pb-3 text-sm text-gris">{e.lugar}, {e.zona}</p>
           <div className="flex gap-2">
             <a className={SECUNDARIO} target="_blank" rel="noopener noreferrer" href={`https://waze.com/ul?q=${direccion}&navigate=yes`}><IconNavegar width={18} height={18} />Waze</a>
@@ -86,7 +90,7 @@ export default function Detalle() {
           <p className="text-xs text-gris">{gratis ? "Entrada" : "Desde"}</p>
           <p className="text-xl font-semibold leading-none">{formatPrecio(e.precio)}</p>
         </div>
-        <Link href={`/checkout/${e.id}`} className="inline-flex min-h-[48px] flex-1 items-center justify-center rounded-xl bg-marca px-6 font-semibold text-white hover:bg-[#0c8e8e]">
+        <Link href={`/checkout/${e.id}`} className="inline-flex min-h-[48px] flex-1 items-center justify-center rounded-xl bg-marca px-6 font-bold text-white hover:bg-[#0c8e8e]">
           {gratis ? "Guardar mi lugar" : "Comprar entradas"}
         </Link>
       </div>

@@ -1,11 +1,11 @@
 export type Pilar = "Aventura" | "Conexión" | "Emprendedurismo" | "Bienestar";
 export type Categoria = "Mercado" | "Música" | "Comida" | "Taller";
 
-export const PILARES: { id: Pilar; texto: string; foto: string }[] = [
-  { id: "Aventura", texto: "Rutas, volcanes y playas", foto: "/images/caminata.jpg" },
-  { id: "Conexión", texto: "Música y buena compañía", foto: "/images/luces.jpg" },
-  { id: "Emprendedurismo", texto: "Mercaditos y talento local", foto: "/images/mercado.jpg" },
-  { id: "Bienestar", texto: "Movimiento y pausas", foto: "/images/yoga.jpg" },
+export const PILARES: { id: Pilar; texto: string; foto: string; estilo: string }[] = [
+  { id: "Aventura", texto: "Rutas, volcanes y playas", foto: "/images/caminata.jpg", estilo: "bg-lima border-lima text-tinta" },
+  { id: "Conexión", texto: "Música y buena compañía", foto: "/images/luces.jpg", estilo: "bg-coral border-coral text-tinta" },
+  { id: "Emprendedurismo", texto: "Mercaditos y talento local", foto: "/images/mercado.jpg", estilo: "bg-arena border-marca text-tinta" },
+  { id: "Bienestar", texto: "Movimiento y pausas", foto: "/images/yoga.jpg", estilo: "bg-oceano border-oceano text-white" },
 ];
 
 export type FiltroCategoria = "todo" | "mercado" | "musica" | "comida" | "taller" | "gratis";
@@ -13,6 +13,27 @@ export const FILTROS: { id: FiltroCategoria; label: string }[] = [
   { id: "todo", label: "Todo" }, { id: "mercado", label: "Mercados" }, { id: "musica", label: "Música" },
   { id: "comida", label: "Comida" }, { id: "taller", label: "Talleres" }, { id: "gratis", label: "Gratis" },
 ];
+
+/** Estilos por categoría: chip (etiqueta), anillo (sello) y banda (pestaña de fecha). */
+export const COLOR_CAT: Record<Categoria, { chip: string; banda: string; anillo: string }> = {
+  Mercado: { chip: "bg-lima border-lima text-tinta", banda: "bg-lima text-tinta", anillo: "ring-lima" },
+  Música: { chip: "bg-oceano border-oceano text-white", banda: "bg-oceano text-white", anillo: "ring-oceano" },
+  Comida: { chip: "bg-coral border-coral text-tinta", banda: "bg-coral text-tinta", anillo: "ring-coral" },
+  Taller: { chip: "bg-arena border-marca text-tinta", banda: "bg-arena text-tinta", anillo: "ring-marca" },
+};
+export const COLOR_FILTRO: Record<FiltroCategoria, { on: string; off: string }> = {
+  todo: { on: "bg-tinta border-tinta text-white", off: "bg-fondo border-transparent text-tinta" },
+  mercado: { on: "bg-lima border-tinta/20 text-tinta", off: "bg-lima/30 border-transparent text-tinta" },
+  musica: { on: "bg-oceano border-oceano text-white", off: "bg-oceano/10 border-transparent text-oceano" },
+  comida: { on: "bg-coral border-coral text-tinta", off: "bg-coral/20 border-transparent text-[#9A3B22]" },
+  taller: { on: "bg-arena border-marca text-tinta", off: "bg-arena border-marca/40 text-tinta" },
+  gratis: { on: "bg-marca border-marca text-white", off: "bg-marca/10 border-transparent text-[#0B7C7C]" },
+};
+
+export type TipoSticker = "Hoy" | "Quedan pocas" | "Gratis" | "Nuevo";
+export const COLOR_STICKER: Record<TipoSticker, string> = {
+  Hoy: "bg-coral text-tinta", "Quedan pocas": "bg-lima text-tinta", Gratis: "bg-marca text-white", Nuevo: "bg-oceano text-white",
+};
 
 export interface Evento {
   id: string;
@@ -31,6 +52,8 @@ export interface Evento {
   actualizado: string; // YYYY-MM-DD
   foto: string;
   descripcion: string;
+  pocas?: boolean; // quedan pocos lugares
+  nuevo?: boolean;
 }
 
 const iso = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
@@ -63,13 +86,13 @@ export function distancia(desde: string, hasta: string) {
 
 export const EVENTOS: Evento[] = [
   { id: "e1", titulo: "Mercadito del Volcán", categoria: "Mercado", pilar: "Emprendedurismo", fecha: enDias(SAB), hora: "9:00 a. m.", lugar: "Parque Cafetalón", zona: "Santa Tecla", precio: 0, parqueo: true, mascotas: true, organizador: "Manos del Valle", verificado: true, actualizado: enDias(-2), foto: "/images/mercado.jpg", descripcion: "Más de 40 emprendimientos locales con café de altura, artesanías y plantas, con el volcán de fondo." },
-  { id: "e2", titulo: "Atardecer con ritmos de la costa", categoria: "Música", pilar: "Conexión", fecha: enDias(DOM), hora: "4:30 p. m.", lugar: "Playa El Sunzal", zona: "La Libertad", precio: 12, parqueo: true, mascotas: false, organizador: "Costa Sonora", verificado: true, actualizado: enDias(-1), foto: "/images/concierto.jpg", descripcion: "Tres bandas en vivo frente al mar. Lleva tu toalla y llega temprano para ver caer el sol." },
-  { id: "e3", titulo: "Ruta de pupusas y café", categoria: "Comida", pilar: "Bienestar", fecha: enDias(SAB + 7), hora: "10:00 a. m.", lugar: "Ruta de las Flores", zona: "Juayúa", precio: 18, parqueo: true, mascotas: true, organizador: "Sabores del Cielo", verificado: true, actualizado: enDias(-3), foto: "/images/comida.jpg", descripcion: "Recorrido guiado por cinco paradas de comida típica, con degustación incluida." },
-  { id: "e4", titulo: "Taller de cerámica con añil", categoria: "Taller", pilar: "Bienestar", fecha: enDias(2), hora: "2:00 p. m.", lugar: "Casa Añil", zona: "San Salvador", precio: 25, parqueo: false, mascotas: false, organizador: "Casa Añil", verificado: false, actualizado: enDias(-1), foto: "/images/ceramica.jpg", descripcion: "Aprende a moldear y teñir con añil natural. Te llevas tu pieza a casa." },
-  { id: "e5", titulo: "Caminata al amanecer: Cerro Verde", categoria: "Taller", pilar: "Aventura", fecha: enDias(SAB + 14), hora: "5:30 a. m.", lugar: "Parque Nacional Cerro Verde", zona: "Santa Ana", precio: 15, parqueo: true, mascotas: true, organizador: "Rumbo Trekkers", verificado: true, actualizado: enDias(-4), foto: "/images/caminata.jpg", descripcion: "Sube con guía hasta el mirador y desayuna viendo el Izalco. Nivel fácil a medio." },
+  { id: "e2", titulo: "Atardecer con ritmos de la costa", categoria: "Música", pilar: "Conexión", fecha: enDias(DOM), hora: "4:30 p. m.", lugar: "Playa El Sunzal", zona: "La Libertad", precio: 12, parqueo: true, mascotas: false, organizador: "Costa Sonora", verificado: true, actualizado: enDias(-1), foto: "/images/concierto.jpg", descripcion: "Tres bandas en vivo frente al mar. Lleva tu toalla y llega temprano para ver caer el sol.", pocas: true },
+  { id: "e3", titulo: "Ruta de pupusas y café", categoria: "Comida", pilar: "Bienestar", fecha: enDias(SAB + 7), hora: "10:00 a. m.", lugar: "Ruta de las Flores", zona: "Juayúa", precio: 18, parqueo: true, mascotas: true, organizador: "Sabores del Cielo", verificado: true, actualizado: enDias(-3), foto: "/images/comida.jpg", descripcion: "Recorrido guiado por cinco paradas de comida típica, con degustación incluida.", nuevo: true },
+  { id: "e4", titulo: "Taller de cerámica con añil", categoria: "Taller", pilar: "Bienestar", fecha: enDias(2), hora: "2:00 p. m.", lugar: "Casa Añil", zona: "San Salvador", precio: 25, parqueo: false, mascotas: false, organizador: "Casa Añil", verificado: false, actualizado: enDias(-1), foto: "/images/ceramica.jpg", descripcion: "Aprende a moldear y teñir con añil natural. Te llevas tu pieza a casa.", pocas: true },
+  { id: "e5", titulo: "Caminata al amanecer: Cerro Verde", categoria: "Taller", pilar: "Aventura", fecha: enDias(SAB + 14), hora: "5:30 a. m.", lugar: "Parque Nacional Cerro Verde", zona: "Santa Ana", precio: 15, parqueo: true, mascotas: true, organizador: "Rumbo Trekkers", verificado: true, actualizado: enDias(-4), foto: "/images/caminata.jpg", descripcion: "Sube con guía hasta el mirador y desayuna viendo el Izalco. Nivel fácil a medio.", nuevo: true },
   { id: "e6", titulo: "Noche de food trucks", categoria: "Comida", pilar: "Conexión", fecha: enDias(DOM), hora: "6:00 p. m.", lugar: "Plaza Gerardo Barrios", zona: "San Salvador", precio: 0, parqueo: false, mascotas: true, organizador: "Ruedas y Sabor", verificado: true, actualizado: enDias(-1), foto: "/images/parrilla.jpg", descripcion: "Doce food trucks, música de fondo y mesas compartidas en pleno centro." },
   { id: "e7", titulo: "Feria de diseño hecho aquí", categoria: "Mercado", pilar: "Emprendedurismo", fecha: enDias(4), hora: "11:00 a. m.", lugar: "Museo Marte", zona: "San Salvador", precio: 5, parqueo: true, mascotas: false, organizador: "Colectivo Cuscatlán", verificado: true, actualizado: enDias(-2), foto: "/images/tienda.jpg", descripcion: "Moda, ilustración y objetos de diseñadores salvadoreños. Conoce a quienes los crean." },
-  { id: "e8", titulo: "Yoga frente al lago", categoria: "Taller", pilar: "Bienestar", fecha: enDias(DOM + 7), hora: "7:00 a. m.", lugar: "Lago de Coatepeque", zona: "Santa Ana", precio: 10, parqueo: true, mascotas: true, organizador: "Respira SV", verificado: true, actualizado: enDias(-5), foto: "/images/yoga.jpg", descripcion: "Una clase abierta para todos los niveles con vista al lago. Trae tu tapete." },
+  { id: "e8", titulo: "Yoga frente al lago", categoria: "Taller", pilar: "Bienestar", fecha: enDias(DOM + 7), hora: "7:00 a. m.", lugar: "Lago de Coatepeque", zona: "Santa Ana", precio: 10, parqueo: true, mascotas: true, organizador: "Respira SV", verificado: true, actualizado: enDias(-5), foto: "/images/yoga.jpg", descripcion: "Una clase abierta para todos los niveles con vista al lago. Trae tu tapete.", nuevo: true },
 ];
 
 export function formatFecha(f: string, largo = false) {
@@ -77,3 +100,12 @@ export function formatFecha(f: string, largo = false) {
   return d.toLocaleDateString("es-SV", largo ? { weekday: "long", day: "numeric", month: "long" } : { weekday: "short", day: "numeric", month: "short" });
 }
 export const formatPrecio = (p: number) => (p === 0 ? "Gratis" : `$${p.toFixed(2)}`);
+
+/** Un solo sticker por evento, por prioridad. */
+export function stickerDe(e: Evento): TipoSticker | null {
+  if (e.fecha === hoyISO()) return "Hoy";
+  if (e.pocas) return "Quedan pocas";
+  if (e.precio === 0) return "Gratis";
+  if (e.nuevo) return "Nuevo";
+  return null;
+}

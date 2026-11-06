@@ -20,7 +20,8 @@ export function TabBar() {
           return (
             <li key={href}>
               <Link href={href} aria-current={activo ? "page" : undefined}
-                className={`flex min-h-[56px] flex-col items-center justify-center gap-0.5 text-[11px] font-medium ${activo ? "text-marca" : "text-gris"}`}>
+                className={`relative flex min-h-[56px] flex-col items-center justify-center gap-0.5 text-[11px] font-bold ${activo ? "text-oceano" : "text-gris"}`}>
+                {activo && <span className="absolute top-0 h-1 w-8 rounded-b-full bg-marca" />}
                 <Icon width={24} height={24} />
                 {label}
               </Link>

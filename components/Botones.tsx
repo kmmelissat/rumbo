@@ -1,24 +1,25 @@
 import Link from "next/link";
 import type { ButtonHTMLAttributes, ReactNode } from "react";
+import { Ondulado } from "./Marca";
 
-const PRIMARIO = "inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-xl bg-marca px-6 text-base font-semibold text-white hover:bg-[#0c8e8e] disabled:cursor-not-allowed disabled:opacity-40";
+const PRIMARIO = "inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-xl bg-marca px-6 text-base font-bold text-white hover:bg-[#0c8e8e] disabled:cursor-not-allowed disabled:opacity-40";
 export const SECUNDARIO = "inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-xl border border-linea bg-white px-6 text-base font-semibold text-tinta hover:bg-fondo";
 export function BotonPrimario(p: ButtonHTMLAttributes<HTMLButtonElement>) { return <button {...p} className={`${PRIMARIO} ${p.className ?? ""}`} />; }
 export function LinkPrimario({ href, children }: { href: string; children: ReactNode }) { return <Link href={href} className={PRIMARIO}>{children}</Link>; }
 
-export function Encabezado({ titulo, sub }: { titulo: string; sub?: string }) {
+export function Encabezado({ titulo, sub, color = "text-marca" }: { titulo: string; sub?: string; color?: string }) {
   return (
-    <header className="px-4 pb-3 pt-6">
-      <h1 className="text-2xl">{titulo}</h1>
-      {sub && <p className="mt-1 text-sm text-gris">{sub}</p>}
+    <header className="px-4 pb-4 pt-6">
+      <h1 className="relative inline-block text-3xl leading-tight">{titulo}<Ondulado color={color} /></h1>
+      {sub && <p className="mt-3 text-sm text-gris">{sub}</p>}
     </header>
   );
 }
 
 export function Vacio({ icono, titulo, texto, children }: { icono: ReactNode; titulo: string; texto: string; children?: ReactNode }) {
   return (
-    <div className="mx-4 mt-6 flex flex-col items-center gap-2 rounded-xl border border-linea p-8 text-center">
-      <span className="flex h-14 w-14 items-center justify-center rounded-full bg-fondo text-gris">{icono}</span>
+    <div className="mx-4 mt-6 flex flex-col items-center gap-2 rounded-[20px] border-2 border-dashed border-marca/50 bg-arena p-8 text-center">
+      <span className="flex h-14 w-14 items-center justify-center rounded-full bg-white text-marca">{icono}</span>
       <h2 className="text-lg">{titulo}</h2>
       <p className="text-sm text-gris">{texto}</p>
       {children && <div className="mt-3 w-full">{children}</div>}
