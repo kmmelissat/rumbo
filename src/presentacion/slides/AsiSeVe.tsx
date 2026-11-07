@@ -1,54 +1,110 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
+import { useEffect, useRef, useState, type ComponentType, type SVGProps } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { Caveat } from "next/font/google";
 import { Nota, Ondulado } from "@/components/Marca";
+import { LogoIcon } from "@/src/components/Logo";
 import { Entra } from "../componentes/Entra";
-import { Flecha } from "../componentes/Garabatos";
+import { Cruz, Espiral, Flecha, Ola, Sol, Volcan } from "../componentes/Garabatos";
+
+const caveat = Caveat({ subsets: ["latin"], weight: "600" });
 
 type Pantalla = "explorar" | "ficha" | "checkout" | "boleto" | "guardados" | "boletos" | "perfil" | "bienvenida";
+type Garabato = ComponentType<SVGProps<SVGSVGElement>>;
+type StickerDef = { Icono: Garabato; fondo: string; trazo: string; left: number; top: number; rot: number };
 
-const NOTAS: Record<Pantalla, { etiqueta: string; puntos: string[]; accion: string }> = {
+const OSC = "#12303A";
+
+const NOTAS: Record<Pantalla, {
+  etiqueta: string; puntos: string[]; accion: string;
+  color: string; texto: string; rot: number; stickers: StickerDef[];
+}> = {
   bienvenida: {
     etiqueta: "Primer uso",
-    puntos: ["Al abrir la app por primera vez, eliges lo que te mueve entre cuatro pilares: Aventura, Conexión, Emprendedurismo y Bienestar.", "Con eso armamos las recomendaciones, sin crear cuenta."],
-    accion: "Elige un interés y toca Empezar a explorar.",
+    puntos: ["Eliges lo que te mueve: Aventura, Conexión, Emprendedurismo o Bienestar.", "Con eso armamos tus recomendaciones, sin crear cuenta."],
+    accion: "Toca Empezar a explorar",
+    color: "#2F6B3F", texto: "#FFFFFF", rot: -1.5,
+    stickers: [
+      { Icono: Sol, fondo: "#F5B82E", trazo: OSC, left: 1478, top: 250, rot: 8 },
+      { Icono: Volcan, fondo: "#C5E063", trazo: OSC, left: 1470, top: 540, rot: -9 },
+    ],
   },
   explorar: {
     etiqueta: "Explorar",
-    puntos: ["Busca por nombre, lugar o zona y filtra por categoría: cada una tiene su color.", "Tres caminos para descubrir: lo que se mueve este finde, lo gratis y lo que está cerca de ti.", "Cada tarjeta trae fecha, un sticker de contexto y el precio, sin sorpresas."],
-    accion: "Toca cualquier evento para ver su ficha.",
+    puntos: ["Busca por nombre, lugar o zona y filtra por categoría.", "Cada tarjeta trae fecha, precio y un sticker de contexto."],
+    accion: "Toca un evento para ver su ficha",
+    color: "#0FA3A3", texto: "#FFFFFF", rot: 1.5,
+    stickers: [
+      { Icono: Ola, fondo: "#FAF6EF", trazo: "#0A7C7C", left: 1478, top: 260, rot: -8 },
+      { Icono: Sol, fondo: "#F5B82E", trazo: OSC, left: 1472, top: 540, rot: 10 },
+    ],
   },
   ficha: {
     etiqueta: "Ficha del evento",
-    puntos: ["Organizador verificado, parqueo y mascotas a la vista.", "Cómo llegar con Waze o Google Maps, a un toque.", "La información está confirmada por el organizador y muestra cuándo se actualizó."],
-    accion: "Toca Comprar entradas o Guardar mi lugar.",
+    puntos: ["Organizador verificado, parqueo y mascotas a la vista.", "Cómo llegar con Waze o Google Maps, a un toque."],
+    accion: "Toca Comprar entradas",
+    color: "#F28F6B", texto: OSC, rot: -2,
+    stickers: [
+      { Icono: Cruz, fondo: "#FAF6EF", trazo: "#F28F6B", left: 1476, top: 270, rot: 9 },
+    ],
   },
   checkout: {
     etiqueta: "Pago",
-    puntos: ["El 3.8% de procesamiento va en su propia línea, y no cobramos fee de servicio.", "La política de reembolso se ve antes de pagar.", "Las entradas se apartan por 10 minutos con cuenta regresiva. No hace falta crear cuenta."],
-    accion: "Escribe un correo y paga: es una simulación.",
+    puntos: ["El 3.8% de procesamiento va en su propia línea; sin fee de servicio.", "Entradas apartadas 10 minutos, con reembolso visible antes de pagar."],
+    accion: "Escribe un correo y paga: pago de demostración",
+    color: "#F5B82E", texto: OSC, rot: 1,
+    stickers: [
+      { Icono: Espiral, fondo: "#0A7C7C", trazo: "#FAF6EF", left: 1476, top: 255, rot: -10 },
+      { Icono: Cruz, fondo: "#C5E063", trazo: OSC, left: 1480, top: 545, rot: 7 },
+    ],
   },
   boleto: {
     etiqueta: "Boleto",
-    puntos: ["Código QR real y código del boleto.", "Se agrega al calendario o se comparte con un amigo por WhatsApp.", "Cada compra suma un sello al pasaporte."],
-    accion: "Revisa tu pasaporte en la pestaña Perfil.",
+    puntos: ["Código QR real, calendario y WhatsApp para compartir.", "Cada compra suma un sello al pasaporte."],
+    accion: "Revisa tu pasaporte en Perfil",
+    color: "#C5E063", texto: OSC, rot: -1,
+    stickers: [
+      { Icono: Sol, fondo: "#F28F6B", trazo: OSC, left: 1476, top: 265, rot: 8 },
+      { Icono: Ola, fondo: "#FAF6EF", trazo: "#0A7C7C", left: 1472, top: 545, rot: -7 },
+    ],
   },
   guardados: {
     etiqueta: "Guardados",
-    puntos: ["Los eventos con corazón se juntan aquí, listos para decidir después."],
-    accion: "Guarda algo desde Explorar y míralo aparecer.",
+    puntos: ["Los eventos con corazón se juntan aquí, para decidir después."],
+    accion: "Guarda uno desde Explorar",
+    color: "#0E5A8A", texto: "#FFFFFF", rot: 2,
+    stickers: [
+      { Icono: Espiral, fondo: "#F5B82E", trazo: OSC, left: 1478, top: 280, rot: -9 },
+    ],
   },
   boletos: {
     etiqueta: "Rumbo al plan",
-    puntos: ["Todos tus boletos en un solo lugar, cada uno con su QR."],
-    accion: "Toca un boleto para abrirlo.",
+    puntos: ["Todos tus boletos en un lugar, cada uno con su QR."],
+    accion: "Toca un boleto para abrirlo",
+    color: "#0E5A8A", texto: "#FFFFFF", rot: -2,
+    stickers: [
+      { Icono: Cruz, fondo: "#C5E063", trazo: OSC, left: 1476, top: 285, rot: 10 },
+    ],
   },
   perfil: {
     etiqueta: "Perfil",
-    puntos: ["El pasaporte junta un sello por cada evento al que vas, con recompensa cada cinco.", "Ajustes básicos: zona, recordatorios e intereses."],
-    accion: "Compra un boleto y mira cómo se estampa el sello.",
+    puntos: ["El pasaporte suma un sello por evento, con recompensa cada cinco.", "Ajustes: zona, recordatorios e intereses."],
+    accion: "Compra un boleto y mira el sello",
+    color: "#8B6FD6", texto: "#FFFFFF", rot: 1.5,
+    stickers: [
+      { Icono: Volcan, fondo: "#F5B82E", trazo: OSC, left: 1474, top: 255, rot: -8 },
+      { Icono: Sol, fondo: "#FAF6EF", trazo: "#8B6FD6", left: 1480, top: 545, rot: 9 },
+    ],
   },
 };
+
+const RECORRIDO: { id: Pantalla; nombre: string }[] = [
+  { id: "explorar", nombre: "Explorar" },
+  { id: "ficha", nombre: "Ficha" },
+  { id: "checkout", nombre: "Pago" },
+  { id: "boleto", nombre: "Boleto" },
+  { id: "perfil", nombre: "Perfil" },
+];
 
 function pantallaDe(ruta: string): Pantalla {
   const r = ruta.replace(/^\/prototipo/, "") || "/";
@@ -62,8 +118,33 @@ function pantallaDe(ruta: string): Pantalla {
   return "explorar";
 }
 
+/** Pantalla de carga dentro del celular: crema, logo y brújula girando. */
+function Cargando({ gira }: { gira: boolean }) {
+  return (
+    <motion.div
+      className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-7"
+      style={{ background: "#FAF6EF" }}
+      initial={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.4 }}
+    >
+      <LogoIcon size={96} />
+      <motion.svg
+        width="56" height="56" viewBox="0 0 56 56" fill="none" aria-hidden
+        animate={gira ? { rotate: 360 } : { rotate: 0 }}
+        transition={gira ? { duration: 2.4, ease: "linear", repeat: Infinity } : { duration: 0 }}
+      >
+        <circle cx="28" cy="28" r="24" stroke="#0A7C7C" strokeWidth="3" />
+        <path d="M28 8 L34 28 L28 48 L22 28 Z" fill="#F28F6B" />
+        <path d="M28 8 L34 28 L22 28 Z" fill="#12303A" />
+        <circle cx="28" cy="28" r="3" fill="#FAF6EF" />
+      </motion.svg>
+    </motion.div>
+  );
+}
+
 /** Marco de teléfono en CSS (390 x 844 de pantalla). */
-function Telefono({ cargar }: { cargar: boolean }) {
+function Telefono({ cargar, listo, alCargar, gira }: { cargar: boolean; listo: boolean; alCargar: () => void; gira: boolean }) {
   return (
     <div className="relative" style={{ width: 420, height: 874 }}>
       {/* Botones laterales */}
@@ -93,16 +174,24 @@ function Telefono({ cargar }: { cargar: boolean }) {
             </div>
 
             {/* La app real */}
-            <div className="min-h-0 flex-1">
+            <div className="relative min-h-0 flex-1">
               {cargar && (
-                <iframe id="rumbo-iframe" title="App de Rumbo" src="/prototipo?embed=1" className="block h-full w-full border-0" />
+                <iframe id="rumbo-iframe" title="App de Rumbo" src="/prototipo?embed=1" onLoad={alCargar} className="block h-full w-full border-0" />
               )}
+              <AnimatePresence>{!listo && <Cargando key="cargando" gira={gira} />}</AnimatePresence>
             </div>
 
             {/* Indicador de inicio */}
             <div className="relative flex h-[22px] shrink-0 items-center justify-center bg-white">
               <span className="h-[5px] w-[134px] rounded-full bg-black" aria-hidden />
             </div>
+
+            {/* Reflejo diagonal: no captura clics */}
+            <div
+              className="pointer-events-none absolute inset-0 z-20"
+              style={{ background: "linear-gradient(115deg, transparent 30%, rgba(255,255,255,0.10) 42%, rgba(255,255,255,0.03) 52%, transparent 62%)" }}
+              aria-hidden
+            />
           </div>
         </div>
       </div>
@@ -110,13 +199,36 @@ function Telefono({ cargar }: { cargar: boolean }) {
   );
 }
 
+function Check({ rm }: { rm: boolean }) {
+  return (
+    <motion.svg
+      width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden
+      initial={rm ? { opacity: 0 } : { opacity: 0, scale: 0 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={rm ? { duration: 0.2 } : { type: "spring", stiffness: 420, damping: 14 }}
+    >
+      <circle cx="9" cy="9" r="9" fill="#0A7C7C" />
+      <path d="M5 9.3 L8 12.2 L13 6.2" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+    </motion.svg>
+  );
+}
+
 export function AsiSeVe({ activa }: { activa: boolean }) {
+  const rm = !!useReducedMotion();
   const [cargar, setCargar] = useState(false);
+  const [listo, setListo] = useState(false);
   const [pantalla, setPantalla] = useState<Pantalla>("explorar");
+  const [vistas, setVistas] = useState<Pantalla[]>([]);
   const cajaRef = useRef<HTMLDivElement>(null);
 
   // El iframe se monta la primera vez que la parada se activa y se queda cargado.
   useEffect(() => { if (activa) setCargar(true); }, [activa]);
+
+  // Recorrido: marca cada pantalla del tour que se ha visto.
+  useEffect(() => {
+    if (!activa) return;
+    setVistas((v) => (v.includes(pantalla) ? v : [...v, pantalla]));
+  }, [pantalla, activa]);
 
   useEffect(() => {
     const alMensaje = (e: MessageEvent) => {
@@ -136,13 +248,31 @@ export function AsiSeVe({ activa }: { activa: boolean }) {
   }, []);
 
   const nota = NOTAS[pantalla];
+  const animar = activa && !rm;
+  const completo = RECORRIDO.every((p) => vistas.includes(p.id));
 
   return (
     <div className="relative h-full w-full">
       <Entra activa={activa} desde="escala" rot={-2} className="absolute left-[150px] top-[100px]">
-        <div ref={cajaRef} data-nodrag style={{ width: 420 * 0.86, height: 874 * 0.86 }}>
+        <div ref={cajaRef} data-nodrag className="relative" style={{ width: 420 * 0.86, height: 874 * 0.86 }}>
+          {/* Sombra elíptica en el piso */}
+          <motion.div
+            className="pointer-events-none absolute -bottom-[26px] left-[10%] right-[10%] h-[34px] rounded-[50%]"
+            style={{ background: "radial-gradient(ellipse at center, rgba(18,48,58,0.38) 0%, rgba(18,48,58,0) 70%)" }}
+            animate={animar ? { scaleX: [1, 1.06, 1], opacity: [0.7, 1, 0.7] } : { scaleX: 1, opacity: 0.85 }}
+            transition={animar ? { duration: 5, ease: "easeInOut", repeat: Infinity } : { duration: 0.3 }}
+            aria-hidden
+          />
           <div style={{ transform: "scale(0.86)", transformOrigin: "top left", width: 420, height: 874 }}>
-            <Telefono cargar={cargar} />
+            {/* Inclinación 3D que se asienta */}
+            <motion.div
+              style={{ transformPerspective: 1400, transformOrigin: "50% 100%" }}
+              initial={false}
+              animate={activa || rm ? { rotateX: 0, rotateY: 0 } : { rotateX: rm ? 0 : 14, rotateY: rm ? 0 : -12 }}
+              transition={activa ? { type: "spring", stiffness: 60, damping: 14, delay: 0.4 } : { duration: 0.25 }}
+            >
+              <Telefono cargar={cargar} listo={listo} alCargar={() => setListo(true)} gira={animar} />
+            </motion.div>
           </div>
         </div>
       </Entra>
@@ -152,32 +282,125 @@ export function AsiSeVe({ activa }: { activa: boolean }) {
           <h2 className="relative inline-block font-display text-[84px] font-bold leading-tight text-oceano">Así se ve Rumbo<Ondulado color="text-coral" /></h2>
         </Entra>
 
-        <Entra activa={activa} retraso={0.5} className="mt-12">
-          <div className="min-h-[430px] rounded-[28px] border-2 border-marca/40 bg-white/80 p-9">
-            <AnimatePresence mode="wait">
-              <motion.div key={pantalla} initial={{ opacity: 0, x: 40 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -40 }} transition={{ duration: 0.25 }}>
-                <span className="inline-block rounded-lg border-[6px] border-white bg-lima px-3 text-[22px] font-bold leading-9 text-tinta shadow-md shadow-black/20 -rotate-2">{nota.etiqueta}</span>
-                <ul className="mt-6 space-y-4">
-                  {nota.puntos.map((p) => (
-                    <li key={p} className="flex gap-4 text-[30px] leading-snug text-tinta/90">
-                      <span className="mt-[14px] h-3 w-3 shrink-0 rounded-full bg-marca" aria-hidden />{p}
-                    </li>
-                  ))}
-                </ul>
-                <p className="mt-7 font-display text-[28px] font-bold text-oceano">{nota.accion}</p>
+        {/* Recorrido guiado: solo informa */}
+        <Entra activa={activa} retraso={0.4} className="relative mt-5">
+          <ol className="flex items-center gap-3" aria-label="Recorrido por la app">
+            {RECORRIDO.map((p) => {
+              const actual = p.id === pantalla;
+              const visto = vistas.includes(p.id);
+              const c = NOTAS[p.id];
+              return (
+                <li
+                  key={p.id}
+                  aria-current={actual ? "step" : undefined}
+                  className="flex h-[44px] items-center gap-2 rounded-full border-2 px-4 text-[20px] font-bold"
+                  style={{
+                    borderColor: actual ? c.color : visto ? "#0A7C7C66" : "#12303A26",
+                    background: actual ? c.color : "#FFFFFFB3",
+                    color: actual ? c.texto : visto ? OSC : "#12303A99",
+                    transition: "background-color .25s, border-color .25s, color .25s",
+                  }}
+                >
+                  {p.nombre}
+                  {visto && (!actual || completo) && <Check rm={rm} />}
+                </li>
+              );
+            })}
+          </ol>
+          <AnimatePresence>
+            {completo && (
+              <motion.div
+                key="completo"
+                className="pointer-events-none absolute -top-[96px] right-0 flex items-center gap-3"
+                initial={rm ? { opacity: 0 } : { opacity: 0, scale: 0.6, rotate: -12 }}
+                animate={{ opacity: 1, scale: 1, rotate: rm ? 0 : -4 }}
+                exit={{ opacity: 0 }}
+                transition={rm ? { duration: 0.25 } : { type: "spring", stiffness: 260, damping: 13 }}
+              >
+                <span className={`${caveat.className} text-[38px] leading-[0.95] text-coral`}>recorrido<br />completo</span>
+                <svg width="64" height="64" viewBox="0 0 64 64" fill="none" aria-hidden style={{ transform: "rotate(-10deg)" }}>
+                  <circle cx="32" cy="32" r="29" stroke="#F28F6B" strokeWidth="3" strokeDasharray="3 4" />
+                  <circle cx="32" cy="32" r="21" stroke="#F28F6B" strokeWidth="2.5" />
+                  <path d="M32 15 L36 32 L32 49 L28 32 Z" fill="#F28F6B" />
+                  <circle cx="32" cy="32" r="3" fill="#FAF6EF" />
+                </svg>
               </motion.div>
-            </AnimatePresence>
-          </div>
+            )}
+          </AnimatePresence>
         </Entra>
 
-        <Entra activa={activa} retraso={0.9} rot={-3} className="mt-8 flex items-center gap-4">
+        {/* Nota adhesiva con vida */}
+        <Entra activa={activa} retraso={0.5} className="mt-7">
+          <motion.div
+            animate={animar ? { y: [0, -3, 0, 3, 0], rotate: [0, 1, 0, -1, 0] } : { y: 0, rotate: 0 }}
+            transition={animar ? { duration: 9, ease: "easeInOut", repeat: Infinity } : { duration: 0.3 }}
+          >
+            <div className="min-h-[340px]">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={pantalla}
+                  className="rounded-[26px] border-[4px] bg-[#FFFDF6] p-8 shadow-[0_18px_30px_-12px_rgba(18,48,58,0.35)]"
+                  style={{ borderColor: nota.color }}
+                  initial={rm ? { opacity: 0 } : { opacity: 0, y: 50, rotate: nota.rot + 4, scale: 0.92 }}
+                  animate={{ opacity: 1, y: 0, rotate: rm ? 0 : nota.rot, scale: 1 }}
+                  exit={rm ? { opacity: 0 } : { opacity: 0, y: -30, rotate: nota.rot - 4, scale: 0.94 }}
+                  transition={rm ? { duration: 0.2 } : { type: "spring", stiffness: 220, damping: 16, exit: { duration: 0.2 } } as object}
+                >
+                  <span
+                    className="inline-block -rotate-2 rounded-lg border-[6px] border-white px-3 text-[22px] font-bold leading-9 shadow-md shadow-black/20"
+                    style={{ background: nota.color, color: nota.texto }}
+                  >{nota.etiqueta}</span>
+                  <ul className="mt-5 space-y-3">
+                    {nota.puntos.map((p) => (
+                      <li key={p} className="flex gap-4 text-[28px] leading-snug text-tinta/90">
+                        <span className="mt-[14px] h-3 w-3 shrink-0 rounded-full" style={{ background: nota.color }} aria-hidden />{p}
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="mt-6 flex items-center gap-3">
+                    <motion.span
+                      className="inline-flex"
+                      animate={animar ? { x: [0, -10, 0] } : { x: 0 }}
+                      transition={animar ? { duration: 1.4, ease: "easeInOut", repeat: Infinity } : { duration: 0.2 }}
+                    >
+                      <Flecha className="h-[44px] w-[100px] -scale-x-100" style={{ color: nota.color }} />
+                    </motion.span>
+                    <span
+                      className="rounded-full px-5 py-2 font-display text-[26px] font-bold leading-tight shadow-md shadow-black/15"
+                      style={{ background: nota.color, color: nota.texto }}
+                    >{nota.accion}</span>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          </motion.div>
+        </Entra>
+
+        <Entra activa={activa} retraso={0.9} rot={-3} className="mt-6 flex items-center gap-4">
           <Nota className="text-[38px] text-marca">es la app de verdad, tócala</Nota>
-          <Flecha className="h-[50px] w-[120px] -scale-x-100 text-coral" />
         </Entra>
         <Entra activa={activa} retraso={1} className="mt-3">
           <p className="text-[22px] text-gris">Con el celular activo, la flecha → te devuelve aquí; otra vez, avanza.</p>
         </Entra>
       </div>
+
+      {/* Stickers fuera del celular y del texto */}
+      <AnimatePresence>
+        {activa && nota.stickers.map((s, i) => (
+          <motion.div
+            key={`${pantalla}-${i}`}
+            className="pointer-events-none absolute flex h-[88px] w-[88px] items-center justify-center rounded-full border-[6px] border-white shadow-lg shadow-black/25"
+            style={{ left: s.left, top: s.top, background: s.fondo, color: s.trazo }}
+            initial={rm ? { opacity: 0 } : { opacity: 0, scale: 0, rotate: s.rot - 25 }}
+            animate={{ opacity: 1, scale: 1, rotate: rm ? 0 : s.rot }}
+            exit={{ opacity: 0, transition: { duration: 0.15 } }}
+            transition={rm ? { duration: 0.2 } : { type: "spring", stiffness: 320, damping: 11, delay: 0.25 + i * 0.1 }}
+            aria-hidden
+          >
+            <s.Icono className="h-[48px] w-[48px]" />
+          </motion.div>
+        ))}
+      </AnimatePresence>
     </div>
   );
 }
