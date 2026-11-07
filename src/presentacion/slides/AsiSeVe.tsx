@@ -21,7 +21,7 @@ const NOTAS: Record<Pantalla, {
 }> = {
   bienvenida: {
     etiqueta: "Primer uso",
-    puntos: ["Eliges lo que te mueve: Aventura, Conexión, Emprendedurismo o Bienestar.", "Con eso armamos tus recomendaciones, sin crear cuenta."],
+    puntos: ["Eliges lo que te mueve, sin crear cuenta.", "Con eso armamos tus recomendaciones."],
     accion: "Toca Empezar a explorar",
     color: "#2F6B3F", texto: "#FFFFFF", rot: -1.5,
     stickers: [
@@ -31,7 +31,7 @@ const NOTAS: Record<Pantalla, {
   },
   explorar: {
     etiqueta: "Explorar",
-    puntos: ["Busca por nombre, lugar o zona y filtra por categoría.", "Cada tarjeta trae fecha, precio y un sticker de contexto."],
+    puntos: ["Busca por nombre, lugar o zona.", "Cada tarjeta trae fecha, precio y contexto."],
     accion: "Toca un evento para ver su ficha",
     color: "#0FA3A3", texto: "#FFFFFF", rot: 1.5,
     stickers: [
@@ -41,7 +41,7 @@ const NOTAS: Record<Pantalla, {
   },
   ficha: {
     etiqueta: "Ficha del evento",
-    puntos: ["Organizador verificado, parqueo y mascotas a la vista.", "Cómo llegar con Waze o Google Maps, a un toque."],
+    puntos: ["Organizador verificado, parqueo, mascotas.", "Cómo llegar con Waze o Google Maps."],
     accion: "Toca Comprar entradas",
     color: "#F28F6B", texto: OSC, rot: -2,
     stickers: [
@@ -50,7 +50,7 @@ const NOTAS: Record<Pantalla, {
   },
   checkout: {
     etiqueta: "Pago",
-    puntos: ["El 3.8% de procesamiento va en su propia línea; sin fee de servicio.", "Entradas apartadas 10 minutos, con reembolso visible antes de pagar."],
+    puntos: ["3.8% de procesamiento, sin fee de servicio.", "Entradas apartadas por 10 minutos."],
     accion: "Escribe un correo y paga: pago de demostración",
     color: "#F5B82E", texto: OSC, rot: 1,
     stickers: [
@@ -60,7 +60,7 @@ const NOTAS: Record<Pantalla, {
   },
   boleto: {
     etiqueta: "Boleto",
-    puntos: ["Código QR real, calendario y WhatsApp para compartir.", "Cada compra suma un sello al pasaporte."],
+    puntos: ["Código QR real, calendario y WhatsApp.", "Cada compra suma un sello al pasaporte."],
     accion: "Revisa tu pasaporte en Perfil",
     color: "#C5E063", texto: OSC, rot: -1,
     stickers: [
@@ -70,7 +70,7 @@ const NOTAS: Record<Pantalla, {
   },
   guardados: {
     etiqueta: "Guardados",
-    puntos: ["Los eventos con corazón se juntan aquí, para decidir después."],
+    puntos: ["Tus eventos con corazón, juntos aquí."],
     accion: "Guarda uno desde Explorar",
     color: "#0E5A8A", texto: "#FFFFFF", rot: 2,
     stickers: [
@@ -79,7 +79,7 @@ const NOTAS: Record<Pantalla, {
   },
   boletos: {
     etiqueta: "Rumbo al plan",
-    puntos: ["Todos tus boletos en un lugar, cada uno con su QR."],
+    puntos: ["Todos tus boletos, cada uno con su QR."],
     accion: "Toca un boleto para abrirlo",
     color: "#0E5A8A", texto: "#FFFFFF", rot: -2,
     stickers: [
@@ -88,7 +88,7 @@ const NOTAS: Record<Pantalla, {
   },
   perfil: {
     etiqueta: "Perfil",
-    puntos: ["El pasaporte suma un sello por evento, con recompensa cada cinco.", "Ajustes: zona, recordatorios e intereses."],
+    puntos: ["Un sello por evento, premio cada cinco.", "Ajustes: zona, recordatorios e intereses."],
     accion: "Compra un boleto y mira el sello",
     color: "#8B6FD6", texto: "#FFFFFF", rot: 1.5,
     stickers: [
@@ -224,19 +224,18 @@ export function AsiSeVe({ activa }: { activa: boolean }) {
   // El iframe se monta la primera vez que la parada se activa y se queda cargado.
   useEffect(() => { if (activa) setCargar(true); }, [activa]);
 
-  // Recorrido: marca cada pantalla del tour que se ha visto.
-  useEffect(() => {
-    if (!activa) return;
-    setVistas((v) => (v.includes(pantalla) ? v : [...v, pantalla]));
-  }, [pantalla, activa]);
-
   useEffect(() => {
     const alMensaje = (e: MessageEvent) => {
       if (e.origin !== window.location.origin) return;
       const marco = cajaRef.current?.querySelector("iframe");
       if (!marco || e.source !== marco.contentWindow) return;
       const d = e.data as { tipo?: string; ruta?: string } | null;
-      if (d?.tipo === "rumbo:ruta" && typeof d.ruta === "string") setPantalla(pantallaDe(d.ruta));
+      if (d?.tipo === "rumbo:ruta" && typeof d.ruta === "string") {
+        // Solo el celular marca pantallas como vistas.
+        const p = pantallaDe(d.ruta);
+        setPantalla(p);
+        setVistas((v) => (v.includes(p) ? v : [...v, p]));
+      }
       else if (d?.tipo === "rumbo:salir") {
         // Primera flecha dentro del celular: devuelve el foco a la presentación.
         marco.blur();
@@ -311,31 +310,30 @@ export function AsiSeVe({ activa }: { activa: boolean }) {
             {completo && (
               <motion.div
                 key="completo"
-                className="pointer-events-none absolute -top-[96px] right-0 flex items-center gap-3"
-                initial={rm ? { opacity: 0 } : { opacity: 0, scale: 0.6, rotate: -12 }}
-                animate={{ opacity: 1, scale: 1, rotate: rm ? 0 : -4 }}
+                className="pointer-events-none absolute left-1 top-full mt-3 flex items-center gap-3"
+                initial={rm ? { opacity: 0 } : { opacity: 0, scale: 0.6, rotate: -8 }}
+                animate={{ opacity: 1, scale: 1, rotate: 0 }}
                 exit={{ opacity: 0 }}
                 transition={rm ? { duration: 0.25 } : { type: "spring", stiffness: 260, damping: 13 }}
               >
-                <span className={`${caveat.className} text-[38px] leading-[0.95] text-coral`}>recorrido<br />completo</span>
-                <svg width="64" height="64" viewBox="0 0 64 64" fill="none" aria-hidden style={{ transform: "rotate(-10deg)" }}>
+                <svg width="40" height="40" viewBox="0 0 64 64" fill="none" aria-hidden>
                   <circle cx="32" cy="32" r="29" stroke="#F28F6B" strokeWidth="3" strokeDasharray="3 4" />
-                  <circle cx="32" cy="32" r="21" stroke="#F28F6B" strokeWidth="2.5" />
                   <path d="M32 15 L36 32 L32 49 L28 32 Z" fill="#F28F6B" />
                   <circle cx="32" cy="32" r="3" fill="#FAF6EF" />
                 </svg>
+                <span className={`${caveat.className} text-[30px] leading-none text-coral`}>recorrido completo</span>
               </motion.div>
             )}
           </AnimatePresence>
         </Entra>
 
         {/* Nota adhesiva con vida */}
-        <Entra activa={activa} retraso={0.5} className="mt-7">
+        <Entra activa={activa} retraso={0.5} className="mt-[84px]">
           <motion.div
             animate={animar ? { y: [0, -3, 0, 3, 0], rotate: [0, 1, 0, -1, 0] } : { y: 0, rotate: 0 }}
             transition={animar ? { duration: 9, ease: "easeInOut", repeat: Infinity } : { duration: 0.3 }}
           >
-            <div className="min-h-[340px]">
+            <div className="min-h-[300px]">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={pantalla}
@@ -376,28 +374,29 @@ export function AsiSeVe({ activa }: { activa: boolean }) {
           </motion.div>
         </Entra>
 
-        <Entra activa={activa} retraso={0.9} rot={-3} className="mt-6 flex items-center gap-4">
-          <Nota className="text-[38px] text-marca">es la app de verdad, tócala</Nota>
+        <Entra activa={activa} retraso={0.9} className="mt-5">
+          <p className="text-[20px] text-gris">Toca la app. La flecha → vuelve aquí.</p>
         </Entra>
-        <Entra activa={activa} retraso={1} className="mt-3">
-          <p className="text-[22px] text-gris">Con el celular activo, la flecha → te devuelve aquí; otra vez, avanza.</p>
+        <Entra activa={activa} retraso={1} rot={-3} className="mt-5 flex items-center gap-3">
+          <Flecha className="h-[40px] w-[90px] -scale-x-100 text-marca" />
+          <Nota className="text-[34px] text-marca">es la app de verdad, tócala</Nota>
         </Entra>
       </div>
 
       {/* Stickers fuera del celular y del texto */}
       <AnimatePresence>
-        {activa && nota.stickers.map((s, i) => (
+        {activa && nota.stickers.slice(0, 2).map((s, i) => (
           <motion.div
             key={`${pantalla}-${i}`}
-            className="pointer-events-none absolute flex h-[88px] w-[88px] items-center justify-center rounded-full border-[6px] border-white shadow-lg shadow-black/25"
-            style={{ left: s.left, top: s.top, background: s.fondo, color: s.trazo }}
+            className="pointer-events-none absolute flex h-[80px] w-[80px] items-center justify-center rounded-full border-[6px] border-white shadow-lg shadow-black/25"
+            style={{ left: i === 0 ? 1470 : 524, top: i === 0 ? 330 : 600, background: s.fondo, color: s.trazo }}
             initial={rm ? { opacity: 0 } : { opacity: 0, scale: 0, rotate: s.rot - 25 }}
             animate={{ opacity: 1, scale: 1, rotate: rm ? 0 : s.rot }}
             exit={{ opacity: 0, transition: { duration: 0.15 } }}
             transition={rm ? { duration: 0.2 } : { type: "spring", stiffness: 320, damping: 11, delay: 0.25 + i * 0.1 }}
             aria-hidden
           >
-            <s.Icono className="h-[48px] w-[48px]" />
+            <s.Icono className="h-[44px] w-[44px]" />
           </motion.div>
         ))}
       </AnimatePresence>

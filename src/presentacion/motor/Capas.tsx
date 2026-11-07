@@ -25,8 +25,8 @@ export function FondoViaje({ pos, total, ancho }: { pos: MotionValue<number>; to
       <Capa pos={pos} total={total} ancho={ancho} factor={0.25}>
         {(i) => (
           <>
-            <div className={`absolute -right-[8%] -top-[18%] h-[70%] w-[48%] rounded-full opacity-[0.16] ${COLORES[i % 4]}`} />
-            <div className={`absolute -bottom-[25%] left-[10%] h-[60%] w-[40%] rounded-full opacity-[0.12] ${COLORES[(i + 2) % 4]}`} />
+            <div className={`absolute -right-[8%] -top-[18%] h-[70%] w-[48%] rounded-full opacity-[0.08] ${COLORES[i % 4]}`} />
+            <div className={`absolute -bottom-[25%] left-[10%] h-[60%] w-[40%] rounded-full opacity-[0.06] ${COLORES[(i + 2) % 4]}`} />
             <Volcan className="absolute bottom-0 right-[6%] h-[34%] w-[40%] text-oceano/10" />
             <Volcan className="absolute bottom-0 left-[-4%] h-[22%] w-[28%] text-marca/10" />
           </>
@@ -36,10 +36,10 @@ export function FondoViaje({ pos, total, ancho }: { pos: MotionValue<number>; to
       <Capa pos={pos} total={total} ancho={ancho} factor={0.6}>
         {(i) => (
           <>
-            <Sol className={`absolute right-[42%] top-[8%] h-[8%] w-[6%] opacity-60 ${TINTES[(i + 1) % 4] === "text-lima" ? "text-coral" : TINTES[(i + 1) % 4]}`} />
-            <Ola className="absolute bottom-[14%] left-[3%] h-[7%] w-[12%] text-marca opacity-50" />
-            <Cruz className="absolute bottom-[26%] right-[4%] h-[5%] w-[3%] text-coral opacity-60" />
-            <Espiral className="absolute left-[46%] top-[78%] h-[9%] w-[6%] text-oceano opacity-30" />
+            <Sol className={`absolute right-[42%] top-[8%] h-[8%] w-[6%] opacity-20 ${TINTES[(i + 1) % 4] === "text-lima" ? "text-coral" : TINTES[(i + 1) % 4]}`} />
+            <Ola className="absolute bottom-[14%] left-[3%] h-[7%] w-[12%] text-marca opacity-15" />
+            <Cruz className="absolute bottom-[26%] right-[4%] h-[5%] w-[3%] text-coral opacity-20" />
+            <Espiral className="absolute left-[46%] top-[78%] h-[9%] w-[6%] text-oceano opacity-12" />
           </>
         )}
       </Capa>
