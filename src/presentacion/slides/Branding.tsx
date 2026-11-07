@@ -2,7 +2,7 @@
 import { type ReactNode } from "react";
 import { Caveat } from "next/font/google";
 import { motion, useReducedMotion } from "motion/react";
-import { Logo, LogoIcon } from "@/src/components/Logo";
+import { Logo } from "@/src/components/Logo";
 
 /** Textos editables de la slide. */
 const MARCA_DATOS = {
@@ -22,7 +22,6 @@ const MARCA_DATOS = {
     { nombre: "Lima", hex: "#C5E063" },
     { nombre: "Terracota", hex: "#E2683F", nota: "solo acento" },
   ],
-  notaPaleta: "El naranja nunca es el color principal",
   tipografias: [
     { nombre: "Fraunces", uso: "Títulos: cálida y con carácter", muestra: "Aparta tu lugar", clase: "font-display font-bold" },
     { nombre: "DM Sans", uso: "Interfaz y texto", muestra: "Quedan 12 entradas", clase: "font-sans font-medium" },
@@ -38,7 +37,6 @@ const MARCA_DATOS = {
     { id: "emprendedurismo", nombre: "Emprendedurismo", frase: "Apoyar a quienes crean lo local.", color: "#F5B82E", texto: "#12303A" },
     { id: "bienestar", nombre: "Bienestar", frase: "Planes para desconectar y cuidarte.", color: "#1E5E45", texto: "#FFFFFF" },
   ],
-  cierre: "Y así se ve en la app",
 };
 
 const caveat = Caveat({ subsets: ["latin"], weight: "600" });
@@ -75,23 +73,23 @@ function Item({ visible, i = 0, className, style, children }: { visible: boolean
 function PasoLogo({ visible }: { visible: boolean }) {
   const rm = useReducedMotion();
   const vars = [
-    { n: "Principal", bg: "#FFFFFF", logo: <Logo variant="principal" size={52} /> },
-    { n: "Invertida", bg: C.turquesa, logo: <Logo variant="invertida" size={52} /> },
-    { n: "Mono", bg: C.mostaza, logo: <Logo variant="mono" size={52} color={C.noche} /> },
+    { n: "Principal", bg: "#FFFFFF", logo: <Logo variant="principal" size={38} /> },
+    { n: "Invertida", bg: C.turquesa, logo: <Logo variant="invertida" size={38} /> },
+    { n: "Mono", bg: C.mostaza, logo: <Logo variant="mono" size={38} color={C.noche} /> },
   ];
   return (
-    <div className="flex flex-col items-center gap-9">
+    <div className="flex flex-col items-center gap-5">
       <motion.div initial={false} animate={visible ? { opacity: 1, rotate: 0, scale: 1 } : { opacity: 0, rotate: rm ? 0 : -14, scale: rm ? 1 : 0.8 }}
         transition={rm ? { duration: 0.2 } : { type: "spring", stiffness: 70, damping: 12, delay: 0.2 }} className="flex items-center gap-6">
-        <Logo variant="principal" size={170} />
+        <Logo variant="principal" size={100} />
         <motion.span initial={false} animate={visible && !rm ? { rotate: 360 } : { rotate: 0 }}
-          transition={visible && !rm ? { duration: 2.4, ease: "easeInOut", delay: 0.5 } : { duration: 0 }}><Chispa size={56} color={C.mostaza} /></motion.span>
+          transition={visible && !rm ? { duration: 2.4, ease: "easeInOut", delay: 0.5 } : { duration: 0 }}><Chispa size={40} color={C.mostaza} /></motion.span>
       </motion.div>
       <div className="grid grid-cols-3 gap-8">
         {vars.map((v, i) => (
-          <Item key={v.n} visible={visible} i={i + 3} className="flex flex-col items-center gap-3">
-            <div className="flex h-[130px] w-[340px] items-center justify-center rounded-[24px] shadow-lg shadow-black/10" style={{ background: v.bg }}>{v.logo}</div>
-            <p className="text-[18px] font-bold uppercase tracking-[0.14em]">{v.n}</p>
+          <Item key={v.n} visible={visible} i={i + 3} className="flex flex-col items-center gap-2">
+            <div className="flex h-[84px] w-[300px] items-center justify-center rounded-[24px] shadow-lg shadow-black/10" style={{ background: v.bg }}>{v.logo}</div>
+            <p className="text-[16px] font-bold uppercase tracking-[0.14em]">{v.n}</p>
           </Item>
         ))}
       </div>
@@ -106,21 +104,21 @@ const STICKERS = [
 ];
 function PasoPersonalidad({ visible }: { visible: boolean }) {
   return (
-    <div className="flex flex-col items-center gap-10">
-      <div className="flex flex-wrap justify-center gap-x-6 gap-y-6">
+    <div className="flex flex-col items-center gap-4">
+      <div className="flex flex-wrap justify-center gap-x-5 gap-y-4">
         {MARCA_DATOS.personalidad.map((w, i) => (
           <Item key={w} visible={visible} i={i} style={{ rotate: `${STICKERS[i].r}deg` }}>
-            <span className="inline-block rounded-full border-4 border-white px-8 py-4 font-display text-[44px] font-bold leading-none shadow-lg shadow-black/15"
+            <span className="inline-block rounded-full border-4 border-white px-6 py-2 font-display text-[30px] font-bold leading-none shadow-lg shadow-black/15"
               style={{ background: STICKERS[i].bg, color: STICKERS[i].fg }}>{w}</span>
           </Item>
         ))}
       </div>
-      <div className="flex flex-col items-center gap-4">
-        <p className={`${caveat.className} text-[40px] leading-none`} style={{ color: C.terracota }}>Lo que no es</p>
-        <div className="flex flex-wrap justify-center gap-8">
+      <div className="flex items-center gap-6">
+        <p className={`${caveat.className} text-[32px] leading-none`} style={{ color: C.terracota }}>Lo que no es</p>
+        <div className="flex flex-wrap justify-center gap-6">
           {MARCA_DATOS.noEs.map((w, i) => (
             <Item key={w} visible={visible} i={i + 6}>
-              <span className="relative inline-block px-2 font-display text-[34px] font-semibold leading-tight opacity-70">
+              <span className="relative inline-block px-2 font-display text-[26px] font-semibold leading-tight opacity-70">
                 {w}
                 <svg aria-hidden viewBox="0 0 200 12" preserveAspectRatio="none" className="absolute left-0 top-1/2 h-3 w-full -translate-y-1/2"><path d="M2 7 Q50 1 100 6 T198 5" fill="none" stroke={C.terracota} strokeWidth="4" strokeLinecap="round" /></svg>
               </span>
@@ -137,7 +135,7 @@ function PasoPaleta({ visible }: { visible: boolean }) {
   const rm = useReducedMotion();
   const n = MARCA_DATOS.paleta.length;
   return (
-    <div className="flex flex-col items-center gap-8">
+    <div className="flex flex-col items-center gap-4">
       <div className="grid w-full grid-cols-9 gap-2">
         {MARCA_DATOS.paleta.map((c, i) => {
           const centro = i - (n - 1) / 2;
@@ -145,30 +143,34 @@ function PasoPaleta({ visible }: { visible: boolean }) {
             <motion.div key={c.hex} initial={false}
               animate={visible ? { opacity: 1, rotate: 0, x: 0, y: 0 } : { opacity: 0, rotate: rm ? 0 : centro * 9, x: rm ? 0 : -centro * 120, y: rm ? 0 : 40 }}
               transition={rm || !visible ? { duration: 0.2 } : { type: "spring", stiffness: 60, damping: 13, delay: 0.2 + i * 0.07 }}
-              style={{ transformOrigin: "50% 100%" }} className="flex flex-col items-center gap-3 text-center">
-              <span className="block h-[120px] w-[120px] rounded-full border-4 border-white shadow-lg shadow-black/20" style={{ background: c.hex, width: c.nota ? 84 : 120, height: c.nota ? 84 : 120, marginTop: c.nota ? 18 : 0, marginBottom: c.nota ? 18 : 0 }} />
-              <p className="text-[19px] font-bold leading-tight">{c.nombre}</p>
-              <p className="text-[17px] tabular-nums opacity-70">{c.hex}{c.nota ? <><br />{c.nota}</> : null}</p>
+              style={{ transformOrigin: "50% 100%" }} className="flex flex-col items-center gap-2 text-center">
+              <span className="block h-[80px] w-[80px] rounded-full border-4 border-white shadow-lg shadow-black/20" style={{ background: c.hex, width: c.nota ? 56 : 80, height: c.nota ? 56 : 80, marginTop: c.nota ? 12 : 0, marginBottom: c.nota ? 12 : 0 }} />
+              <p className="text-[17px] font-bold leading-tight">{c.nombre}</p>
+              <p className="text-[15px] tabular-nums opacity-70">{c.hex}{c.nota ? <><br />{c.nota}</> : null}</p>
             </motion.div>
           );
         })}
       </div>
-      <Item visible={visible} i={10}>
-        <p className="rounded-full px-8 py-3 font-display text-[30px] font-semibold" style={{ background: C.noche, color: C.crema }}>{MARCA_DATOS.notaPaleta}</p>
-      </Item>
     </div>
   );
+}
+
+function PasoMarca({ visible }: { visible: boolean }) {
+  return <div className="flex flex-col gap-10"><PasoLogo visible={visible} /><PasoPersonalidad visible={visible} /></div>;
+}
+function PasoIdentidad({ visible }: { visible: boolean }) {
+  return <div className="flex flex-col gap-10"><PasoPaleta visible={visible} /><PasoTipografia visible={visible} /></div>;
 }
 
 /* ───── Paso 4: tipografía ───── */
 function PasoTipografia({ visible }: { visible: boolean }) {
   return (
-    <div className="grid grid-cols-3 gap-8">
+    <div className="grid grid-cols-3 gap-6">
       {MARCA_DATOS.tipografias.map((f, i) => (
-        <Item key={f.nombre} visible={visible} i={i * 2} className="flex flex-col gap-4 rounded-[28px] bg-white px-8 py-8 shadow-xl shadow-black/10">
-          <p className="text-[18px] font-bold uppercase tracking-[0.14em]" style={{ color: C.turquesa }}>{f.nombre}</p>
-          <p className={`${f.clase === "caveat" ? caveat.className : f.clase} min-h-[130px] text-[56px] leading-[1.05]`} style={f.clase === "caveat" ? { color: C.terracota } : undefined}>{f.muestra}</p>
-          <p className="border-t-2 pt-4 text-[22px] leading-snug" style={{ borderColor: C.noche + "22" }}>{f.uso}</p>
+        <Item key={f.nombre} visible={visible} i={i * 2} className="flex flex-col gap-2 rounded-[24px] bg-white px-7 py-5 shadow-xl shadow-black/10">
+          <p className="text-[16px] font-bold uppercase tracking-[0.14em]" style={{ color: C.turquesa }}>{f.nombre}</p>
+          <p className={`${f.clase === "caveat" ? caveat.className : f.clase} text-[40px] leading-[1.1]`} style={f.clase === "caveat" ? { color: C.terracota } : undefined}>{f.muestra}</p>
+          <p className="border-t-2 pt-2 text-[19px] leading-snug" style={{ borderColor: C.noche + "22" }}>{f.uso}</p>
         </Item>
       ))}
     </div>
@@ -208,30 +210,13 @@ function PasoPilares({ visible }: { visible: boolean }) {
       </Item>
       <div className="grid grid-cols-4 gap-6">
         {MARCA_DATOS.pilares.map((p, i) => (
-          <Item key={p.id} visible={visible} i={i + 2} className="flex min-h-[390px] flex-col gap-5 rounded-[30px] px-7 py-8 shadow-xl shadow-black/15" style={{ background: p.color, color: p.texto }}>
+          <Item key={p.id} visible={visible} i={i + 2} className="flex min-h-[300px] flex-col gap-5 rounded-[30px] px-5 py-7 shadow-xl shadow-black/15" style={{ background: p.color, color: p.texto }}>
             <span className="flex h-[96px] w-[96px] items-center justify-center rounded-3xl" style={{ background: p.texto + "22" }}><Icono n={p.id} size={64} /></span>
-            <h3 className="font-display text-[38px] font-bold leading-none">{p.nombre}</h3>
-            <p className="text-[27px] leading-snug">{p.frase}</p>
+            <h3 className="font-display text-[31px] font-bold leading-none">{p.nombre}</h3>
+            <p className="text-[24px] leading-snug">{p.frase}</p>
           </Item>
         ))}
       </div>
-    </div>
-  );
-}
-
-/* ───── Paso 7: la app ───── */
-function PasoApp({ visible, cargar }: { visible: boolean; cargar: boolean }) {
-  return (
-    <div className="flex items-center justify-center gap-20">
-      <Item visible={visible} i={0} className="flex flex-col gap-6">
-        <LogoIcon size={96} />
-        <p className="font-display text-[68px] font-bold leading-[1.05]">{MARCA_DATOS.cierre}</p>
-      </Item>
-      <Item visible={visible} i={2}>
-        <div className="flex h-[640px] w-[320px] flex-col overflow-hidden rounded-[44px] border-[10px] bg-white shadow-2xl shadow-black/30" style={{ borderColor: C.noche }}>
-          {cargar && <iframe title="App de Rumbo con la marca aplicada" src="/prototipo?embed=1" className="block h-full w-full border-0" />}
-        </div>
-      </Item>
     </div>
   );
 }
@@ -242,7 +227,7 @@ export function Branding({ activa, paso }: { activa: boolean; paso: number }) {
   const p = activa ? paso : -1;
   const titulo = p === 0 ? { opacity: 1, x: 0, y: 280, scale: 1 } : p > 0 ? { opacity: 1, x: -565, y: 80, scale: 0.5 } : { opacity: 0, x: 0, y: 300, scale: 0.5 };
   const capa = (on: boolean) => ({ animate: { opacity: on ? 1 : 0 }, transition: { duration: rm ? 0.15 : 0.35, delay: on ? 0.15 : 0 }, style: { gridArea: "1 / 1", pointerEvents: on ? "auto" as const : "none" as const } });
-  const pasos = [PasoLogo, PasoPersonalidad, PasoPaleta, PasoTipografia, PasoVoz, PasoPilares];
+  const pasos = [PasoMarca, PasoIdentidad, PasoVoz, PasoPilares];
 
   return (
     <div className="relative h-full w-full overflow-hidden" style={{ background: C.crema, color: C.noche }}>
@@ -261,7 +246,6 @@ export function Branding({ activa, paso }: { activa: boolean; paso: number }) {
         {pasos.map((Paso, i) => (
           <motion.div key={i} aria-hidden={p !== i + 1} initial={false} {...capa(p === i + 1)}><Paso visible={p === i + 1} /></motion.div>
         ))}
-        <motion.div aria-hidden={p !== 7} initial={false} {...capa(p === 7)}><PasoApp visible={p === 7} cargar={p >= 6} /></motion.div>
       </div>
     </div>
   );

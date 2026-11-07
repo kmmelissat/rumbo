@@ -21,7 +21,7 @@ const MODELO_DATOS = {
   ],
   datosClave: [
     { quien: "Organizador", texto: "8% + $0.30 por entrada, y publicar es gratis" },
-    { quien: "Asistente", texto: "Solo paga el procesamiento de pago, sin cargo de servicio de Rumbo" },
+    { quien: "Asistente", texto: "Sin cargo de servicio de Rumbo" },
     { quien: "Pago al organizador", texto: "3 días hábiles después del evento" },
   ],
 };

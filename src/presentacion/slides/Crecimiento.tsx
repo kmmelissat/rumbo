@@ -18,7 +18,7 @@ const CRECIMIENTO_DATOS = {
         hipotesis: "Si publicamos cada semana \"3 rumbos para este finde\" en Instagram y TikTok, más gente entra a la web sin pagar anuncios.",
         cambio: "Guía semanal con enlace a Rumbo.",
         metrica: "Visitas a la web desde redes por semana.",
-        guardrail: "Cero gasto en anuncios (un clic cuesta unos $3.35 en promedio global y cada usuario deja unos $4.50 al año).",
+        guardrail: "Que el crecimiento siga siendo orgánico, sin depender de anuncios.",
         resultado: "",
       },
     },
@@ -76,13 +76,11 @@ const CRECIMIENTO_DATOS = {
       "Eventos guardados y compartidos",
       "Entradas vendidas",
       "Ingresos por organizador",
-      "Costo por conseguir un usuario",
     ],
     nota: "Con poco tráfico no hacemos A/B formal: comparamos una semana contra otra con el mismo tipo de evento y cambiamos una sola cosa a la vez.",
   },
   cierre: {
     frase: "Una hipótesis a la vez, y los números deciden",
-    salida: "¿Cuánto cuesta todo esto? Hagamos la cuenta",
   },
 };
 
@@ -253,7 +251,6 @@ function PasoCierre({ visible }: { visible: boolean }) {
         <Aguja size={150} />
       </motion.div>
       <Item visible={visible} i={1}><h2 className="max-w-[1200px] font-display text-[78px] font-bold leading-[1.05]">{d.frase}</h2></Item>
-      <Item visible={visible} i={4}><p className={`${caveat.className} text-[52px] leading-none`} style={{ color: C.terracota }}>{d.salida}</p></Item>
     </div>
   );
 }

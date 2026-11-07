@@ -9,7 +9,7 @@ import { Branding } from "./Branding";
 import { Estrategia } from "./Estrategia";
 import { Redes } from "./Redes";
 import { Crecimiento } from "./Crecimiento";
-import { Costos } from "./Costos";
+import { Cierre } from "./Cierre";
 
 /** Registro del viaje: una entrada por parada. Agrega aquí las nuevas slides. */
 export const PARADAS: Parada[] = [
@@ -73,20 +73,20 @@ export const PARADAS: Parada[] = [
     notas: [
       "Idea fuerza: Rumbo gana de 7 formas y lo único que hay que entender es quién paga qué.\nDeja leer el título y avanza.",
       "Organizadores pagan cuatro líneas, marcas y negocios dos, y los combos llevan la comisión incluida en el precio.\nSon siete líneas en una sola plataforma.",
-      "Organizador: 8% + $0.30 por entrada y publicar es gratis; asistente: solo el procesamiento de pago.\nEl organizador cobra 3 días hábiles después del evento. Al avanzar pasas a la siguiente slide.",
+      "Organizador: 8% + $0.30 por entrada y publicar es gratis; asistente: sin cargo de servicio de Rumbo.\nEl organizador cobra 3 días hábiles después del evento. Al avanzar pasas a la siguiente slide.",
     ],
     Componente: ModeloNegocio,
   },
   {
     id: "branding",
     titulo: "Branding",
-    pasos: 8,
+    pasos: 5,
     notas: [
       "Idea fuerza: Rumbo es la brújula del fin de semana; no buscas planes, los descubres. Lee el título y deja ver la frase.",
-      "Logo: el cuadrado turquesa con la R y la chispa-brújula mostaza. Muestra las tres variantes: principal, invertida y mono.",
-      "Personalidad: aventurera, juvenil, cercana, juguetona y confiable al pagar. Y lo que no es: corporativa, una ticketera fría ni un collage caótico.",
-      "Paleta y tipografía: azul noche y turquesas con crema, mostaza, bosque, coral y lima; el naranja nunca es el principal. Fraunces para títulos, DM Sans para texto y Caveat solo en stickers y notas.",
-      "Voz y pilares: tuteo, directo y con humor ligero; lo local viene del contenido. Aventura, conexión, emprendedurismo y bienestar, todos con contexto local. Cierra con la app y pasa a marketing.",
+      "Logo y personalidad: el cuadrado turquesa con la R y la chispa-brújula mostaza, en sus tres variantes. Aventurera, juvenil, cercana, juguetona y confiable al pagar; no es corporativa, ni una ticketera fría, ni un collage caótico.",
+      "Paleta y tipografía: azul noche y turquesas con crema, mostaza, bosque, coral y lima; Fraunces para títulos, DM Sans para texto y Caveat solo en stickers y notas.",
+      "Voz: tuteo, directo y con humor ligero; lo local viene del contenido, no de jerga forzada.",
+      "Pilares: aventura, conexión, emprendedurismo y bienestar, todos con contexto local. Pasa a marketing.",
     ],
     Componente: Branding,
   },
@@ -96,7 +96,7 @@ export const PARADAS: Parada[] = [
     pasos: 7,
     notas: [
       "Idea fuerza: Rumbo llega a la gente por contenido, por los organizadores y por alianzas, no por anuncios pagados.",
-      "Por qué orgánico: $4.50 al año por usuario contra $3.35 por clic en Instagram. Aclara que es un promedio global, no de El Salvador. Pagar por clics no se sostiene.",
+      "Por qué orgánico: el crecimiento viene de contenido, organizadores que comparten su evento y alianzas.",
       "Embudo: descubre, guarda, comparte, compra, vuelve. Sin números de conversión; lo que mueve cada etapa es contenido, la web móvil, WhatsApp, un solo QR y la guía semanal.",
       "Canales y relación con cada cliente: web móvil como canal principal, Instagram y TikTok, WhatsApp, la guía semanal y los propios organizadores. Asistentes en autoservicio, organizadores con atención personal al inicio, marcas con trato directo.",
       "Arranque: un tipo de evento, una zona (San Salvador y La Libertad) y organizadores aliados como Farmer's Market y Sivar Emprende antes de abrir al público.",
@@ -130,22 +130,19 @@ export const PARADAS: Parada[] = [
       "Ingresos: cobrar a mano un primer evento destacado de $30, con dinero real. Guardrail: que valga la pena para el organizador.",
       "Referidos: compartir por WhatsApp una ficha clara del evento, sin mensajes automáticos a contactos.",
       "Cómo medimos: siete métricas. Con poco tráfico comparamos una semana contra otra, con el mismo tipo de evento y un solo cambio a la vez; no hay A/B formal.",
-      "Cierre: una hipótesis a la vez, y los números deciden. Lanza \"¿Cuánto cuesta todo esto? Hagamos la cuenta\" y pasa a Costos y punto de equilibrio.",
+      "Cierre: una hipótesis a la vez, y los números deciden.",
     ],
     Componente: Crecimiento,
   },
   {
-    id: "costos",
-    titulo: "Costos y punto de equilibrio",
-    pasos: 6,
+    id: "cierre",
+    titulo: "Encuentra tu rumbo",
+    pasos: 3,
     notas: [
-      "Idea fuerza: Rumbo cuesta poco de operar y con unas 100 entradas al mes cubre sus costos fijos. Deja leer el título.",
-      "Seis costos: constituir la empresa ($1), desarrollo ($0 en efectivo, el costo es el tiempo del equipo), hosting ($0 o $25), marketing orgánico con $100 de promoción, pasarela (la paga el asistente) y contador.",
-      "Una entrada de $12: 8% son $0.96, más $0.30 fijos, dejan $1.26 a Rumbo. El procesamiento de pago va aparte.",
-      "Momento fuerte: $125 al mes de costos fijos entre $1.26 por entrada da unas 100 entradas. Espera a que el punto llegue al cruce. Aclara: sin contador ni sueldos, es un ejemplo con supuestos, no una previsión.",
-      "Mueve el deslizador de 0 a 300 entradas. Las tres palancas son el precio de la entrada, las entradas por evento y los costos fijos; no se inventan cifras nuevas.",
-      "Cierre: pocas entradas al mes bastan para cubrir la operación. Lanza \"¿Y qué podría salir mal? Vamos con eso\" y pasa a Plan y riesgos.",
+      "Aparece \"Encuentra tu rumbo\": Rumbo conecta a los salvadoreños con lo que pasa en su país. Deja que lo lean.",
+      "Entran los cuatro pilares: aventura, conexión, emprendedurismo y bienestar.",
+      "Presenta al equipo y lee la línea de qué sigue. Cierra dando las gracias; la brújula llega a su destino.",
     ],
-    Componente: Costos,
+    Componente: Cierre,
   },
 ];

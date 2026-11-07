@@ -3,15 +3,14 @@ import { type CSSProperties, type ReactNode } from "react";
 import { Caveat } from "next/font/google";
 import { motion, useReducedMotion } from "motion/react";
 
-/** Textos y cifras editables. Las únicas cifras son las de este bloque. */
+/** Textos y cifras editables.  */
 const ESTRATEGIA_DATOS = {
   titulo: "Cómo llega Rumbo a la gente",
   subtitulo: "(sin pagar por cada clic)",
   porQue: {
-    a: { cifra: "$4.50", texto: "al año por usuario" },
-    b: { cifra: "$3.35", texto: "por clic en Instagram (promedio global)" },
-    mensaje: "Pagar por clics no se sostiene. Los usuarios llegan por contenido, por organizadores que comparten su evento y por alianzas.",
-    nota: "Promedio global de anuncios, no específico de El Salvador.",
+    a: { cifra: "Contenido", texto: "Los planes de la semana, donde el público ya está" },
+    b: { cifra: "Organizadores", texto: "Comparten su evento con su propia audiencia" },
+    mensaje: "El crecimiento es orgánico: los usuarios llegan por contenido, por organizadores que comparten su evento y por alianzas.",
   },
   embudo: [
     { etapa: "Descubre", icono: "lupa", texto: "Instagram y TikTok con los planes de la semana, y la guía semanal de planes." },
@@ -44,7 +43,6 @@ const ESTRATEGIA_DATOS = {
     { nombre: "Eventos guardados y compartidos", mide: "Si hay interés" },
     { nombre: "Reservas o entradas vendidas", mide: "Si hay intención de compra" },
     { nombre: "Ingresos por organizador", mide: "Si se puede monetizar" },
-    { nombre: "Costo por conseguir un usuario", mide: "Si el crecimiento es sostenible" },
   ],
   cierre: "¿Cómo se ve eso en redes? Mira",
 };
@@ -89,18 +87,17 @@ function PasoPorQue({ visible }: { visible: boolean }) {
     <div className="flex flex-col items-center gap-8">
       <div className="flex items-center gap-8">
         <motion.div {...choque(-240)} className="w-[560px] rounded-[30px] px-10 py-9 text-center shadow-xl shadow-black/10" style={{ background: C.turquesa, color: "#fff" }}>
-          <p className="font-display text-[112px] font-bold leading-none">{d.a.cifra}</p>
+          <p className="font-display text-[64px] font-bold leading-none">{d.a.cifra}</p>
           <p className="mt-3 text-[30px] font-semibold leading-snug">{d.a.texto}</p>
         </motion.div>
-        <span className="font-display text-[40px] font-bold" style={{ color: C.terracota }}>vs</span>
+        <span className="font-display text-[40px] font-bold" style={{ color: C.terracota }}>+</span>
         <motion.div {...choque(240)} className="w-[560px] rounded-[30px] px-10 py-9 text-center shadow-xl shadow-black/10" style={{ background: C.mostaza, color: C.noche }}>
-          <p className="font-display text-[112px] font-bold leading-none">{d.b.cifra}</p>
+          <p className="font-display text-[64px] font-bold leading-none">{d.b.cifra}</p>
           <p className="mt-3 text-[30px] font-semibold leading-snug">{d.b.texto}</p>
         </motion.div>
       </div>
       <Item visible={visible} base={0.9} className="flex max-w-[1100px] flex-col items-center gap-3 text-center">
         <p className="font-display text-[38px] font-semibold leading-snug">{d.mensaje}</p>
-        <p className="text-[18px] opacity-60">{d.nota}</p>
       </Item>
     </div>
   );
