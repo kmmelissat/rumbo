@@ -4,8 +4,11 @@ import type { ComponentType } from "react";
 export interface Parada {
   id: string;
   titulo: string;
-  notas: string;
-  Componente: ComponentType<{ activa: boolean }>;
+  /** Notas del modo presentador: un texto, o uno por paso si la parada tiene pasos. */
+  notas: string | string[];
+  /** Momentos internos que avanzan con → (por defecto 1). */
+  pasos?: number;
+  Componente: ComponentType<{ activa: boolean; paso: number }>;
 }
 
 /** Medidas del escenario: todo se diseña en 1600 x 900 y se escala. */

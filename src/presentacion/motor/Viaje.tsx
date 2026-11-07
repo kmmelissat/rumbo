@@ -28,6 +28,7 @@ function Escena({ i, pos, activa, children }: { i: number; pos: MotionValue<numb
 export function Viaje() {
   const total = PARADAS.length;
   const [indice, setIndice] = useState(0);
+  const [paso, setPaso] = useState(0);
   const [listo, setListo] = useState(false);
   const [presentador, setPresentador] = useState(false);
   const [vp, setVp] = useState({ w: 1280, h: 720 });
@@ -36,19 +37,31 @@ export function Viaje() {
   const trackX = useTransform(pos, (p) => -p * ANCHO);
   const toque = useRef<{ x: number; y: number } | null>(null);
 
-  const ir = useCallback((n: number) => {
+  const pasosDe = (i: number) => PARADAS[i].pasos ?? 1;
+
+  const ir = useCallback((n: number, pasoFinal = 0) => {
     const i = limitar(n, total - 1);
     setIndice(i);
+    setPaso(pasoFinal);
     objetivo.set(i);
     if (window.location.hash !== `#${i + 1}`) window.history.replaceState(null, "", `#${i + 1}`);
   }, [objetivo, total]);
+
+  const avanzar = useCallback(() => {
+    if (paso < (PARADAS[indice].pasos ?? 1) - 1) setPaso(paso + 1);
+    else if (indice < total - 1) ir(indice + 1);
+  }, [paso, indice, total, ir]);
+  const retroceder = useCallback(() => {
+    if (paso > 0) setPaso(paso - 1);
+    else if (indice > 0) ir(indice - 1, (PARADAS[indice - 1].pasos ?? 1) - 1);
+  }, [paso, indice, ir]);
 
   // Arranque: lee el hash, sin animar desde la parada 0 si viene con #n.
   useEffect(() => {
     const i = desdeHash();
     setIndice(i); objetivo.jump(i); pos.jump(i);
     setListo(true);
-    const alHash = () => { const j = desdeHash(); setIndice(j); objetivo.set(j); };
+    const alHash = () => { const j = desdeHash(); setIndice(j); setPaso(0); objetivo.set(j); };
     window.addEventListener("hashchange", alHash);
     return () => window.removeEventListener("hashchange", alHash);
   }, [objetivo, pos]);
@@ -64,8 +77,8 @@ export function Viaje() {
     const tecla = (e: KeyboardEvent) => {
       if (e.metaKey || e.ctrlKey || e.altKey) return;
       const k = e.key;
-      if (k === "ArrowRight" || k === "PageDown" || (k === " " && !e.shiftKey)) { e.preventDefault(); ir(indice + 1); }
-      else if (k === "ArrowLeft" || k === "PageUp" || (k === " " && e.shiftKey)) { e.preventDefault(); ir(indice - 1); }
+      if (k === "ArrowRight" || k === "PageDown" || (k === " " && !e.shiftKey)) { e.preventDefault(); avanzar(); }
+      else if (k === "ArrowLeft" || k === "PageUp" || (k === " " && e.shiftKey)) { e.preventDefault(); retroceder(); }
       else if (k === "Home") ir(0);
       else if (k === "End") ir(total - 1);
       else if (k === "f" || k === "F") {
@@ -75,7 +88,7 @@ export function Viaje() {
     };
     window.addEventListener("keydown", tecla);
     return () => window.removeEventListener("keydown", tecla);
-  }, [indice, ir, total]);
+  }, [avanzar, retroceder, ir, total]);
 
   const escala = Math.min(vp.w / ANCHO, vp.h / ALTO);
   const ancho = vp.w;
@@ -87,8 +100,8 @@ export function Viaje() {
         const t = toque.current; toque.current = null;
         if (!t || (e.target as HTMLElement).closest("[data-nodrag]")) return;
         const dx = e.clientX - t.x, dy = e.clientY - t.y;
-        if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) ir(indice + (dx < 0 ? 1 : -1));
-        else if (Math.abs(dx) < 10 && Math.abs(dy) < 10) ir(indice + 1);
+        if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) (dx < 0 ? avanzar : retroceder)();
+        else if (Math.abs(dx) < 10 && Math.abs(dy) < 10) avanzar();
       }}>
       <FondoViaje pos={pos} total={total} ancho={ancho} />
 
@@ -97,7 +110,7 @@ export function Viaje() {
           <RutaMundo total={total} />
           {PARADAS.map((p, i) => (
             <Escena key={p.id} i={i} pos={pos} activa={i === indice}>
-              <p.Componente activa={listo && i === indice} />
+              <p.Componente activa={listo && i === indice} paso={i === indice ? paso : 0} />
             </Escena>
           ))}
         </motion.div>
@@ -106,11 +119,11 @@ export function Viaje() {
       <BarraRuta paradas={PARADAS} indice={indice} pos={pos} ir={ir} />
 
       <p className="pointer-events-none absolute bottom-3 left-4 z-30 text-xs font-bold text-oceano/70" aria-hidden>
-        {indice + 1} / {total} · ← → navegar · F pantalla completa · N presentador
+        {indice + 1} / {total}{pasosDe(indice) > 1 ? ` · paso ${paso + 1}/${pasosDe(indice)}` : ""} · ← → navegar · F pantalla completa · N presentador
       </p>
 
       <AnimatePresence>
-        {presentador && <Presentador actual={PARADAS[indice]} siguiente={PARADAS[indice + 1]} indice={indice} total={total} />}
+        {presentador && <Presentador paso={paso} actual={PARADAS[indice]} siguiente={PARADAS[indice + 1]} indice={indice} total={total} />}
       </AnimatePresence>
     </div>
   );
