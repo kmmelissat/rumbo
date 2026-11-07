@@ -5,6 +5,8 @@ import { AsiSeVe } from "./AsiSeVe";
 import { Clientes } from "./Clientes";
 import { Mercado } from "./Mercado";
 import { Competencia } from "./Competencia";
+import { ModeloNegocio } from "./ModeloNegocio";
+import { Branding } from "./Branding";
 
 /** Registro del viaje: una entrada por parada. Agrega aquí las nuevas slides. */
 export const PARADAS: Parada[] = [
@@ -74,5 +76,33 @@ export const PARADAS: Parada[] = [
       "Defensa: un calendario se copia fácil, así que la ventaja es la red de organizadores y alianzas y los datos de qué eventos funcionan. Primera prioridad: construir esa red. Da paso a la siguiente parada.",
     ],
     Componente: Competencia,
+  },
+  {
+    id: "modelo-negocio",
+    titulo: "Modelo de negocio",
+    pasos: 7,
+    notas: [
+      "Idea fuerza: Rumbo gana de 7 formas y lo más claro es quién paga cada una. Los montos de las tarjetas son ejemplos.",
+      "Organizadores: Rumbo cobra comisión por entradas y por reservas y stands (se descuenta de su pago), el organizador paga $30 por destacar un evento, y el plan profesional cuesta de $15 a $25 al mes.",
+      "Marcas y negocios: las promociones comerciales (una cafetería paga $60 por una semana) y los combos patrocinados (una bebida regalada por $150, con 90 canjes).",
+      "Combos: Rumbo cobra comisión por combos y el precio ya la incluye. Las cifras de uso se miden en la validación.",
+      "Quién paga qué: el organizador paga 8% + $0.30 por entrada, descontado de su pago; los eventos gratuitos no llevan comisión ni fees; cobra 3 días hábiles después del evento. El asistente paga solo el procesamiento, unos 3.8% en total, visible antes de pagar y sin cargo de servicio de Rumbo.",
+      "Cómo está pensado el cobro: 500 entradas de $12 al mes dejan $630 brutos ($480 del 8% más $150 de los $0.30). Si Rumbo absorbiera 3.6% ($216) quedarían $414, todavía antes de reembolsos, IVA, disputas y operación.",
+      "Cierre: \"Y todo esto ya se puede ver funcionando\"; volvemos a la demo.",
+    ],
+    Componente: ModeloNegocio,
+  },
+  {
+    id: "branding",
+    titulo: "Branding",
+    pasos: 8,
+    notas: [
+      "Idea fuerza: Rumbo es la brújula del fin de semana; no buscas planes, los descubres. Lee el título y deja ver la frase.",
+      "Logo: el cuadrado turquesa con la R y la chispa-brújula mostaza. Muestra las tres variantes: principal, invertida y mono.",
+      "Personalidad: aventurera, juvenil, cercana, juguetona y confiable al pagar. Y lo que no es: corporativa, una ticketera fría ni un collage caótico.",
+      "Paleta y tipografía: azul noche y turquesas con crema, mostaza, bosque, coral y lima; el naranja nunca es el principal. Fraunces para títulos, DM Sans para texto y Caveat solo en stickers y notas.",
+      "Voz y pilares: tuteo, directo y con humor ligero; lo local viene del contenido. Aventura, conexión, emprendedurismo y bienestar, todos con contexto local. Cierra con la app y pasa a marketing.",
+    ],
+    Componente: Branding,
   },
 ];
