@@ -2,11 +2,14 @@ import type { Parada } from "../tipos";
 import { Portada } from "./Portada";
 import { Problema } from "./Problema";
 import { AsiSeVe } from "./AsiSeVe";
-import { Clientes } from "./Clientes";
-import { Mercado } from "./Mercado";
+import { ClientesMercado } from "./ClientesMercado";
 import { Competencia } from "./Competencia";
 import { ModeloNegocio } from "./ModeloNegocio";
 import { Branding } from "./Branding";
+import { Estrategia } from "./Estrategia";
+import { Redes } from "./Redes";
+import { Crecimiento } from "./Crecimiento";
+import { Costos } from "./Costos";
 
 /** Registro del viaje: una entrada por parada. Agrega aquí las nuevas slides. */
 export const PARADAS: Parada[] = [
@@ -38,29 +41,15 @@ export const PARADAS: Parada[] = [
     Componente: AsiSeVe,
   },
   {
-    id: "clientes",
-    titulo: "Clientes",
+    id: "clientes-mercado",
+    titulo: "Clientes y mercado",
     pasos: 3,
     notas: [
-      "Idea fuerza: Rumbo tiene dos lados, quien descubre y quien organiza, y los dos ganan. Deja que las mitades se encuentren en la brújula.",
-      "Asistente (Andrea Salazar, 25): profesional joven del área metropolitana que gasta $15-$40 por salida. Recorre qué busca, qué le duele y qué gana. Aclara que es un perfil construido, no una entrevista.",
-      "Organizadora (Camila Rivas, 29): productora de ferias y mercaditos que busca 400-1,500 visitantes por fin de semana. Cierra con la idea de que los dos lados se necesitan.",
+      "Idea fuerza: Rumbo tiene dos lados, quien descubre y quien organiza. Andrea Salazar (25) gasta $15-$40 por salida y Camila Rivas (29) cobra $25-$50 por stand.\nAclara que son perfiles construidos, no entrevistas.",
+      "Los dos lados se necesitan: más asistentes atraen más organizadores, y más organizadores atraen más asistentes.\nDeja correr las partículas y avanza.",
+      "Mercado en personas de 21 a 32 años: TAM 1.4 millones (unos $257 millones de gasto en salidas), SAM 424 mil (unos $76 millones) y SOM de 8.5 mil a 21 mil usuarios (unos $31 mil a $76 mil en comisiones).\nRepite que TAM y SAM son gasto de la gente; el ingreso de Rumbo es solo el SOM. Fuente: Censo 2024 y ONU World Population Prospects 2024.",
     ],
-    Componente: Clientes,
-  },
-  {
-    id: "mercado",
-    titulo: "Mercado",
-    pasos: 6,
-    notas: [
-      "Idea fuerza: el tamaño de la oportunidad, de lo grande a lo que alcanzamos primero. Aclara desde ya que TAM y SAM son gasto de las personas en salidas, no ingreso de Rumbo.",
-      "TAM: 1.4 millones de personas de 21 a 32 años en El Salvador (Censo 2024 y ONU World Population Prospects 2024). Con un gasto aproximado de $180 al año en salidas da cerca de $257 millones de gasto potencial.",
-      "SAM: unas 424 mil personas en San Salvador y La Libertad con acceso a internet. Mismo gasto por persona: cerca de $76 millones. Es donde hoy se promocionan por redes los eventos locales, mercaditos y experiencias.",
-      "SOM: entre 2% y 5% del SAM en el primer año, de 8.5 mil a 21 mil usuarios activos. Con una comisión aproximada de $3.6 por usuario al año, el ingreso de Rumbo es de $31 mil a $76 mil.",
-      "Recorre las tres fórmulas. Repite la aclaración: el ingreso de Rumbo es solo la comisión, es decir, el SOM. Fuente: Censo 2024 de El Salvador y ONU World Population Prospects 2024.",
-      "Cierre: la brújula apunta al SOM. Empezamos por ahí. Lanza la pregunta \"¿Y quién más está en este camino?\" y avanza a Competencia.",
-    ],
-    Componente: Mercado,
+    Componente: ClientesMercado,
   },
   {
     id: "competencia",
@@ -80,15 +69,11 @@ export const PARADAS: Parada[] = [
   {
     id: "modelo-negocio",
     titulo: "Modelo de negocio",
-    pasos: 7,
+    pasos: 3,
     notas: [
-      "Idea fuerza: Rumbo gana de 7 formas y lo más claro es quién paga cada una. Los montos de las tarjetas son ejemplos.",
-      "Organizadores: Rumbo cobra comisión por entradas y por reservas y stands (se descuenta de su pago), el organizador paga $30 por destacar un evento, y el plan profesional cuesta de $15 a $25 al mes.",
-      "Marcas y negocios: las promociones comerciales (una cafetería paga $60 por una semana) y los combos patrocinados (una bebida regalada por $150, con 90 canjes).",
-      "Combos: Rumbo cobra comisión por combos y el precio ya la incluye. Las cifras de uso se miden en la validación.",
-      "Quién paga qué: el organizador paga 8% + $0.30 por entrada, descontado de su pago; los eventos gratuitos no llevan comisión ni fees; cobra 3 días hábiles después del evento. El asistente paga solo el procesamiento, unos 3.8% en total, visible antes de pagar y sin cargo de servicio de Rumbo.",
-      "Cómo está pensado el cobro: 500 entradas de $12 al mes dejan $630 brutos ($480 del 8% más $150 de los $0.30). Si Rumbo absorbiera 3.6% ($216) quedarían $414, todavía antes de reembolsos, IVA, disputas y operación.",
-      "Cierre: \"Y todo esto ya se puede ver funcionando\"; volvemos a la demo.",
+      "Idea fuerza: Rumbo gana de 7 formas y lo único que hay que entender es quién paga qué.\nDeja leer el título y avanza.",
+      "Organizadores pagan cuatro líneas, marcas y negocios dos, y los combos llevan la comisión incluida en el precio.\nSon siete líneas en una sola plataforma.",
+      "Organizador: 8% + $0.30 por entrada y publicar es gratis; asistente: solo el procesamiento de pago.\nEl organizador cobra 3 días hábiles después del evento. Al avanzar pasas a la siguiente slide.",
     ],
     Componente: ModeloNegocio,
   },
@@ -104,5 +89,63 @@ export const PARADAS: Parada[] = [
       "Voz y pilares: tuteo, directo y con humor ligero; lo local viene del contenido. Aventura, conexión, emprendedurismo y bienestar, todos con contexto local. Cierra con la app y pasa a marketing.",
     ],
     Componente: Branding,
+  },
+  {
+    id: "estrategia",
+    titulo: "Estrategia de marketing",
+    pasos: 7,
+    notas: [
+      "Idea fuerza: Rumbo llega a la gente por contenido, por los organizadores y por alianzas, no por anuncios pagados.",
+      "Por qué orgánico: $4.50 al año por usuario contra $3.35 por clic en Instagram. Aclara que es un promedio global, no de El Salvador. Pagar por clics no se sostiene.",
+      "Embudo: descubre, guarda, comparte, compra, vuelve. Sin números de conversión; lo que mueve cada etapa es contenido, la web móvil, WhatsApp, un solo QR y la guía semanal.",
+      "Canales y relación con cada cliente: web móvil como canal principal, Instagram y TikTok, WhatsApp, la guía semanal y los propios organizadores. Asistentes en autoservicio, organizadores con atención personal al inicio, marcas con trato directo.",
+      "Arranque: un tipo de evento, una zona (San Salvador y La Libertad) y organizadores aliados como Farmer's Market y Sivar Emprende antes de abrir al público.",
+      "Medición: siete indicadores y qué permite entender cada uno. Cierra con \"¿Cómo se ve eso en redes? Mira\" y pasa a la siguiente slide.",
+    ],
+    Componente: Estrategia,
+  },
+  {
+    id: "redes",
+    titulo: "Contenido para redes",
+    pasos: 9,
+    notas: [
+      "Idea fuerza: así se ve Rumbo donde la gente ya está. Todas las piezas están dibujadas en código, con la marca aplicada.",
+      "Reel o TikTok \"3 rumbos para este finde\": el gancho \"Tu finde ya tiene plan\" en los primeros 3 segundos, tres planes y cierre con guardar. Después, stories con cuenta regresiva, encuesta y enlace: un sticker por story.",
+      "Carrusel de la guía semanal (portada, dos planes y cierre \"Guarda tu plan en Rumbo\"), flyer del evento destacado de $30 con QR grande y sello de pasaporte, y el post de Camila que comparte su mercadito en Rumbo.",
+      "Una pieza por pilar: aventura, conexión, emprendedurismo y bienestar, cada una con su color. Plantillas recurrentes y hashtags.",
+      "Regla de oro: Instagram y TikTok son para descubrir; la compra pasa en un solo enlace y un solo QR. Cierra con \"¿Y cómo sabemos si funciona? Lo medimos\".",
+    ],
+    Componente: Redes,
+  },
+  {
+    id: "crecimiento",
+    titulo: "Crecimiento",
+    pasos: 9,
+    notas: [
+      "Idea fuerza: Rumbo crece con experimentos pequeños, uno por etapa del embudo. Deja leer el título.",
+      "Embudo AARRR: adquisición, activación, retención, ingresos y referidos. La brújula recorre las cinco etapas.",
+      "Adquisición: la guía semanal \"3 rumbos para este finde\" en redes, sin anuncios. Cada experimento tiene hipótesis, cambio, métrica y guardrail; el resultado dice \"en medición\" hasta que haya datos reales.",
+      "Activación: guardar un evento sin crear cuenta. El guardrail es que el tiempo en la página y los errores no empeoren.",
+      "Retención: recordatorio por WhatsApp del plan guardado. Guardrail: que no suban las bajas ni las quejas.",
+      "Ingresos: cobrar a mano un primer evento destacado de $30, con dinero real. Guardrail: que valga la pena para el organizador.",
+      "Referidos: compartir por WhatsApp una ficha clara del evento, sin mensajes automáticos a contactos.",
+      "Cómo medimos: siete métricas. Con poco tráfico comparamos una semana contra otra, con el mismo tipo de evento y un solo cambio a la vez; no hay A/B formal.",
+      "Cierre: una hipótesis a la vez, y los números deciden. Lanza \"¿Cuánto cuesta todo esto? Hagamos la cuenta\" y pasa a Costos y punto de equilibrio.",
+    ],
+    Componente: Crecimiento,
+  },
+  {
+    id: "costos",
+    titulo: "Costos y punto de equilibrio",
+    pasos: 6,
+    notas: [
+      "Idea fuerza: Rumbo cuesta poco de operar y con unas 100 entradas al mes cubre sus costos fijos. Deja leer el título.",
+      "Seis costos: constituir la empresa ($1), desarrollo ($0 en efectivo, el costo es el tiempo del equipo), hosting ($0 o $25), marketing orgánico con $100 de promoción, pasarela (la paga el asistente) y contador.",
+      "Una entrada de $12: 8% son $0.96, más $0.30 fijos, dejan $1.26 a Rumbo. El procesamiento de pago va aparte.",
+      "Momento fuerte: $125 al mes de costos fijos entre $1.26 por entrada da unas 100 entradas. Espera a que el punto llegue al cruce. Aclara: sin contador ni sueldos, es un ejemplo con supuestos, no una previsión.",
+      "Mueve el deslizador de 0 a 300 entradas. Las tres palancas son el precio de la entrada, las entradas por evento y los costos fijos; no se inventan cifras nuevas.",
+      "Cierre: pocas entradas al mes bastan para cubrir la operación. Lanza \"¿Y qué podría salir mal? Vamos con eso\" y pasa a Plan y riesgos.",
+    ],
+    Componente: Costos,
   },
 ];
