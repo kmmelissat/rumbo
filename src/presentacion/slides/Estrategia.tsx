@@ -2,6 +2,8 @@
 import { type CSSProperties, type ReactNode } from "react";
 import { Caveat } from "next/font/google";
 import { motion, useReducedMotion } from "motion/react";
+import { Entra } from "../componentes/Entra";
+import { Brujula } from "../componentes/Brujula";
 
 /** Textos y cifras editables.  */
 const ESTRATEGIA_DATOS = {
@@ -207,7 +209,128 @@ function PasoMetricas({ visible }: { visible: boolean }) {
   );
 }
 
+/* ───────────── Rediseño (V2): estrategia + crecimiento en 3 pasos ───────────── */
+
+/** Textos editables. Hipótesis, guardrails y demás van en las notas del presentador. */
+const ESTRATEGIA_V2 = {
+  titulo: "Cómo llega y cómo crece Rumbo",
+  subtitulo: "(orgánico primero, con un impulso pequeño)",
+  etapas: [
+    { letra: "A", etapa: "Adquisición", icono: "video", canal: "Instagram y TikTok", experimento: "Guía semanal \"3 rumbos para este finde\"", metrica: "Visitas a la web desde redes por semana" },
+    { letra: "A", etapa: "Activación", icono: "movil", canal: "Web móvil y QR en mercaditos", experimento: "Guardar sin crear cuenta", metrica: "% que guarda un plan en su primera visita" },
+    { letra: "R", etapa: "Retención", icono: "chat", canal: "WhatsApp y guía semanal", experimento: "Recordatorio del plan guardado", metrica: "Usuarios que regresan la semana siguiente" },
+    { letra: "R", etapa: "Ingresos", icono: "boleto", canal: "Los organizadores", experimento: "Cobrar a mano un evento destacado de $30", metrica: "Organizadores que pagan" },
+    { letra: "R", etapa: "Referidos", icono: "enviar", canal: "WhatsApp (botón compartir)", experimento: "Ficha clara del evento al compartir", metrica: "Eventos compartidos y visitas desde esos enlaces" },
+  ],
+  arranque: "Un tipo de evento, en San Salvador y La Libertad, con organizadores aliados antes de abrir al público",
+  frase: "Una hipótesis a la vez, y los números deciden",
+};
+
+function NotaCaveat({ className = "", style, children }: { className?: string; style?: CSSProperties; children: ReactNode }) {
+  return <p className={`${caveat.className} ${className}`} style={style}>{children}</p>;
+}
+
+const FICHA_V2 = 268, PASO_V2 = FICHA_V2 + 25, BR_V2 = 64;
+const posV2 = (i: number) => i * PASO_V2 + (FICHA_V2 - BR_V2) / 2;
+
+function EmbudoV2({ visible }: { visible: boolean }) {
+  const rm = useReducedMotion();
+  const et = ESTRATEGIA_V2.etapas;
+  const N = et.length;
+  return (
+    <div className="flex flex-col gap-4">
+      <div className="flex gap-[25px]">
+        {et.map((e, i) => (
+          <motion.div key={e.etapa} initial={false} className="flex h-[150px] flex-col justify-center gap-3 rounded-[24px] border-2 px-6 shadow-lg shadow-black/10"
+            style={{ width: FICHA_V2, borderColor: C.turquesa, background: "#fff" }}
+            animate={{ opacity: visible ? 1 : 0.35 }}
+            transition={{ duration: rm ? 0.2 : 0.4, delay: visible && !rm ? 0.6 + i * 0.6 : 0 }}>
+            <div className="flex items-center gap-3">
+              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full font-display text-[28px] font-bold" style={{ background: C.mostaza, color: C.noche }}>{e.letra}</span>
+              <span style={{ color: C.turquesa }}><Icono n={e.icono} size={40} /></span>
+            </div>
+            <h3 className="font-display text-[34px] font-bold leading-none">{e.etapa}</h3>
+          </motion.div>
+        ))}
+      </div>
+      {/* Ruta punteada con la brújula recorriendo las cinco etapas */}
+      <div className="relative h-[72px]" style={{ width: 1440 }}>
+        <div aria-hidden className="absolute top-1/2 -translate-y-1/2 border-t-[5px] border-dotted" style={{ left: FICHA_V2 / 2, right: FICHA_V2 / 2, borderColor: C.turquesa }} />
+        <div className="relative flex h-full gap-[25px]">
+          {et.map((e) => <span key={e.etapa} className="flex items-center justify-center" style={{ width: FICHA_V2 }}><span className="block h-6 w-6 rounded-full border-[5px]" style={{ borderColor: C.turquesa, background: C.crema }} /></span>)}
+        </div>
+        <motion.div aria-hidden initial={false} className="absolute left-0 top-1" style={{ width: BR_V2 }}
+          animate={visible ? { opacity: 1, x: rm ? posV2(N - 1) : et.map((_, i) => posV2(i)) } : { opacity: 0, x: posV2(0) }}
+          transition={rm ? { duration: 0.2 } : visible ? { x: { duration: 0.6 * (N - 1), delay: 0.6, ease: "easeInOut" }, opacity: { duration: 0.3 } } : { duration: 0.2 }}>
+          <Brujula size={BR_V2} activa={visible} grados={90} />
+        </motion.div>
+      </div>
+    </div>
+  );
+}
+
+function TarjetasV2({ visible }: { visible: boolean }) {
+  const et = ESTRATEGIA_V2.etapas;
+  const campo = "text-[15px] font-bold uppercase tracking-[0.12em]";
+  return (
+    <ul className="flex h-full min-h-0 flex-col gap-[10px]">
+      {et.map((e, i) => (
+        <li key={e.etapa} className="flex min-h-0 flex-1">
+          <Entra activa={visible} retraso={i * 0.12} className="flex w-full">
+            <div className="grid w-full grid-cols-[250px_1fr_1.2fr_1.15fr] items-center gap-8 rounded-[22px] border-2 bg-white px-6 py-2" style={{ borderColor: C.noche + "14" }}>
+              <div className="flex items-center gap-3">
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full font-display text-[26px] font-bold" style={{ background: C.mostaza, color: C.noche }}>{e.letra}</span>
+                <h3 className="font-display text-[30px] font-bold leading-none">{e.etapa}</h3>
+              </div>
+              <div><p className={campo} style={{ color: C.turquesa }}>Canal</p><p className="text-[22px] font-semibold leading-tight">{e.canal}</p></div>
+              <div><p className={campo} style={{ color: C.turquesa }}>Experimento</p><p className="text-[22px] font-semibold leading-tight">{e.experimento}</p></div>
+              <div><p className={campo} style={{ color: C.turquesa }}>Métrica</p><p className="text-[22px] font-semibold leading-tight">{e.metrica}</p></div>
+            </div>
+          </Entra>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function ArranqueV2({ visible }: { visible: boolean }) {
+  return (
+    <div className="grid grid-cols-[260px_1fr] items-center gap-14">
+      <Entra activa={visible} desde="escala"><Brujula size={260} activa={visible} grados={90} /></Entra>
+      <div className="flex flex-col gap-10">
+        <Entra activa={visible} retraso={0.2}><p className="font-display text-[52px] font-bold leading-[1.12]">{ESTRATEGIA_V2.arranque}</p></Entra>
+        <Entra activa={visible} retraso={0.8}>
+          <p className="font-display text-[40px] font-bold leading-tight" style={{ color: C.turquesa }}>
+            <span className="rounded px-3" style={{ background: C.mostaza + "55" }}>{ESTRATEGIA_V2.frase}</span>
+          </p>
+        </Entra>
+      </div>
+    </div>
+  );
+}
+
 export function Estrategia({ activa, paso }: { activa: boolean; paso: number }) {
+  const rm = useReducedMotion();
+  const p = activa ? paso : -1;
+  const capa = (on: boolean) => ({ animate: { opacity: on ? 1 : 0 }, transition: { duration: rm ? 0.15 : 0.35, delay: on ? 0.15 : 0 }, style: { gridArea: "1 / 1", pointerEvents: on ? ("auto" as const) : ("none" as const) } });
+  return (
+    <div className="relative flex h-full w-full flex-col overflow-hidden px-[80px] pb-[48px] pt-[72px]" style={{ background: C.crema, color: C.noche }}>
+      <div aria-hidden className="absolute -right-40 -top-48 h-[560px] w-[560px] rounded-full blur-3xl" style={{ background: C.turquesa + "1f" }} />
+      <Entra activa={p >= 0} desde="arriba" className="relative flex flex-col items-center">
+        <h1 className="font-display text-[68px] font-bold leading-[1.02]">{ESTRATEGIA_V2.titulo}</h1>
+        <NotaCaveat className="mt-2 text-[42px] leading-none" style={{ color: C.terracota }}>{ESTRATEGIA_V2.subtitulo}</NotaCaveat>
+      </Entra>
+      <div className="relative mt-6 grid min-h-0 flex-1 items-center">
+        <motion.div aria-hidden={p !== 0} initial={false} {...capa(p === 0)}><EmbudoV2 visible={p === 0} /></motion.div>
+        <motion.div aria-hidden={p !== 1} initial={false} className="h-full" {...capa(p === 1)}><TarjetasV2 visible={p === 1} /></motion.div>
+        <motion.div aria-hidden={p !== 2} initial={false} {...capa(p === 2)}><ArranqueV2 visible={p === 2} /></motion.div>
+      </div>
+    </div>
+  );
+}
+
+/* Versión anterior (6 pasos). Se conserva sin renderizar. */
+export function EstrategiaAnterior({ activa, paso }: { activa: boolean; paso: number }) {
   const rm = useReducedMotion();
   const p = activa ? paso : -1;
   const titulo = p === 0 ? { opacity: 1, x: 0, y: 330, scale: 1 } : p > 0 ? { opacity: 1, x: 0, y: 40, scale: 0.55 } : { opacity: 0, x: 0, y: 340, scale: 0.5 };

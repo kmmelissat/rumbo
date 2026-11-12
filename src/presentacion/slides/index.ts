@@ -92,14 +92,11 @@ export const PARADAS: Parada[] = [
   {
     id: "estrategia",
     titulo: "Estrategia de marketing",
-    pasos: 7,
+    pasos: 3,
     notas: [
-      "Idea fuerza: Rumbo llega a la gente por contenido, por los organizadores y por alianzas, orgánico primero, con un presupuesto pequeño para impulsar el contenido.",
-      "Por qué orgánico: el crecimiento viene de contenido, organizadores que comparten su evento y alianzas.",
-      "Embudo: descubre, guarda, comparte, compra, vuelve. Sin números de conversión; lo que mueve cada etapa es contenido, la web móvil, WhatsApp, un solo QR y la guía semanal.",
-      "Canales y relación con cada cliente: web móvil y QR en mercaditos como canal principal, Instagram y TikTok, WhatsApp, la guía semanal y los propios organizadores. Asistentes en autoservicio, organizadores con atención personal al inicio, marcas con trato directo.",
-      "Arranque: un tipo de evento, una zona (San Salvador y La Libertad) y organizadores aliados como Farmer's Market y Sivar Emprende antes de abrir al público.",
-      "Medición: siete indicadores y qué permite entender cada uno. Cierra con \"¿Cómo se ve eso en redes? Mira\" y pasa a la siguiente slide.",
+      "Idea fuerza: Rumbo llega y crece primero de forma orgánica, con un impulso pequeño al contenido, y lo hace con un experimento por etapa del embudo AARRR: adquisición, activación, retención, ingresos y referidos. La brújula recorre las cinco etapas.",
+      "Un experimento por etapa, cada uno con hipótesis, cambio, métrica y guardrail; el resultado dice \"en medición\" hasta que haya datos reales.\nAdquisición: si publicamos cada semana \"3 rumbos para este finde\" en Instagram y TikTok, más gente entra a la web, con un impulso pequeño al contenido. Guardrail: que el crecimiento siga siendo orgánico.\nActivación: si se puede abrir y guardar un evento sin registrarse, más visitantes guardan su primer plan. Guardrail: que el tiempo en la página y los errores no empeoren.\nRetención: si recordamos por WhatsApp los planes guardados, más personas vuelven la semana siguiente. Guardrail: que no suban las bajas ni las quejas de mensajes.\nIngresos: si el evento destacado muestra clics y guardados, los organizadores pagan por destacar; se cobra a mano un primer evento de $30, con dinero real. Guardrail: que el organizador reporte que valió la pena y que los eventos no destacados no pierdan visibilidad.\nReferidos: si compartir por WhatsApp envía una ficha clara (horario, precio, ubicación), más gente llega por recomendación. Guardrail: nada de mensajes automáticos a contactos.\nRelación con cada cliente: asistentes en autoservicio en la web; organizadores con atención personal por WhatsApp al inicio y panel de autoservicio después; marcas y lugares con trato directo y acuerdos por campaña.\nCómo medimos: organizadores activos, eventos confirmados por semana, usuarios activos semanales, eventos guardados y compartidos, entradas vendidas e ingresos por organizador. Con poco tráfico no hacemos A/B formal: comparamos una semana contra otra, con el mismo tipo de evento y un solo cambio a la vez.",
+      "Arranque: un tipo de evento, en San Salvador y La Libertad, con organizadores aliados como Farmer's Market y Sivar Emprende antes de abrir al público. Cierre: una hipótesis a la vez, y los números deciden. Después viene cómo se ve esto en redes; pasa a la siguiente slide.",
     ],
     Componente: Estrategia,
   },
