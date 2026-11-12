@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { Caveat } from "next/font/google";
 import { motion, useReducedMotion } from "motion/react";
 import { Entra } from "../componentes/Entra";
+import { PROYECCION_DATOS } from "./Roi";
 
 /**
  * Datos editables. El porcentaje no se escribe: se calcula desde el monto y el total.
@@ -21,7 +22,7 @@ export const PRESUPUESTO_DATOS = {
       concepto: "Impulso a Reels y TikTok",
       etiqueta: "Instagram y TikTok · Adquisición",
       monto: 40,
-      porque: "Ahí está nuestro público: Instagram tiene 2.3 millones de usuarios en El Salvador y los de 18 a 34 años son cerca de dos tercios. El video corto es el formato de \"3 rumbos para este finde\".",
+      porque: "Ahí está nuestro público: Instagram tiene 2.3 millones de usuarios en El Salvador y los jóvenes de 18 a 34 años son cerca de dos tercios, y nuestro público de 21 a 32 cae dentro. El video corto es el formato de \"3 rumbos para este finde\".",
     },
     {
       id: "captacion",
@@ -57,6 +58,11 @@ export const PRESUPUESTO_DATOS = {
 const caveat = Caveat({ subsets: ["latin"], weight: "600" });
 const C = { crema: "#FAF6EF", noche: "#12303A", turquesa: "#0A7C7C", mostaza: "#F5B82E" };
 const D = PRESUPUESTO_DATOS;
+/* Gasto de marketing proyectado: se calcula desde PROYECCION_DATOS, no se escribe a mano. */
+const GASTOS = PROYECCION_DATOS.gastoMkt;
+const GASTO_MES_FINAL = GASTOS[GASTOS.length - 1];
+const GASTO_SEMESTRE = GASTOS.reduce((a, b) => a + b, 0);
+const usd = (n: number) => `$${Math.round(n).toLocaleString("en-US")}`;
 const pct = (monto: number) => Math.round((monto / D.total) * 100);
 
 /* Íconos propios de la slide (trazo, sin marcas reales), uno por etapa. */
@@ -148,7 +154,8 @@ export function Presupuesto({ activa, paso }: { activa: boolean; paso: number })
         })}
       </ul>
 
-      <Entra activa={p >= 2} retraso={0.7} className="mt-3 shrink-0">
+      <Entra activa={p >= 2} retraso={0.7} className="mt-3 flex shrink-0 flex-col gap-1">
+        <p className="text-[17px] font-semibold opacity-80">El gasto crece hasta {usd(GASTO_MES_FINAL)} al mes en el mes {GASTOS.length} ({usd(GASTO_SEMESTRE)} en el semestre), en las mismas {D.filas.length} partidas</p>
         <p className="text-[17px] opacity-70">{D.fuente}</p>
       </Entra>
     </div>

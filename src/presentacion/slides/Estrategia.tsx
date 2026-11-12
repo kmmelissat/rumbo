@@ -20,7 +20,7 @@ const ESTRATEGIA_DATOS = {
     { etapa: "Vuelve", icono: "vuelta", texto: "Guía semanal y eventos que se actualizan." },
   ],
   canales: [
-    { icono: "movil", nombre: "Web móvil de Rumbo", texto: "Canal principal para descubrir, guardar y comprar, sin descargar nada." },
+    { icono: "movil", nombre: "Web móvil y QR en mercaditos", texto: "Canal principal para descubrir, guardar y comprar, sin descargar nada." },
     { icono: "video", nombre: "Instagram y TikTok", texto: "Contenido de los planes de la semana, donde el público ya está." },
     { icono: "chat", nombre: "WhatsApp", texto: "Contacto directo con organizadores para publicar y con usuarios para compartir eventos." },
     { icono: "guia", nombre: "Guía semanal de planes", texto: "Los planes de la semana, reunidos en un solo lugar." },

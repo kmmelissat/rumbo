@@ -193,7 +193,7 @@ function PasoRetorno({ activo, supuestos }: { activo: boolean; supuestos: boolea
       </Entra>
       <Entra activa={supuestos}>
         <p className="text-[19px] leading-snug opacity-80">
-          Comisión neta de ${D.comisionNetaEntrada.toFixed(2)} por entrada y evento destacado de ${D.precioDestacado}. Solo contamos {D.lineasContadas} de las {D.lineasTotales} líneas de ingreso.
+          Comisión neta de ${D.comisionNetaEntrada.toFixed(2)} por entrada y evento destacado de ${D.precioDestacado}. Solo contamos {D.lineasContadas} de las {D.lineasTotales} líneas de ingreso. Los costos fijos son ${D.costosFijosMes} al mes de servidor.
           {margenMes6ConFijos > 0 && ` Con costos fijos incluidos, el mes ${MESES} ya deja margen positivo.`}
         </p>
       </Entra>

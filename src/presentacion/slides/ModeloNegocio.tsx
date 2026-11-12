@@ -13,7 +13,7 @@ const MODELO_DATOS = {
   lineas: [
     { grupo: "organizadores", icono: "boleto", nombre: "Comisión por entradas" },
     { grupo: "organizadores", icono: "stand", nombre: "Comisión por reservas y stands" },
-    { grupo: "organizadores", icono: "estrella", nombre: "Eventos destacados" },
+    { grupo: "organizadores", icono: "estrella", nombre: "Eventos destacados", etiqueta: "$30" },
     { grupo: "organizadores", icono: "panel", nombre: "Plan profesional" },
     { grupo: "marcas", icono: "cartel", nombre: "Promociones comerciales" },
     { grupo: "marcas", icono: "regalo", nombre: "Combos patrocinados" },
@@ -67,6 +67,7 @@ function Grupos({ visible }: { visible: boolean }) {
               <Entra key={l.nombre} visible={visible} i={k++} className="flex items-center gap-4 rounded-[20px] border-2 bg-white px-5 py-3 shadow-lg shadow-black/10" style={{ borderColor: color }}>
                 <span className="flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-2xl" style={{ background: color, color: oscuro ? "#fff" : C.noche }}><Icono n={l.icono} /></span>
                 <h3 className="text-[25px] font-semibold leading-tight">{l.nombre}</h3>
+                {"etiqueta" in l && <span className="ml-auto shrink-0 rounded-full px-3 py-1 text-[18px] font-bold leading-none" style={{ background: C.noche + "14" }}>{l.etiqueta}</span>}
               </Entra>
             ))}
           </div>
