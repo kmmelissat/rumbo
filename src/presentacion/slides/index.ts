@@ -49,7 +49,7 @@ export const PARADAS: Parada[] = [
     notas: [
       "Idea fuerza: Rumbo tiene dos lados, quien descubre y quien organiza. Andrea Salazar (25) gasta $15-$40 por salida y Camila Rivas (29) cobra $25-$50 por stand.\nAclara que son perfiles construidos, no entrevistas.",
       "Los dos lados se necesitan: más asistentes atraen más organizadores, y más organizadores atraen más asistentes.\nDeja correr las partículas y avanza.",
-      "Mercado en personas de 21 a 32 años: TAM 1.4 millones (unos $257 millones de gasto en salidas), SAM 424 mil (unos $76 millones) y SOM de 8.5 mil a 21 mil usuarios (unos $31 mil a $76 mil en comisiones).\nRepite que TAM y SAM son gasto de la gente; el ingreso de Rumbo es solo el SOM. Fuente: Censo 2024 y ONU World Population Prospects 2024.",
+      "Mercado en personas de 21 a 32 años: TAM 1.4 millones (unos $257 millones de gasto en salidas), SAM 424 mil (unos $76 millones) y SOM de 8.5 mil a 21 mil usuarios.\nRepite que TAM y SAM son gasto de la gente, no ingreso de Rumbo; el SOM es potencial a largo plazo; la proyección de 6 meses está en ROI. Fuente: Censo 2024 y ONU World Population Prospects 2024.",
     ],
     Componente: ClientesMercado,
   },
@@ -97,7 +97,7 @@ export const PARADAS: Parada[] = [
     titulo: "Estrategia de marketing",
     pasos: 7,
     notas: [
-      "Idea fuerza: Rumbo llega a la gente por contenido, por los organizadores y por alianzas, no por anuncios pagados.",
+      "Idea fuerza: Rumbo llega a la gente por contenido, por los organizadores y por alianzas, orgánico primero, con un presupuesto pequeño para impulsar el contenido.",
       "Por qué orgánico: el crecimiento viene de contenido, organizadores que comparten su evento y alianzas.",
       "Embudo: descubre, guarda, comparte, compra, vuelve. Sin números de conversión; lo que mueve cada etapa es contenido, la web móvil, WhatsApp, un solo QR y la guía semanal.",
       "Canales y relación con cada cliente: web móvil como canal principal, Instagram y TikTok, WhatsApp, la guía semanal y los propios organizadores. Asistentes en autoservicio, organizadores con atención personal al inicio, marcas con trato directo.",
@@ -126,7 +126,7 @@ export const PARADAS: Parada[] = [
     notas: [
       "Idea fuerza: Rumbo crece con experimentos pequeños, uno por etapa del embudo. Deja leer el título.",
       "Embudo AARRR: adquisición, activación, retención, ingresos y referidos. La brújula recorre las cinco etapas.",
-      "Adquisición: la guía semanal \"3 rumbos para este finde\" en redes, sin anuncios. Cada experimento tiene hipótesis, cambio, métrica y guardrail; el resultado dice \"en medición\" hasta que haya datos reales.",
+      "Adquisición: la guía semanal \"3 rumbos para este finde\" en redes, con un impulso pequeño. Cada experimento tiene hipótesis, cambio, métrica y guardrail; el resultado dice \"en medición\" hasta que haya datos reales.",
       "Activación: guardar un evento sin crear cuenta. El guardrail es que el tiempo en la página y los errores no empeoren.",
       "Retención: recordatorio por WhatsApp del plan guardado. Guardrail: que no suban las bajas ni las quejas.",
       "Ingresos: cobrar a mano un primer evento destacado de $30, con dinero real. Guardrail: que valga la pena para el organizador.",

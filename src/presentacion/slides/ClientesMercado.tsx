@@ -44,8 +44,8 @@ const CLIENTES_MERCADO_DATOS = {
     unidad: "Personas de 21 a 32 años",
     tam: { etiqueta: "TAM", personas: [1_400_000] as number[], dinero: [257_000_000] as number[], donde: "En El Salvador", dineroTxt: "de gasto potencial en salidas al año" },
     sam: { etiqueta: "SAM", personas: [424_000] as number[], dinero: [76_000_000] as number[], donde: "En San Salvador y La Libertad, con acceso a internet", dineroTxt: "de gasto al año" },
-    som: { etiqueta: "SOM", personas: [8_500, 21_000] as number[], dinero: [31_000, 76_000] as number[], donde: "Usuarios activos en el primer año: entre 2% y 5% del SAM", dineroTxt: "de ingreso por comisiones" },
-    nota: "TAM y SAM son lo que la gente gasta en salidas, no ingreso de Rumbo; el ingreso de Rumbo es solo la comisión (el SOM).",
+    som: { etiqueta: "SOM", personas: [8_500, 21_000] as number[], dinero: [] as number[], donde: "Usuarios activos en el primer año: entre 2% y 5% del SAM", dineroTxt: "" },
+    nota: "TAM y SAM son lo que la gente gasta en salidas, no ingreso de Rumbo; el SOM son usuarios, un potencial a largo plazo.",
     fuente: "Fuente: Censo 2024 de El Salvador y ONU World Population Prospects 2024",
   },
 };
@@ -231,7 +231,7 @@ function Mercado({ visible }: { visible: boolean }) {
                   style={{ gridArea: "1 / 1", alignSelf: "end", justifySelf: "center", width: c.d, height: c.d, background: c.fondo, borderColor: c.borde, color: c.texto, transformOrigin: "bottom center" }}>
                   <p className="text-[18px] font-bold uppercase tracking-[0.16em] opacity-85">{n.etiqueta}</p>
                   <Cifra rango={n.personas} dinero={false} activa={visible} retraso={c.ini + 0.3} className={`font-display font-bold ${c.pers}`} />
-                  <Cifra rango={n.dinero} dinero activa={visible} retraso={c.ini + 0.3} className="text-[20px] font-semibold opacity-90" />
+                  {n.dinero.length > 0 && <Cifra rango={n.dinero} dinero activa={visible} retraso={c.ini + 0.3} className="text-[20px] font-semibold opacity-90" />}
                 </motion.div>
               );
             })}
@@ -242,7 +242,7 @@ function Mercado({ visible }: { visible: boolean }) {
             {CIRCULOS.map((c) => (
               <motion.div key={c.k} initial={false} animate={{ opacity: visible ? 1 : 0, y: visible ? 0 : 16 }} transition={{ duration: 0.4, delay: visible ? c.ini + 0.4 : 0 }}>
                 <p className="text-[19px] font-bold leading-tight">{M[c.k].etiqueta}: <span className="font-normal">{M[c.k].donde}</span></p>
-                <p className="text-[16px] leading-snug opacity-70">{M[c.k].dineroTxt}</p>
+                {M[c.k].dineroTxt && <p className="text-[16px] leading-snug opacity-70">{M[c.k].dineroTxt}</p>}
               </motion.div>
             ))}
             <motion.p initial={false} animate={{ opacity: visible ? 1 : 0 }} transition={{ duration: 0.4, delay: visible ? 2.6 : 0 }}

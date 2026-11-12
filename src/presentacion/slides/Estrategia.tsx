@@ -6,7 +6,7 @@ import { motion, useReducedMotion } from "motion/react";
 /** Textos y cifras editables.  */
 const ESTRATEGIA_DATOS = {
   titulo: "Cómo llega Rumbo a la gente",
-  subtitulo: "(sin pagar por cada clic)",
+  subtitulo: "(orgánico primero, con un impulso pequeño)",
   porQue: {
     a: { cifra: "Contenido", texto: "Los planes de la semana, donde el público ya está" },
     b: { cifra: "Organizadores", texto: "Comparten su evento con su propia audiencia" },

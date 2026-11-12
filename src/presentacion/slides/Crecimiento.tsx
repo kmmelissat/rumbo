@@ -15,7 +15,7 @@ const CRECIMIENTO_DATOS = {
       letra: "A",
       etapa: "Adquisición",
       experimento: {
-        hipotesis: "Si publicamos cada semana \"3 rumbos para este finde\" en Instagram y TikTok, más gente entra a la web sin pagar anuncios.",
+        hipotesis: "Si publicamos cada semana \"3 rumbos para este finde\" en Instagram y TikTok, más gente entra a la web, con un impulso pequeño al contenido.",
         cambio: "Guía semanal con enlace a Rumbo.",
         metrica: "Visitas a la web desde redes por semana.",
         guardrail: "Que el crecimiento siga siendo orgánico, sin depender de anuncios.",
