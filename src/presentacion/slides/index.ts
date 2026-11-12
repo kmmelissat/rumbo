@@ -9,6 +9,8 @@ import { Branding } from "./Branding";
 import { Estrategia } from "./Estrategia";
 import { Redes } from "./Redes";
 import { Crecimiento } from "./Crecimiento";
+import { Presupuesto } from "./Presupuesto";
+import { Roi } from "./Roi";
 import { Cierre } from "./Cierre";
 
 /** Registro del viaje: una entrada por parada. Agrega aquí las nuevas slides. */
@@ -133,6 +135,29 @@ export const PARADAS: Parada[] = [
       "Cierre: una hipótesis a la vez, y los números deciden.",
     ],
     Componente: Crecimiento,
+  },
+  {
+    id: "presupuesto",
+    titulo: "Presupuesto y plataformas",
+    pasos: 3,
+    notas: [
+      "Idea fuerza: con $100 al mes de marketing en el piloto, cada dólar tiene un destino claro. Deja leer el título y el número.",
+      "Cinco filas que dicen en qué se gasta, cada una con su plataforma y su etapa en la etiqueta. El 40% va a impulsar Reels y TikTok porque es donde más cuesta que alguien nos conozca; luego captación de organizadores (25%), banners QR en mercaditos (15%), herramientas de WhatsApp (10%) y experimentos y contingencias (10%). Las barras muestran el porcentaje del total.",
+      "Por qué en cada una: ahí está el público, cada organizador trae su audiencia, el QR en el mercadito lleva a la web sin descargar nada, WhatsApp es donde se decide el plan y los experimentos permiten cambiar una cosa a la vez. Menciona la fuente al pie y pasa a la proyección.",
+    ],
+    Componente: Presupuesto,
+  },
+  {
+    id: "roi",
+    titulo: "Proyección y ROI",
+    pasos: 4,
+    notas: [
+      "Idea fuerza: es una proyección conservadora a seis meses, no resultados. Deja correr los números de mes 1 a mes 6: usuarios activos de 600 a 5,500, organizadores de 8 a 60, entradas de 15 a 193 y destacados de 1 a 7. De 2.5 a 3.5 de cada 100 usuarios compran una entrada pagada; los demás ven planes gratis o guardan eventos.",
+      "Gasto contra ingreso mes a mes: el gasto en azul noche sube de $100 a $350 y el ingreso en turquesa de unos $49 a unos $453. En el mes 5 el ingreso alcanza al gasto; señala la chispa.",
+      "ROAS es ingresos entre gasto de marketing. El semestre queda en 0.9x a propósito: es inversión de validación. Lo que importa es la tendencia: de 0.49x en el mes 1 a 1.29x en el mes 6, cuando cada dólar devuelve $1.29.",
+      "Supuestos: comisión neta de $1.26 por entrada y evento destacado de $30; solo contamos 2 de las 7 líneas de ingreso. Con costos fijos incluidos, el mes 6 ya deja margen positivo. Pasa al cierre.",
+    ],
+    Componente: Roi,
   },
   {
     id: "cierre",
