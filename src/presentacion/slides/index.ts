@@ -8,7 +8,7 @@ import { ModeloNegocio } from "./ModeloNegocio";
 import { Branding } from "./Branding";
 import { Estrategia } from "./Estrategia";
 import { Redes } from "./Redes";
-import { Crecimiento } from "./Crecimiento";
+// import { Crecimiento } from "./Crecimiento"; // slide retirada de PARADAS; el contenido pasó a Estrategia
 import { Presupuesto } from "./Presupuesto";
 import { Roi } from "./Roi";
 import { Cierre } from "./Cierre";
@@ -66,17 +66,6 @@ export const PARADAS: Parada[] = [
     Componente: Competencia,
   },
   {
-    id: "modelo-negocio",
-    titulo: "Modelo de negocio",
-    pasos: 3,
-    notas: [
-      "Idea fuerza: Rumbo gana de 7 formas y lo único que hay que entender es quién paga qué.\nOrganizador: 8% + $0.30 por entrada y publicar es gratis. Asistente: $0 de cargo de servicio de Rumbo. El organizador cobra 3 días hábiles después del evento.",
-      "Ejemplo con una entrada de $12: el asistente paga $12 (más el costo de procesamiento del pago), Rumbo se queda $1.26 ($0.96 + $0.30) y el organizador recibe $10.74.",
-      "Las 7 líneas de ingreso: organizadores (entradas, reservas y stands, eventos destacados de $30, plan profesional), marcas y negocios (promociones y combos patrocinados) y combos (comisión incluida en el precio). Hoy contamos 2 en la proyección: entradas y eventos destacados. Al avanzar pasas a la siguiente slide.",
-    ],
-    Componente: ModeloNegocio,
-  },
-  {
     id: "branding",
     titulo: "Branding",
     pasos: 5,
@@ -85,20 +74,9 @@ export const PARADAS: Parada[] = [
       "Logo y personalidad: el cuadrado turquesa con la R y la chispa-brújula mostaza, en sus tres variantes. Aventurera, juvenil, cercana, juguetona y confiable al pagar; no es corporativa, ni una ticketera fría, ni un collage caótico.",
       "Paleta y tipografía: azul noche y turquesas con crema, mostaza, bosque, coral y lima; Fraunces para títulos, DM Sans para texto y Caveat solo en stickers y notas.",
       "Voz: tuteo, directo y con humor ligero; lo local viene del contenido, no de jerga forzada.",
-      "Pilares: aventura, conexión, emprendedurismo y bienestar, todos con contexto local. Pasa a marketing.",
+      "Pilares: aventura, conexión, emprendedurismo y bienestar, todos con contexto local. Ahora vemos cómo se ve esta marca en redes.",
     ],
     Componente: Branding,
-  },
-  {
-    id: "estrategia",
-    titulo: "Estrategia de marketing",
-    pasos: 3,
-    notas: [
-      "Idea fuerza: Rumbo llega y crece primero de forma orgánica, con un impulso pequeño al contenido, y lo hace con un experimento por etapa del embudo AARRR: adquisición, activación, retención, ingresos y referidos. La brújula recorre las cinco etapas.",
-      "Un experimento por etapa, cada uno con hipótesis, cambio, métrica y guardrail; el resultado dice \"en medición\" hasta que haya datos reales.\nAdquisición: si publicamos cada semana \"3 rumbos para este finde\" en Instagram y TikTok, más gente entra a la web, con un impulso pequeño al contenido. Guardrail: que el crecimiento siga siendo orgánico.\nActivación: si se puede abrir y guardar un evento sin registrarse, más visitantes guardan su primer plan. Guardrail: que el tiempo en la página y los errores no empeoren.\nRetención: si recordamos por WhatsApp los planes guardados, más personas vuelven la semana siguiente. Guardrail: que no suban las bajas ni las quejas de mensajes.\nIngresos: si el evento destacado muestra clics y guardados, los organizadores pagan por destacar; se cobra a mano un primer evento de $30, con dinero real. Guardrail: que el organizador reporte que valió la pena y que los eventos no destacados no pierdan visibilidad.\nReferidos: si compartir por WhatsApp envía una ficha clara (horario, precio, ubicación), más gente llega por recomendación. Guardrail: nada de mensajes automáticos a contactos.\nRelación con cada cliente: asistentes en autoservicio en la web; organizadores con atención personal por WhatsApp al inicio y panel de autoservicio después; marcas y lugares con trato directo y acuerdos por campaña.\nCómo medimos: organizadores activos, eventos confirmados por semana, usuarios activos semanales, eventos guardados y compartidos, entradas vendidas e ingresos por organizador. Con poco tráfico no hacemos A/B formal: comparamos una semana contra otra, con el mismo tipo de evento y un solo cambio a la vez.",
-      "Arranque: un tipo de evento, en San Salvador y La Libertad, con organizadores aliados como Farmer's Market y Sivar Emprende antes de abrir al público. Cierre: una hipótesis a la vez, y los números deciden. Después viene cómo se ve esto en redes; pasa a la siguiente slide.",
-    ],
-    Componente: Estrategia,
   },
   {
     id: "redes",
@@ -109,26 +87,20 @@ export const PARADAS: Parada[] = [
       "Reel o TikTok \"3 rumbos para este finde\": el gancho \"Tu finde ya tiene plan\" en los primeros 3 segundos, tres planes y cierre con guardar. Después, stories con cuenta regresiva, encuesta y enlace: un sticker por story.",
       "Carrusel de la guía semanal (portada, dos planes y cierre \"Guarda tu plan en Rumbo\"), flyer del evento destacado de $30 con QR grande y sello de pasaporte, y el post de Camila que comparte su mercadito en Rumbo.",
       "Una pieza por pilar: aventura, conexión, emprendedurismo y bienestar, cada una con su color. Plantillas recurrentes y hashtags.",
-      "Regla de oro: Instagram y TikTok son para descubrir; la compra pasa en un solo enlace y un solo QR. Cierra con \"¿Y cómo sabemos si funciona? Lo medimos\".",
+      "Regla de oro: Instagram y TikTok son para descubrir; la compra pasa en un solo enlace y un solo QR. ¿Y cómo llegamos a la gente con esto? Con un embudo y un experimento por etapa.",
     ],
     Componente: Redes,
   },
   {
-    id: "crecimiento",
-    titulo: "Crecimiento",
-    pasos: 9,
+    id: "estrategia",
+    titulo: "Estrategia y crecimiento",
+    pasos: 3,
     notas: [
-      "Idea fuerza: Rumbo crece con experimentos pequeños, uno por etapa del embudo. Deja leer el título.",
-      "Embudo AARRR: adquisición, activación, retención, ingresos y referidos. La brújula recorre las cinco etapas.",
-      "Adquisición: la guía semanal \"3 rumbos para este finde\" en redes, con un impulso pequeño. Cada experimento tiene hipótesis, cambio, métrica y guardrail; el resultado dice \"en medición\" hasta que haya datos reales.",
-      "Activación: guardar un evento sin crear cuenta. El guardrail es que el tiempo en la página y los errores no empeoren.",
-      "Retención: recordatorio por WhatsApp del plan guardado. Guardrail: que no suban las bajas ni las quejas.",
-      "Ingresos: cobrar a mano un primer evento destacado de $30, con dinero real. Guardrail: que valga la pena para el organizador.",
-      "Referidos: compartir por WhatsApp una ficha clara del evento, sin mensajes automáticos a contactos.",
-      "Cómo medimos: siete métricas. Con poco tráfico comparamos una semana contra otra, con el mismo tipo de evento y un solo cambio a la vez; no hay A/B formal.",
-      "Cierre: una hipótesis a la vez, y los números deciden.",
+      "Idea fuerza: Rumbo llega y crece primero de forma orgánica, con un impulso pequeño al contenido, y lo hace con un experimento por etapa del embudo AARRR: adquisición, activación, retención, ingresos y referidos. La brújula recorre las cinco etapas.",
+      "Un experimento por etapa, cada uno con hipótesis, cambio, métrica y guardrail; el resultado dice \"en medición\" hasta que haya datos reales.\nAdquisición: si publicamos cada semana \"3 rumbos para este finde\" en Instagram y TikTok, más gente entra a la web, con un impulso pequeño al contenido. Guardrail: que el crecimiento siga siendo orgánico.\nActivación: si se puede abrir y guardar un evento sin registrarse, más visitantes guardan su primer plan. Guardrail: que el tiempo en la página y los errores no empeoren.\nRetención: si recordamos por WhatsApp los planes guardados, más personas vuelven la semana siguiente. Guardrail: que no suban las bajas ni las quejas de mensajes.\nIngresos: si el evento destacado muestra clics y guardados, los organizadores pagan por destacar; se cobra a mano un primer evento de $30, con dinero real. Guardrail: que el organizador reporte que valió la pena y que los eventos no destacados no pierdan visibilidad.\nReferidos: si compartir por WhatsApp envía una ficha clara (horario, precio, ubicación), más gente llega por recomendación. Guardrail: nada de mensajes automáticos a contactos.\nRelación con cada cliente: asistentes en autoservicio en la web; organizadores con atención personal por WhatsApp al inicio y panel de autoservicio después; marcas y lugares con trato directo y acuerdos por campaña.\nCómo medimos: organizadores activos, eventos confirmados por semana, usuarios activos semanales, eventos guardados y compartidos, entradas vendidas e ingresos por organizador. Con poco tráfico no hacemos A/B formal: comparamos una semana contra otra, con el mismo tipo de evento y un solo cambio a la vez.",
+      "Arranque: un tipo de evento, en San Salvador y La Libertad, con organizadores aliados como Farmer's Market y Sivar Emprende antes de abrir al público. Cierre: una hipótesis a la vez, y los números deciden. Y esto, ¿cuánto cuesta?",
     ],
-    Componente: Crecimiento,
+    Componente: Estrategia,
   },
   {
     id: "presupuesto",
@@ -137,9 +109,20 @@ export const PARADAS: Parada[] = [
     notas: [
       "Idea fuerza: con $100 al mes de marketing en el piloto, cada dólar tiene un destino claro. Deja leer el título y el número.",
       "Cinco filas que dicen en qué se gasta, cada una con su plataforma y su etapa en la etiqueta. El 40% va a impulsar Reels y TikTok porque es donde más cuesta que alguien nos conozca; luego captación de organizadores (25%), banners QR en mercaditos (15%), herramientas de WhatsApp (10%) y experimentos y contingencias (10%). Las barras muestran el porcentaje del total.",
-      "Por qué en cada una: ahí está el público, cada organizador trae su audiencia, el QR en el mercadito lleva a la web sin descargar nada, WhatsApp es donde se decide el plan y los experimentos permiten cambiar una cosa a la vez. Menciona la fuente al pie y pasa a la proyección.",
+      "Por qué en cada una: ahí está el público, cada organizador trae su audiencia, el QR en el mercadito lleva a la web sin descargar nada, WhatsApp es donde se decide el plan y los experimentos permiten cambiar una cosa a la vez. Menciona la fuente al pie. Y así es como ganamos.",
     ],
     Componente: Presupuesto,
+  },
+  {
+    id: "modelo-negocio",
+    titulo: "Modelo de negocio",
+    pasos: 3,
+    notas: [
+      "Idea fuerza: Rumbo gana de 7 formas y lo único que hay que entender es quién paga qué.\nOrganizador: 8% + $0.30 por entrada y publicar es gratis. Asistente: $0 de cargo de servicio de Rumbo. El organizador cobra 3 días hábiles después del evento.",
+      "Ejemplo con una entrada de $12: el asistente paga $12 (más el costo de procesamiento del pago), Rumbo se queda $1.26 ($0.96 + $0.30) y el organizador recibe $10.74.",
+      "Las 7 líneas de ingreso: organizadores (entradas, reservas y stands, eventos destacados de $30, plan profesional), marcas y negocios (promociones y combos patrocinados) y combos (comisión incluida en el precio). Hoy contamos 2 en la proyección: entradas y eventos destacados. Veamos qué devuelve.",
+    ],
+    Componente: ModeloNegocio,
   },
   {
     id: "roi",
@@ -149,7 +132,7 @@ export const PARADAS: Parada[] = [
       "Idea fuerza: es una proyección conservadora a seis meses, no resultados. Deja correr los números de mes 1 a mes 6: usuarios activos de 600 a 5,500, organizadores de 8 a 60, entradas de 15 a 193 y destacados de 1 a 7. De 2.5 a 3.5 de cada 100 usuarios compran una entrada pagada; los demás ven planes gratis o guardan eventos. Los 5,500 usuarios del mes 6 son camino al SOM durante el primer año, no el SOM.",
       "Gasto contra ingreso mes a mes: el gasto en azul noche sube de $100 a $350 y el ingreso en turquesa de unos $49 a unos $453. En el mes 5 el ingreso alcanza al gasto; señala la chispa.",
       "ROAS es ingresos entre gasto de marketing. El semestre queda en 0.9x a propósito: es inversión de validación. Lo que importa es la tendencia: de 0.49x en el mes 1 a 1.29x en el mes 6, cuando cada dólar devuelve $1.29.",
-      "Supuestos: comisión neta de $1.26 por entrada y evento destacado de $30; solo contamos 2 de las 7 líneas de ingreso. Los costos fijos son $25 al mes de servidor. Con costos fijos incluidos, el mes 6 ya deja margen positivo. Pasa al cierre.",
+      "Supuestos: comisión neta de $1.26 por entrada y evento destacado de $30; solo contamos 2 de las 7 líneas de ingreso. Los costos fijos son $25 al mes de servidor. Con costos fijos incluidos, el mes 6 ya deja margen positivo. Y con esto, cerramos.",
     ],
     Componente: Roi,
   },
