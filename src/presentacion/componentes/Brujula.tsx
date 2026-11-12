@@ -1,9 +1,10 @@
 "use client";
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 
 /** Brújula: al activarse gira varias vueltas y se detiene apuntando a `grados` (90 = al este). */
 export function Brujula({ size = 280, activa, grados = 90 }: { size?: number; activa: boolean; grados?: number }) {
-  const marcas = Array.from({ length: 36 }, (_, i) => i * 10);
+  const rm = useReducedMotion();
+  const marcas =Array.from({ length: 36 }, (_, i) => i * 10);
   return (
     <div style={{ width: size, height: size }} className="relative drop-shadow-[0_10px_18px_rgba(14,90,138,0.25)]" aria-hidden>
       <svg viewBox="0 0 200 200" className="absolute inset-0">
@@ -17,8 +18,8 @@ export function Brujula({ size = 280, activa, grados = 90 }: { size?: number; ac
         ))}
       </svg>
       <motion.svg viewBox="0 0 200 200" className="absolute inset-0" initial={false}
-        animate={activa ? { rotate: [0, 400, 70, 100, grados] } : { rotate: 0 }}
-        transition={activa ? { duration: 2.8, times: [0, 0.55, 0.75, 0.9, 1], ease: "easeInOut", delay: 0.6 } : { duration: 0.3 }}>
+        animate={rm ? { rotate: activa ? grados : 0 } : activa ? { rotate: [0, 400, 70, 100, grados] } : { rotate: 0 }}
+        transition={rm ? { duration: 0.2 } : activa ? { duration: 2.8, times: [0, 0.55, 0.75, 0.9, 1], ease: "easeInOut", delay: 0.6 } : { duration: 0.3 }}>
         <polygon points="100,28 114,100 86,100" fill="#FF8A6B" />
         <polygon points="100,172 114,100 86,100" fill="#0E5A8A" />
         <circle cx="100" cy="100" r="9" fill="#C5E063" stroke="#fff" strokeWidth="3" />

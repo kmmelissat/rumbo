@@ -15,7 +15,7 @@ const COMPETENCIA_DATOS = {
       ejemplos: "Fun Capital, TodoTicket, Smart Ticket",
       queHace: "Venden boletos de conciertos y eventos masivos.",
       etiquetaPorQue: "Por qué Rumbo es mejor",
-      porQue: "Reúne los planes locales (mercaditos, ferias, talleres y eventos gratis) con filtros por zona y presupuesto, fees claros antes de pagar y boleto con QR confirmado por correo y WhatsApp.",
+      porQue: "Reúne los planes locales (mercaditos, ferias, talleres y eventos gratis) con filtros por zona y presupuesto, precio claro antes de pagar y boleto con QR confirmado por correo y WhatsApp.",
     },
     {
       id: "agendas", icono: "agenda", aliado: false, nombre: "Agendas",
@@ -41,7 +41,7 @@ const COMPETENCIA_DATOS = {
   ],
   sellos: [
     { icono: "pines", texto: "Planes pequeños y locales en un solo calendario." },
-    { icono: "check", texto: "Información confirmada por el organizador, con fecha de última actualización." },
+    { icono: "check", texto: "Información confirmada por el organizador." },
     { icono: "qr", texto: "Del plan a la reserva con un solo enlace y un solo QR." },
     { icono: "panel", texto: "Herramientas para el organizador: publica rápido y ve clics y guardados." },
   ],
@@ -83,6 +83,9 @@ function Icono({ n, size = 36 }: { n: string; size?: number }) {
 
 /* ───────────── Paso 2: mapa de competidores ───────────── */
 
+const MOSTRAR_POR_QUE = false;
+const MOSTRAR_RUTA = false;
+
 type Grupo = (typeof COMPETENCIA_DATOS.grupos)[number];
 
 function Tarjeta({ g, visible }: { g: Grupo; visible: boolean }) {
@@ -92,7 +95,7 @@ function Tarjeta({ g, visible }: { g: Grupo; visible: boolean }) {
     <motion.article aria-hidden={!visible} initial={false}
       animate={visible ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 50, scale: 0.94 }}
       transition={rm ? { duration: 0.2 } : visible ? { type: "spring", stiffness: 90, damping: 15, delay: 0.2 } : { duration: 0.25 }}
-      className="flex flex-col rounded-[24px] border-2 px-5 py-5 shadow-xl shadow-black/10"
+      className="flex flex-col rounded-[24px] border-2 px-6 py-6 shadow-xl shadow-black/10"
       style={{ background: g.aliado ? "#FFF3D1" : "#FFFFFF", borderColor: color, color: C.noche }}>
       <div className="flex items-center gap-3">
         <span className="flex h-[60px] w-[60px] shrink-0 items-center justify-center rounded-2xl" style={{ background: color, color: g.aliado ? C.noche : "#fff" }}>
@@ -103,22 +106,27 @@ function Tarjeta({ g, visible }: { g: Grupo; visible: boolean }) {
           {g.aliado && <p className={`${caveat.className} mt-1 text-[22px] leading-none`} style={{ color: C.terracota }}>alianza</p>}
         </div>
       </div>
-      <p className="mt-2 text-[16px] font-semibold leading-snug opacity-75">{g.ejemplos}</p>
-      <p className="mt-3 text-[13px] font-bold uppercase tracking-[0.14em] opacity-60">Qué hace hoy</p>
-      <p className="text-[18px] leading-[1.3]">{g.queHace}</p>
-      <p className="mt-3 text-[13px] font-bold uppercase tracking-[0.14em]" style={{ color: g.aliado ? C.terracota : C.turquesa }}>{g.etiquetaPorQue}</p>
-      <p className="text-[18px] font-medium leading-[1.3]">{g.porQue}</p>
+      <p className="mt-4 text-[17px] font-semibold leading-snug opacity-75">{g.ejemplos}</p>
+      <p className="mt-4 text-[13px] font-bold uppercase tracking-[0.14em] opacity-60">Qué hace hoy</p>
+      <p className="text-[19px] leading-[1.3]">{g.queHace}</p>
+      {/* Se conserva pero no se renderiza: el "por qué Rumbo es mejor" va en las notas del presentador. */}
+      {MOSTRAR_POR_QUE && (
+        <>
+          <p className="mt-3 text-[13px] font-bold uppercase tracking-[0.14em]" style={{ color: g.aliado ? C.terracota : C.turquesa }}>{g.etiquetaPorQue}</p>
+          <p className="text-[18px] font-medium leading-[1.3]">{g.porQue}</p>
+        </>
+      )}
     </motion.article>
   );
 }
 
 function Mapa({ p }: { p: number }) {
   const rm = useReducedMotion();
-  const n = Math.min(Math.max(p, 0), 4);
+  const n = p >= 1 ? 4 : 0; // las 4 tarjetas aparecen juntas
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3 pt-10">
       {/* Ruta: la línea se llena con cada paso */}
-      <div className="relative">
+      <div className="relative" hidden={!MOSTRAR_RUTA}>
         <div className="absolute inset-x-0 top-1/2 h-[3px] -translate-y-1/2 rounded" style={{ background: C.turquesa + "33" }} />
         <motion.div initial={false} animate={{ scaleX: n >= 1 ? (n - 0.5) / 4 : 0 }} transition={rm ? { duration: 0.2 } : { duration: 0.8 }}
           className="absolute inset-x-0 top-1/2 h-[3px] origin-left -translate-y-1/2 rounded" style={{ background: C.mostaza }} />
@@ -145,23 +153,25 @@ const COLORES_SELLO = [C.turquesa, C.mostaza, C.marca, C.noche];
 function Sellos({ visible }: { visible: boolean }) {
   const rm = useReducedMotion();
   return (
-    <div className="flex flex-col gap-6">
-      <h2 className="font-display text-[48px] font-bold leading-none">Lo que nos hace distintos</h2>
-      <div className="grid grid-cols-2 gap-6">
+    <div className="flex flex-col gap-8 pt-10">
+      <h2 className="text-center font-display text-[56px] font-bold leading-none">
+        <span className="rounded px-3" style={{ background: C.mostaza + "55" }}>Lo que nos hace distintos</span>
+      </h2>
+      <div className="grid grid-cols-2 gap-8">
         {COMPETENCIA_DATOS.sellos.map((s, i) => {
           const color = COLORES_SELLO[i];
           return (
             <motion.div key={s.texto} initial={false}
               animate={visible ? { opacity: 1, scale: 1, rotate: 0 } : { opacity: 0, scale: 0.7, rotate: i % 2 ? 6 : -6 }}
               transition={rm ? { duration: 0.2 } : visible ? { type: "spring", stiffness: 110, damping: 13, delay: 0.3 + i * 0.35 } : { duration: 0.2 }}
-              className="flex items-center gap-6 rounded-[28px] bg-white px-7 py-7 shadow-xl shadow-black/10">
+              className="flex items-center gap-8 rounded-[28px] bg-white px-9 py-9 shadow-xl shadow-black/10">
               <span className="relative flex h-[120px] w-[120px] shrink-0 items-center justify-center" style={{ color: color === C.mostaza ? C.noche : "#fff" }}>
                 <svg aria-hidden viewBox="0 0 100 100" className="absolute inset-0">
                   <path fill={color} d={Array.from({ length: 16 }, (_, k) => { const a = (k / 16) * Math.PI * 2; const r = k % 2 ? 40 : 48; return `${k ? "L" : "M"}${(50 + r * Math.cos(a)).toFixed(1)} ${(50 + r * Math.sin(a)).toFixed(1)}`; }).join("") + "Z"} />
                 </svg>
                 <span className="relative"><Icono n={s.icono} size={56} /></span>
               </span>
-              <p className="font-display text-[30px] font-semibold leading-[1.15]">{s.texto}</p>
+              <p className="font-display text-[38px] font-semibold leading-[1.12]">{s.texto}</p>
             </motion.div>
           );
         })}
@@ -255,11 +265,11 @@ export function Competencia({ activa, paso }: { activa: boolean; paso: number })
         <p className={`${caveat.className} mt-6 text-[44px]`} style={{ color: C.terracota }}>(hoy está todo repartido)</p>
       </motion.div>
 
-      {/* Escenario: las tres pantallas comparten la misma celda de la cuadrícula */}
+      {/* Escenario: las pantallas comparten la misma celda de la cuadrícula */}
       <div className="absolute left-[60px] top-[188px] grid w-[1480px]">
-        <motion.div aria-hidden={p < 1 || p > 4} initial={false} {...capa(p >= 1 && p <= 4)}><Mapa p={p} /></motion.div>
-        <motion.div aria-hidden={p !== 5} initial={false} {...capa(p === 5)}><Sellos visible={p === 5} /></motion.div>
-        <motion.div aria-hidden={p !== 6} initial={false} {...capa(p === 6)}><Defensa visible={p === 6} /></motion.div>
+        <motion.div aria-hidden={p !== 1} initial={false} {...capa(p === 1)}><Mapa p={p === 1 ? 1 : p > 1 ? 1 : 0} /></motion.div>
+        <motion.div aria-hidden={p !== 2} initial={false} {...capa(p === 2)}><Sellos visible={p === 2} /></motion.div>
+        <motion.div aria-hidden={p !== 3} initial={false} {...capa(p === 3)}><Defensa visible={p === 3} /></motion.div>
       </div>
     </div>
   );
